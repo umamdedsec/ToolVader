@@ -12,12 +12,12 @@ interface Props {
   structuredData?: object;
 }
 
-const { 
-  title = 'ToolVader - Smart Tools For Freelancers', 
+const {
+  title = 'ToolVader - Smart Tools For Freelancers',
   description = 'Free tools for freelancers including freelance rate calculators, pricing tools and business utilities.',
   canonicalURL = new URL(Astro.url.pathname, Astro.site).toString(),
   type = 'website',
-  image = '/og-image.png', // Default OG image path
+  image = '/og-image.png',
   structuredData
 } = Astro.props;
 
@@ -34,6 +34,7 @@ const websiteStructuredData = {
 
 // Breadcrumb Structured Data
 const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
+
 const breadcrumbStructuredData = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -59,12 +60,14 @@ const breadcrumbStructuredData = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
+
     <meta name="generator" content={Astro.generator} />
-    
+
     <!-- SEO -->
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -86,45 +89,57 @@ const breadcrumbStructuredData = {
     <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify(websiteStructuredData)} />
-    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbStructuredData)} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(websiteStructuredData)}
+    />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(breadcrumbStructuredData)}
+    />
+
     {structuredData && (
-      <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify(structuredData)}
+      />
     )}
 
-    <!-- Google Analytics (GA4) Integration Template -->
-    {(() => {
-      // Astro Best Practice: Define your ID or link it to import.meta.env.PUBLIC_GA_ID
-      // REPLACE 'GA_MEASUREMENT_ID' WITH YOUR ACTUAL GOOGLE ANALYTICS ID (e.g., 'G-XXXXXXX')
-      const GA_MEASUREMENT_ID = ''; 
+    <!-- Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-0NNF2M50YN"
+    ></script>
 
-      if (GA_MEASUREMENT_ID && GA_MEASUREMENT_ID !== 'GA_MEASUREMENT_ID') {
-        return (
-          <>
-            <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
-            <script is:inline set:html={`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${GA_MEASUREMENT_ID}');
-            `} />
-          </>
-        );
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
       }
-      return null;
-    })()}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0NNF2M50YN');
+    </script>
+
   </head>
+
   <body class="min-h-screen bg-white font-sans text-gray-900 antialiased selection:bg-gray-900 selection:text-white">
     <div class="relative flex min-h-screen flex-col">
       <Header />
+
       <main class="flex-1">
         <slot />
       </main>
+
       <Footer />
     </div>
   </body>
@@ -134,7 +149,7 @@ const breadcrumbStructuredData = {
   :root {
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   }
-  
+
   body {
     font-family: var(--font-sans);
   }
