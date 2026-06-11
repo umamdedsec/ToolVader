@@ -1,0 +1,130 @@
+---
+interface Props {
+  id: string;
+  name: string;
+  options: string[];
+  placeholder?: string;
+  required?: boolean;
+}
+
+const { id, name, options, placeholder, required } = Astro.props;
+---
+
+<div class="relative autocomplete-wrapper" id={`${id}-wrapper`}>
+  <input
+    type="text"
+    id={id}
+    name={name}
+    placeholder={placeholder}
+    required={required}
+    autocomplete="off"
+    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
+  />
+  <ul
+    id={`${id}-list`}
+    class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm hidden border border-gray-100"
+    role="listbox"
+  >
+    <!-- Options will be populated by JS -->
+  </ul>
+</div>
+
+<script define:vars={{ options, id }}>
+  const input = document.getElementById(id);
+  const list = document.getElementById(`${id}-list`);
+  const wrapper = document.getElementById(`${id}-wrapper`);
+  let currentFocus = -1;
+
+  function filterOptions(val) {
+    return options.filter(opt => opt.toLowerCase().includes(val.toLowerCase()));
+  }
+
+  function updateList(filtered) {
+    list.innerHTML = '';
+    if (filtered.length === 0) {
+      list.classList.add('hidden');
+      return;
+    }
+
+    filtered.forEach((opt, index) => {
+      const li = document.createElement('li');
+      li.textContent = opt;
+      li.className = 'relative cursor-pointer select-none py-2 pl-3 pr-9 text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors duration-150';
+      li.id = `${id}-option-${index}`;
+      li.setAttribute('role', 'option');
+      li.addEventListener('click', () => {
+        selectOption(opt);
+      });
+      list.appendChild(li);
+    });
+
+    list.classList.remove('hidden');
+  }
+
+  function selectOption(val) {
+    input.value = val;
+    list.classList.add('hidden');
+    currentFocus = -1;
+    // Dispatch input event to notify any listeners
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  input.addEventListener('input', (e) => {
+    const val = e.target.value;
+    currentFocus = -1;
+    if (!val) {
+      list.classList.add('hidden');
+      return;
+    }
+    const filtered = filterOptions(val);
+    updateList(filtered);
+  });
+
+  input.addEventListener('focus', () => {
+    if (input.value) {
+      const filtered = filterOptions(input.value);
+      if (filtered.length > 0) updateList(filtered);
+    }
+  });
+
+  input.addEventListener('keydown', (e) => {
+    const items = list.getElementsByTagName('li');
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      currentFocus++;
+      addActive(items);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      currentFocus--;
+      addActive(items);
+    } else if (e.key === 'Enter') {
+      if (currentFocus > -1) {
+        e.preventDefault();
+        if (items[currentFocus]) items[currentFocus].click();
+      }
+    } else if (e.key === 'Escape') {
+      list.classList.add('hidden');
+    }
+  });
+
+  function addActive(items) {
+    if (!items || items.length === 0) return false;
+    removeActive(items);
+    if (currentFocus >= items.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = items.length - 1;
+    items[currentFocus].classList.add('bg-gray-50', 'text-gray-900');
+    items[currentFocus].scrollIntoView({ block: 'nearest' });
+  }
+
+  function removeActive(items) {
+    for (let i = 0; i < items.length; i++) {
+      items[i].classList.remove('bg-gray-50', 'text-gray-900');
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!wrapper.contains(e.target)) {
+      list.classList.add('hidden');
+    }
+  });
+</script>

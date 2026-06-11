@@ -1,0 +1,342 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Autocomplete from '../../components/Autocomplete.astro';
+import { professions } from '../../data/professions';
+import { countries } from '../../data/countries';
+
+const professionNames = professions.map(p => p.name);
+const experienceLevels = ["Beginner", "Intermediate", "Advanced", "Expert"];
+const clientTypes = ["Startup", "Small Business", "Agency", "Enterprise", "Direct Consumer"];
+
+const faqData = [
+  {
+    question: "What is a freelance rate calculator?",
+    answer: "A freelance rate calculator is a tool that helps independent professionals determine their ideal hourly rate by factoring in their profession, years of experience, geographical location, and business expenses. It ensures you're charging enough to cover your costs while remaining competitive in your specific market."
+  },
+  {
+    question: "How do I calculate my freelance hourly rate?",
+    answer: "Calculating your rate involves several steps: first, identify the base market rate for your profession; next, apply multipliers based on your experience level and the type of client; finally, add an hourly buffer to cover your monthly business expenses (like software, taxes, and insurance) across your billable hours."
+  },
+  {
+    question: "Should I charge international clients differently?",
+    answer: "Yes, market value varies significantly by region. ToolVader uses client-side multipliers to adjust your recommended rate based on your client's location, helping you stay competitive in high-value markets while maintaining a sustainable income locally."
+  },
+  {
+    question: "How much should beginner freelancers charge in 2026?",
+    answer: "In 2026, beginner freelancers typically charge around 80% of the standard market rate. This allows you to build a portfolio and gain experience while offering a competitive price to early clients. As your expertise grows, you should transition to intermediate and advanced rates."
+  },
+  {
+    question: "How do monthly expenses affect pricing?",
+    answer: "Your freelance rate must cover all your overhead. ToolVader calculates an 'hourly adjustment' by dividing your total monthly expenses by your billable hours. This ensures that every hour you work for a client contributes toward your business sustainability."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Freelance Rate Calculator 2026",
+      "description": "Calculate freelance rates for 2026 based on profession, experience, country, expenses and client type.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="Freelance Rate Calculator (2026) - ToolVader"
+  description="Calculate freelance rates for 2026 based on profession, experience, country, expenses and client type."
+  structuredData={structuredData}
+>
+  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mb-12">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Freelance Rate Calculator</h1>
+      <p class="mt-4 text-lg text-gray-600">
+        Enter your details below to determine your ideal freelance rate for 2026.
+      </p>
+    </div>
+
+    <!-- Form Section ... -->
+    <form id="rate-form" class="space-y-8 divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-10">
+      <div class="space-y-8">
+        <!-- Profession & Experience -->
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div class="sm:col-span-4">
+            <label for="profession" class="block text-sm font-medium leading-6 text-gray-900">Profession</label>
+            <div class="mt-2">
+              <Autocomplete 
+                id="profession" 
+                name="profession" 
+                options={professionNames}
+                required={true}
+                placeholder="e.g. Software Developer"
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="experience" class="block text-sm font-medium leading-6 text-gray-900">Experience Level</label>
+            <div class="mt-2">
+              <select id="experience" name="experience" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6">
+                {experienceLevels.map(level => <option value={level.toLowerCase()}>{level}</option>)}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Geography -->
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div class="sm:col-span-3">
+            <label for="your-country" class="block text-sm font-medium leading-6 text-gray-900">Your Country</label>
+            <div class="mt-2">
+              <select id="your-country" name="your-country" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6">
+                {countries.map(country => <option value={country.name}>{country.name}</option>)}
+              </select>
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="client-country" class="block text-sm font-medium leading-6 text-gray-900">Client Country</label>
+            <div class="mt-2">
+              <select id="client-country" name="client-country" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6">
+                {countries.map(country => <option value={country.name}>{country.name}</option>)}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Client & Business Details -->
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div class="sm:col-span-3">
+            <label for="client-type" class="block text-sm font-medium leading-6 text-gray-900">Client Type</label>
+            <div class="mt-2">
+              <select id="client-type" name="client-type" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6">
+                {clientTypes.map(type => <option value={type.toLowerCase()}>{type}</option>)}
+              </select>
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="expenses" class="block text-sm font-medium leading-6 text-gray-900">Monthly Expenses (USD)</label>
+            <div class="mt-2">
+              <input type="number" name="expenses" id="expenses" placeholder="2000" step="0.01" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Working Hours & Billable -->
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div class="sm:col-span-3">
+            <label for="hours" class="block text-sm font-medium leading-6 text-gray-900">Weekly Working Hours</label>
+            <div class="mt-2">
+              <input type="number" name="hours" id="hours" placeholder="40" step="1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="billable" class="block text-sm font-medium leading-6 text-gray-900">Billable Percentage (%)</label>
+            <div class="mt-2">
+              <input type="number" name="billable" id="billable" placeholder="70" step="1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">How much of your time is spent on client work vs. admin/marketing.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-8">
+        <button type="submit" id="calculate-btn" class="w-full rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-colors">
+          Calculate My Rate
+        </button>
+      </div>
+    </form>
+
+    <!-- Results Section -->
+    <div id="results" class="mt-12 hidden space-y-10 animate-in fade-in duration-500">
+      <!-- Primary Result: Recommended Rate -->
+      <div class="rounded-3xl bg-gray-900 p-8 text-white sm:p-12 shadow-2xl relative overflow-hidden ring-1 ring-white/10 hover:ring-white/20 transition-all">
+        <div class="relative z-10">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div>
+              <span class="inline-flex items-center rounded-full bg-green-500/10 px-3 py-1 text-xs font-semibold text-green-400 ring-1 ring-inset ring-green-500/20 mb-6">
+                Recommended Rate
+              </span>
+              <h2 class="text-xl font-medium text-gray-400">Recommended Hourly Rate</h2>
+              <div class="mt-4 flex flex-col">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-6xl font-extrabold tracking-tight text-white">$<span id="res-recommended">0.00</span></span>
+                  <span class="text-xl font-medium text-gray-500">/ hour</span>
+                </div>
+                <span class="mt-2 text-xs font-bold uppercase tracking-widest text-gray-600">USD / HOUR</span>
+              </div>
+            </div>
+            <button id="copy-btn" class="inline-flex items-center self-start sm:self-center gap-2 rounded-xl bg-white/5 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10 border border-white/10 transition-all active:scale-95">
+              <svg class="h-5 w-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+              </svg>
+              <span>Copy Results</span>
+            </button>
+          </div>
+          <div class="mt-10 border-t border-white/10 pt-8">
+            <p class="text-base text-gray-400 leading-7 max-w-2xl">
+              This is the balanced rate we recommend charging most clients. It accounts for your expertise, local market conditions, and business sustainability.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Market Rates Grid -->
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+        <div class="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-gray-300 hover:shadow-md transition-all">
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-widest">Local Market</h3>
+          <p class="mt-4 text-3xl font-bold text-gray-900">$<span id="res-local">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">USD / HOUR</p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-gray-300 hover:shadow-md transition-all">
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-widest">Client Market</h3>
+          <p class="mt-4 text-3xl font-bold text-gray-900">$<span id="res-client">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">USD / HOUR</p>
+        </div>
+        <div class="group rounded-2xl border border-blue-100 bg-blue-50/50 p-8 shadow-sm hover:border-blue-200 hover:shadow-md transition-all">
+          <h3 class="text-sm font-semibold text-blue-700 uppercase tracking-widest">Premium Rate</h3>
+          <p class="mt-4 text-3xl font-bold text-blue-900">$<span id="res-premium">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-blue-400 uppercase tracking-widest">USD / HOUR</p>
+        </div>
+      </div>
+
+      <!-- Revenue Projection Section -->
+      <div class="rounded-2xl border border-gray-200 bg-white p-8 sm:p-10 shadow-sm hover:border-gray-300 transition-all">
+        <h3 class="text-lg font-semibold text-gray-900">Monthly Revenue Projection</h3>
+        <p class="mt-1 text-sm text-gray-500">Estimated earnings based on your working hours and billable percentage.</p>
+        
+        <div class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
+          <div class="space-y-2">
+            <span class="text-sm font-medium text-gray-500 uppercase tracking-wider">At Recommended Rate</span>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-bold text-gray-900">$<span id="rev-recommended">0.00</span></span>
+              <span class="text-sm text-gray-500">/ month</span>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <span class="text-sm font-medium text-blue-600 uppercase tracking-wider">At Premium Rate</span>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-bold text-blue-900">$<span id="rev-premium">0.00</span></span>
+              <span class="text-sm text-gray-500">/ month</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Frequently Asked Questions</h2>
+      <dl class="mt-10 space-y-8">
+        {faqData.map(item => (
+          <div>
+            <dt class="text-base font-semibold leading-7 text-gray-900">{item.question}</dt>
+            <dd class="mt-2 text-base leading-7 text-gray-600">{item.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { calculateFreelanceRate } from '../../data/calculations';
+  import { professions } from '../../data/professions';
+  import { countries } from '../../data/countries';
+
+  const form = document.getElementById('rate-form') as HTMLFormElement;
+  const resultsDiv = document.getElementById('results');
+  const resRecommended = document.getElementById('res-recommended');
+  const resLocal = document.getElementById('res-local');
+  const resClient = document.getElementById('res-client');
+  const resPremium = document.getElementById('res-premium');
+  const revRecommended = document.getElementById('rev-recommended');
+  const revPremium = document.getElementById('rev-premium');
+  const copyBtn = document.getElementById('copy-btn');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    const professionName = formData.get('profession') as string;
+    const profession = professions.find(p => p.name === professionName);
+    
+    if (!profession) {
+      alert('Please select a valid profession from the list.');
+      return;
+    }
+
+    const yourCountryName = formData.get('your-country') as string;
+    const clientCountryName = formData.get('client-country') as string;
+    
+    const yourCountry = countries.find(c => c.name === yourCountryName);
+    const clientCountry = countries.find(c => c.name === clientCountryName);
+
+    if (!yourCountry || !clientCountry) return;
+
+    const input = {
+      baseRate: profession.baseRate,
+      demandScore: profession.demandScore,
+      experienceLevel: formData.get('experience') as string,
+      clientType: formData.get('client-type') as string,
+      localMultiplier: yourCountry.localMultiplier,
+      clientMultiplier: clientCountry.clientMultiplier,
+      monthlyExpenses: Number(formData.get('expenses')),
+      weeklyHours: Number(formData.get('hours')),
+      billablePercentage: Number(formData.get('billable'))
+    };
+
+    const results = calculateFreelanceRate(input);
+
+    if (resRecommended) resRecommended.textContent = results.recommendedRate.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resLocal) resLocal.textContent = results.localMarketRate.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resClient) resClient.textContent = results.clientMarketRate.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resPremium) resPremium.textContent = results.premiumRate.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    
+    if (revRecommended) revRecommended.textContent = results.monthlyRevenueRecommended.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (revPremium) revPremium.textContent = results.monthlyRevenuePremium.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    resultsDiv?.classList.remove('hidden');
+    resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    const text = `Freelance Rate Calculation Results:
+Recommended Rate: $${resRecommended?.textContent} USD/hour
+Local Market Rate: $${resLocal?.textContent} USD/hour
+Client Market Rate: $${resClient?.textContent} USD/hour
+Premium Rate: $${resPremium?.textContent} USD/hour
+
+Monthly Revenue Projections:
+At Recommended Rate: $${revRecommended?.textContent}/month
+At Premium Rate: $${revPremium?.textContent}/month
+
+Calculated by ToolVader`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const originalText = copyBtn.querySelector('span')?.textContent;
+      if (copyBtn.querySelector('span')) {
+        copyBtn.querySelector('span')!.textContent = 'Copied!';
+        setTimeout(() => {
+          copyBtn.querySelector('span')!.textContent = originalText || 'Copy Results';
+        }, 2000);
+      }
+    });
+  });
+</script>
