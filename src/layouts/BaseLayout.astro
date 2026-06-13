@@ -13,11 +13,11 @@ interface Props {
 }
 
 const {
-  title = 'ToolVader - Smart Tools For Freelancers',
-  description = 'Free tools for freelancers including freelance rate calculators, pricing tools and business utilities.',
+  title = 'ToolVader – 2026 Free Tools for Freelancers, Consultants & Solopreneurs',
+  description = 'Free online tools for freelancers, consultants and solopreneurs. Calculate freelance rates, generate project quotes and manage your business with ToolVader.',
   canonicalURL = new URL(Astro.url.pathname, Astro.site).toString(),
   type = 'website',
-  image = '/og-image.png',
+  image = '/toolvader_logo.png',
   structuredData
 } = Astro.props;
 
@@ -62,6 +62,7 @@ const breadcrumbStructuredData = {
     <meta name="viewport" content="width=device-width" />
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
