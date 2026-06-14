@@ -1,0 +1,286 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const complexityMultipliers = {
+  simple: 1.0,
+  medium: 1.15,
+  complex: 1.3
+};
+
+const revisionMultipliers = {
+  "1": 1.0,
+  "2": 1.05,
+  "3+": 1.10
+};
+
+const faqData = [
+  {
+    question: "How do I estimate project hours correctly?",
+    answer: "Start by breaking the project into smaller tasks. Estimate each task individually, then sum them up. It's often helpful to add a 15-20% buffer to your total estimate to account for unforeseen challenges or communication overhead."
+  },
+  {
+    question: "Why should I charge more for complexity?",
+    answer: "Complex projects involve higher technical risk, more research, and more intensive problem-solving. Charging a premium for complexity protects your profit margins and accounts for the additional mental energy and expertise required."
+  },
+  {
+    question: "When should I use a fixed-price vs. hourly rate?",
+    answer: "Fixed-price is ideal for projects with a clearly defined scope and deliverables. It provides budget certainty for the client and allows you to earn more as you become more efficient. Hourly is better for open-ended consulting or projects with shifting requirements."
+  },
+  {
+    question: "How much deposit should I ask for?",
+    answer: "A 50% upfront deposit is standard for many freelancers and small agencies. It secures your time, covers initial overhead, and ensures the client is committed to the project before you begin work."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Project Price Calculator 2026",
+      "description": "Calculate professional fixed-price project quotes using your hourly rate, estimated hours, complexity and revision rounds.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="Project Price Calculator (2026) - ToolVader"
+  description="Calculate professional fixed-price project quotes using your hourly rate, estimated hours, complexity and revision rounds."
+  structuredData={structuredData}
+>
+  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mb-12">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Project Price Calculator</h1>
+      <p class="mt-4 text-lg text-gray-600">
+        Convert your hourly expertise into professional fixed-price project quotes. Factor in complexity and scope buffers.
+      </p>
+    </div>
+
+    <form id="project-form" class="space-y-8 divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-10">
+      <div class="space-y-8">
+        <!-- Economics -->
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div class="sm:col-span-3">
+            <label for="hourly-rate" class="block text-sm font-medium leading-6 text-gray-900">Your Hourly Rate (USD)</label>
+            <div class="mt-2">
+              <input type="number" name="hourly-rate" id="hourly-rate" placeholder="50" step="0.01" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="est-hours" class="block text-sm font-medium leading-6 text-gray-900">Estimated Hours</label>
+            <div class="mt-2">
+              <input type="number" name="est-hours" id="est-hours" placeholder="20" step="0.1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Scope -->
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div class="sm:col-span-3">
+            <label for="complexity" class="block text-sm font-medium leading-6 text-gray-900">Project Complexity</label>
+            <div class="mt-2">
+              <select id="complexity" name="complexity" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6">
+                <option value="simple">Simple (1.0x) - Standard execution</option>
+                <option value="medium">Medium (1.15x) - Custom elements</option>
+                <option value="complex">Complex (1.30x) - High technical risk</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="revisions" class="block text-sm font-medium leading-6 text-gray-900">Revision Rounds</label>
+            <div class="mt-2">
+              <select id="revisions" name="revisions" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6">
+                <option value="1">1 Round (0% buffer)</option>
+                <option value="2">2 Rounds (5% buffer)</option>
+                <option value="3+">3+ Rounds (10% buffer)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-8">
+        <button type="submit" id="calculate-btn" class="w-full rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-colors">
+          Calculate Project Price
+        </button>
+      </div>
+    </form>
+
+    <!-- Results Section -->
+    <div id="results" class="mt-12 hidden space-y-10 animate-in fade-in duration-500">
+      <!-- Primary Result: Recommended Quote -->
+      <div class="rounded-3xl bg-gray-900 p-8 text-white sm:p-12 shadow-2xl relative overflow-hidden ring-1 ring-white/10 hover:ring-white/20 transition-all">
+        <div class="relative z-10">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div>
+              <span class="inline-flex items-center rounded-full bg-green-500/10 px-3 py-1 text-xs font-semibold text-green-400 ring-1 ring-inset ring-green-500/20 mb-6">
+                Recommended Quote
+              </span>
+              <h2 class="text-xl font-medium text-gray-400">Recommended Project Price</h2>
+              <div class="mt-4 flex flex-col">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-6xl font-extrabold tracking-tight text-white">$<span id="res-total">0.00</span></span>
+                </div>
+                <span class="mt-2 text-xs font-bold uppercase tracking-widest text-gray-600">TOTAL PROJECT FEE (USD)</span>
+              </div>
+            </div>
+            <button id="copy-btn" class="inline-flex items-center self-start sm:self-center gap-2 rounded-xl bg-white/5 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10 border border-white/10 transition-all active:scale-95">
+              <svg class="h-5 w-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+              </svg>
+              <span>Copy Quote</span>
+            </button>
+          </div>
+          <div class="mt-10 border-t border-white/10 pt-8">
+            <p class="text-base text-gray-400 leading-7 max-w-2xl">
+              This quote includes your base labor, complexity premium, and revision buffer. Collect a deposit before starting work.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Price Breakdown Grid -->
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+        <div class="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-gray-300 hover:shadow-md transition-all">
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-widest">Base Labor</h3>
+          <p class="mt-4 text-3xl font-bold text-gray-900">$<span id="res-base">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">RATE × HOURS</p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-gray-300 hover:shadow-md transition-all">
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-widest">50% Deposit</h3>
+          <p class="mt-4 text-3xl font-bold text-gray-900">$<span id="res-deposit">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">DUE UPFRONT</p>
+        </div>
+        <div class="group rounded-2xl border border-blue-100 bg-blue-50/50 p-8 shadow-sm hover:border-blue-200 hover:shadow-md transition-all">
+          <h3 class="text-sm font-semibold text-blue-700 uppercase tracking-widest">Safe Range</h3>
+          <p class="mt-4 text-xl font-bold text-blue-900"><span id="res-range">0 - 0</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-blue-400 uppercase tracking-widest">±10% BUFFER</p>
+        </div>
+      </div>
+
+      <!-- SEO Content Section -->
+      <div class="rounded-2xl border border-gray-200 bg-white p-8 sm:p-10 shadow-sm hover:border-gray-300 transition-all">
+        <h2 class="text-2xl font-bold text-gray-900">How to Use the Project Price Calculator</h2>
+        <div class="mt-6 space-y-4 text-base leading-7 text-gray-600">
+          <p>
+            Quoting fixed-price projects requires more than just multiplying your hourly rate by your time estimate. To remain profitable, you must account for project risk, technical complexity, and the inevitability of revision rounds.
+          </p>
+          <p>
+            Our <strong>Project Price Calculator</strong> helps freelancers and consultants build a professional safety net into their quotes. By applying a <strong>Complexity Multiplier</strong>, you ensure that high-risk or research-intensive tasks don't eat into your margins. Similarly, the <strong>Revision Buffer</strong> protects you from "scope creep" by pricing in the administrative time required for multiple rounds of feedback.
+          </p>
+          <p>
+            For best results, always be honest about your time estimates and include a 10-15% "contingency buffer" in your hours before calculating the final fee.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Frequently Asked Questions</h2>
+      <dl class="mt-10 space-y-8">
+        {faqData.map(item => (
+          <div>
+            <dt class="text-base font-semibold leading-7 text-gray-900">{item.question}</dt>
+            <dd class="mt-2 text-base leading-7 text-gray-600">{item.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <!-- Internal Link -->
+    <div class="mt-16 rounded-2xl bg-gray-50 p-8 text-center">
+      <p class="text-gray-600">
+        Need to determine your base hourly rate first? 
+        <a href="/tools/freelance-rate-calculator" class="ml-1 font-semibold text-gray-900 hover:underline">
+          Try our Freelance Rate Calculator →
+        </a>
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  const complexityMultipliers = {
+    simple: 1.0,
+    medium: 1.15,
+    complex: 1.3
+  };
+
+  const revisionMultipliers = {
+    "1": 1.0,
+    "2": 1.05,
+    "3+": 1.10
+  };
+
+  const form = document.getElementById('project-form');
+  const resultsDiv = document.getElementById('results');
+  const resTotal = document.getElementById('res-total');
+  const resBase = document.getElementById('res-base');
+  const resDeposit = document.getElementById('res-deposit');
+  const resRange = document.getElementById('res-range');
+  const copyBtn = document.getElementById('copy-btn');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    const hourlyRate = Number(formData.get('hourly-rate'));
+    const estHours = Number(formData.get('est-hours'));
+    const complexity = formData.get('complexity');
+    const revisions = formData.get('revisions');
+
+    const basePrice = hourlyRate * estHours;
+    const complexityMult = complexityMultipliers[complexity] || 1.0;
+    const revisionMult = revisionMultipliers[revisions] || 1.0;
+
+    const finalPrice = basePrice * complexityMult * revisionMult;
+    const deposit = finalPrice * 0.5;
+    const rangeLow = finalPrice * 0.9;
+    const rangeHigh = finalPrice * 1.1;
+
+    if (resTotal) resTotal.textContent = finalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resBase) resBase.textContent = basePrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resDeposit) resDeposit.textContent = deposit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resRange) resRange.textContent = `$${rangeLow.toLocaleString(undefined, { maximumFractionDigits: 0 })} - $${rangeHigh.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+
+    resultsDiv?.classList.remove('hidden');
+    resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    const text = `Project Quote:
+Total Recommended Price: $${resTotal?.textContent} USD
+Suggested 50% Deposit: $${resDeposit?.textContent} USD
+Safe Price Range: ${resRange?.textContent} USD
+
+Calculated by ToolVader`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const span = copyBtn.querySelector('span');
+      if (span) {
+        const originalText = span.textContent;
+        span.textContent = 'Copied!';
+        setTimeout(() => {
+          span.textContent = originalText;
+        }, 2000);
+      }
+    });
+  });
+</script>
