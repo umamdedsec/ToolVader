@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const faqData = [
+  {
+    question: "How is annual salary calculated?",
+    answer: "Your annual salary is calculated by multiplying your hourly rate by the number of hours you work per week, and then multiplying that subtotal by the number of weeks you work per year (typically 52). This provides a gross income estimate before taxes."
+  },
+  {
+    question: "What hours should I use?",
+    answer: "You should use your average billable or working hours. For a standard full-time role, this is usually 40 hours per week. If you are a freelancer, remember to only include the hours you actually get paid for, excluding administrative or marketing time."
+  },
+  {
+    question: "Can freelancers use this calculator?",
+    answer: "Absolutely. Freelancers often use this to reverse-engineer their needed hourly rate based on a target annual income. By adjusting the 'Weeks Per Year' input, you can also account for planned vacations or unpaid time off."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Hourly to Salary Calculator 2026",
+      "description": "Convert hourly pay into annual, monthly and weekly salary instantly using our free salary calculator.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="Hourly to Salary Calculator 2026 - ToolVader"
+  description="Convert hourly pay into annual, monthly and weekly salary instantly using our free salary calculator."
+  structuredData={structuredData}
+>
+  <div class="mx-auto max-w-4xl px-4 pt-6 pb-12 sm:px-6 lg:px-8">
+    <div class="mb-12">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Hourly to Salary Calculator</h1>
+      <p class="mt-4 text-lg text-gray-600">
+        Instantly convert your hourly pay into a comprehensive annual, monthly, and weekly salary breakdown.
+      </p>
+    </div>
+
+    <form id="salary-form" class="space-y-8 divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-10">
+      <div class="space-y-8">
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div class="sm:col-span-2">
+            <label for="hourly-rate" class="block text-sm font-medium leading-6 text-gray-900">Hourly Rate ($)</label>
+            <div class="mt-2">
+              <input type="number" name="hourly-rate" id="hourly-rate" value="25" min="0" step="0.01" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="hours-per-week" class="block text-sm font-medium leading-6 text-gray-900">Hours Per Week</label>
+            <div class="mt-2">
+              <input type="number" name="hours-per-week" id="hours-per-week" value="40" min="0" max="168" step="0.1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="weeks-per-year" class="block text-sm font-medium leading-6 text-gray-900">Weeks Per Year</label>
+            <div class="mt-2">
+              <input type="number" name="weeks-per-year" id="weeks-per-year" value="52" min="0" max="52" step="1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-8">
+        <button type="submit" id="calculate-btn" class="w-full rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-colors">
+          Calculate Salary Breakdown
+        </button>
+      </div>
+    </form>
+
+    <!-- Results Section -->
+    <div id="results" class="mt-12 hidden space-y-10 animate-in fade-in duration-500">
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+        <div class="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-gray-300 hover:shadow-md transition-all text-center">
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-widest">Annual Salary</h3>
+          <p class="mt-4 text-3xl font-bold text-gray-900">$<span id="res-annual">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">GROSS PER YEAR</p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-gray-300 hover:shadow-md transition-all text-center">
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-widest">Monthly Income</h3>
+          <p class="mt-4 text-3xl font-bold text-gray-900">$<span id="res-monthly">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">GROSS PER MONTH</p>
+        </div>
+        <div class="group rounded-2xl border border-blue-100 bg-blue-50/50 p-8 shadow-sm hover:border-blue-200 hover:shadow-md transition-all text-center">
+          <h3 class="text-sm font-semibold text-blue-700 uppercase tracking-widest">Weekly Income</h3>
+          <p class="mt-4 text-3xl font-bold text-blue-900">$<span id="res-weekly">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-blue-400 uppercase tracking-widest">GROSS PER WEEK</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Why Convert Hourly Pay Into Annual Salary?</h2>
+      <div class="mt-6 space-y-6 text-base leading-7 text-gray-600">
+        <p>
+          Understanding your income in terms of an annual salary is a critical step for professional financial management. Whether you are transitioning from a traditional 9-to-5 or managing a diverse freelance portfolio, converting your hourly rate into a yearly figure provides a baseline for <strong>effective budgeting</strong>. It allows you to visualize your total gross earnings and align them with major annual expenses like taxes, insurance, and retirement contributions.
+        </p>
+        <p>
+          For independent professionals, salary conversion is essential for <strong>job comparisons</strong> and contract evaluations. When deciding between a long-term contract and multiple short-term projects, comparing the 'effective salary' of each helps you choose the most profitable path. Additionally, <strong>freelance planning</strong> becomes more accurate when you can forecast your income based on varying billable hours and planned time off.
+        </p>
+        <p>
+          By using an <strong>income forecasting</strong> tool like the ToolVader Salary Calculator, you can simulate different scenarios—such as increasing your hourly rate or adjusting your weekly workload—to see exactly how they impact your bottom line. This data-driven approach ensures you are always working toward your long-term financial goals in the ever-changing independent economy of 2026.
+        </p>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Frequently Asked Questions</h2>
+      <dl class="mt-10 space-y-8">
+        {faqData.map(item => (
+          <div>
+            <dt class="text-base font-semibold leading-7 text-gray-900">{item.question}</dt>
+            <dd class="mt-2 text-base leading-7 text-gray-600">{item.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <RelatedTools currentPath="/tools/hourly-to-salary-calculator" />
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  const form = document.getElementById('salary-form');
+  const resultsDiv = document.getElementById('results');
+  const resAnnual = document.getElementById('res-annual');
+  const resMonthly = document.getElementById('res-monthly');
+  const resWeekly = document.getElementById('res-weekly');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    const hourlyRate = Math.max(0, Number(formData.get('hourly-rate')));
+    const hoursPerWeek = Math.max(0, Math.min(168, Number(formData.get('hours-per-week'))));
+    const weeksPerYear = Math.max(0, Math.min(52, Number(formData.get('weeks-per-year'))));
+
+    const weeklySalary = hourlyRate * hoursPerWeek;
+    const annualSalary = weeklySalary * weeksPerYear;
+    const monthlySalary = annualSalary / 12;
+
+    if (resAnnual) resAnnual.textContent = annualSalary.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resMonthly) resMonthly.textContent = monthlySalary.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resWeekly) resWeekly.textContent = weeklySalary.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    resultsDiv?.classList.remove('hidden');
+    resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>

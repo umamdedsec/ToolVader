@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const faqData = [
+  {
+    question: "What is ROI?",
+    answer: "ROI stands for Return on Investment. It is a financial metric used to evaluate the efficiency of an investment or compare the efficiencies of several different investments. It measures the amount of return on an investment relative to the investment's cost."
+  },
+  {
+    question: "What is a good ROI?",
+    answer: "A 'good' ROI varies by industry and the nature of the investment. For general business investments, an ROI of 15-30% is often considered very healthy. However, for high-risk activities like startup investing or aggressive marketing campaigns, targets can be much higher."
+  },
+  {
+    question: "Why is ROI important?",
+    answer: "ROI is important because it provides a clear, objective way to measure the success of your financial decisions. It helps you identify which parts of your business are profitable and where you might be wasting resources, enabling smarter strategic planning."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "ROI Calculator (2026)",
+      "description": "Calculate return on investment (ROI) instantly using revenue, cost and profit metrics.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="ROI Calculator (2026) - ToolVader"
+  description="Calculate return on investment (ROI) instantly using revenue, cost and profit metrics."
+  structuredData={structuredData}
+>
+  <div class="mx-auto max-w-4xl px-4 pt-6 pb-12 sm:px-6 lg:px-8">
+    <div class="mb-12 text-center">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">ROI Calculator</h1>
+      <p class="mt-4 text-lg text-gray-600">
+        Calculate your return on investment and measure business performance in seconds.
+      </p>
+    </div>
+
+    <form id="roi-form" class="space-y-8 divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-10">
+      <div class="space-y-8">
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+          <div>
+            <label for="investment-cost" class="block text-sm font-medium leading-6 text-gray-900">Investment Cost ($)</label>
+            <div class="mt-2">
+              <input type="number" name="investment-cost" id="investment-cost" value="1000" min="0.01" step="0.01" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+          </div>
+
+          <div>
+            <label for="return-value" class="block text-sm font-medium leading-6 text-gray-900">Return Value ($)</label>
+            <div class="mt-2">
+              <input type="number" name="return-value" id="return-value" value="1500" min="0" step="0.01" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-8">
+        <button type="submit" id="calculate-btn" class="w-full rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-colors">
+          Calculate ROI
+        </button>
+      </div>
+    </form>
+
+    <!-- Results Section -->
+    <div id="results" class="mt-12 hidden space-y-10 animate-in fade-in duration-500">
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="group rounded-2xl border border-blue-100 bg-blue-50/50 p-6 shadow-sm hover:border-blue-200 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-blue-700 uppercase tracking-widest">ROI %</h3>
+          <p class="mt-4 text-2xl font-bold text-blue-900"><span id="res-roi">0.00</span>%</p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-gray-300 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Profit Earned</h3>
+          <p class="mt-4 text-2xl font-bold text-gray-900">$<span id="res-profit">0.00</span></p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-gray-300 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Investment</h3>
+          <p class="mt-4 text-2xl font-bold text-gray-900">$<span id="res-cost">0.00</span></p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-gray-300 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Return Value</h3>
+          <p class="mt-4 text-2xl font-bold text-gray-900">$<span id="res-value">0.00</span></p>
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <button id="copy-btn" class="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-6 py-3 text-sm font-semibold text-white hover:bg-gray-700 transition-all active:scale-95">
+          <span>Copy Results</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Why ROI Matters</h2>
+      <div class="mt-6 space-y-6 text-base leading-7 text-gray-600">
+        <p>
+          Return on Investment (ROI) is one of the most critical key performance indicators (KPIs) for any business, regardless of size or industry. In 2026, as the independent economy becomes increasingly data-driven, understanding the efficiency of your spending is no longer optional for freelancers, agency owners, and entrepreneurs. ROI provides a direct measurement of how well your capital is being utilized to generate profit, allowing for objective decision-making instead of relying on intuition or "gut feeling."
+        </p>
+        <p>
+          For <strong>marketing campaigns</strong>, ROI is the ultimate benchmark. Whether you are investing in paid social ads, search engine marketing, or content creation, knowing the ROI allows you to see which channels are driving growth and which are draining your budget. By calculating ROI for individual campaigns, marketers can optimize their strategies in real-time, shifting resources toward the most effective touchpoints and maximizing overall impact.
+        </p>
+        <p>
+          In the realm of <strong>freelancing and agency growth</strong>, ROI applies to more than just advertising. It covers investments in new software, professional development courses, and even the hiring of subcontractors. For a solo consultant, purchasing a high-end productivity tool might have a high initial cost, but if it saves five hours of manual labor per week, the ROI becomes incredibly clear over time. Agencies use ROI to evaluate the profitability of specific client accounts or service offerings, ensuring that the team's effort is aligned with the highest possible financial returns.
+        </p>
+        <p>
+          Effective <strong>decision making</strong> is built on the foundation of ROI analysis. When faced with multiple opportunities—such as launching a new product line versus expanding into a new geographical market—ROI helps stakeholders prioritize the path with the highest probability of success. It provides a common language for comparing disparate investments, from physical equipment to digital infrastructure. Ultimately, mastering ROI calculation empowers business owners to mitigate risk, protect their margins, and build a sustainable legacy in a competitive global market.
+        </p>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Frequently Asked Questions</h2>
+      <dl class="mt-10 space-y-8">
+        {faqData.map(item => (
+          <div>
+            <dt class="text-base font-semibold leading-7 text-gray-900">{item.question}</dt>
+            <dd class="mt-2 text-base leading-7 text-gray-600">{item.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <RelatedTools currentPath="/tools/roi-calculator" />
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  const form = document.getElementById('roi-form');
+  const resultsDiv = document.getElementById('results');
+  const resRoi = document.getElementById('res-roi');
+  const resProfit = document.getElementById('res-profit');
+  const resCost = document.getElementById('res-cost');
+  const resValue = document.getElementById('res-value');
+  const copyBtn = document.getElementById('copy-btn');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    const cost = Number(formData.get('investment-cost'));
+    const value = Number(formData.get('return-value'));
+
+    if (cost <= 0) {
+      alert('Investment Cost must be greater than zero.');
+      return;
+    }
+
+    const profit = value - cost;
+    const roi = (profit / cost) * 100;
+
+    if (resRoi) resRoi.textContent = roi.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resProfit) resProfit.textContent = profit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resCost) resCost.textContent = cost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resValue) resValue.textContent = value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    resultsDiv?.classList.remove('hidden');
+    resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    const text = `ROI Calculation Results:
+Investment Cost: $${resCost?.textContent}
+Return Value: $${resValue?.textContent}
+Profit Earned: $${resProfit?.textContent}
+ROI: ${resRoi?.textContent}%
+
+Calculated by ToolVader`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const span = copyBtn.querySelector('span');
+      if (span) {
+        const originalText = span.textContent;
+        span.textContent = 'Copied!';
+        setTimeout(() => {
+          span.textContent = originalText;
+        }, 2000);
+      }
+    });
+  });
+</script>

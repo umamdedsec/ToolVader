@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Autocomplete from '../../components/Autocomplete.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
 import { professions } from '../../data/professions';
 import { countries } from '../../data/countries';
 
@@ -61,7 +62,7 @@ const structuredData = {
   description="Calculate freelance rates for 2026 based on profession, experience, country, expenses and client type."
   structuredData={structuredData}
 >
-  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-4xl px-4 pt-6 pb-12 sm:px-6 lg:px-8">
     <div class="mb-12">
       <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Freelance Rate Calculator</h1>
       <p class="mt-4 text-lg text-gray-600">
@@ -252,6 +253,8 @@ const structuredData = {
         ))}
       </dl>
     </div>
+
+    <RelatedTools currentPath="/tools/freelance-rate-calculator" />
   </div>
 </BaseLayout>
 

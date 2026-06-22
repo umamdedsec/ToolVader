@@ -1,0 +1,216 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const faqData = [
+  {
+    question: "How is hourly pay calculated from salary?",
+    answer: "To find your hourly rate, we divide your total annual salary by the total number of hours you work in a year. This is calculated by multiplying your hours worked per week by the number of weeks you work per year."
+  },
+  {
+    question: "What hours should I use?",
+    answer: "You should use your actual working hours. For many, this is 40 hours per week, but if you regularly work overtime or have a different contract, use those specific hours to get an accurate hourly equivalent of your base salary."
+  },
+  {
+    question: "Can I compare multiple job offers?",
+    answer: "Yes, this calculator is ideal for comparing a salaried position with an hourly contract. By converting a salary offer into its hourly equivalent, you can see if the flexibility of a contract is worth the trade-off, or vice versa."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Salary to Hourly Calculator (2026)",
+      "description": "Convert annual salary into hourly pay instantly using ToolVader's free Salary to Hourly Calculator.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="Salary to Hourly Calculator (2026) - ToolVader"
+  description="Convert annual salary into hourly pay instantly using ToolVader's free Salary to Hourly Calculator."
+  structuredData={structuredData}
+>
+  <div class="mx-auto max-w-4xl px-4 pt-6 pb-12 sm:px-6 lg:px-8">
+    <div class="mb-12 text-center">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Salary to Hourly Calculator</h1>
+      <p class="mt-4 text-lg text-gray-600">
+        Convert annual salary into hourly earnings and compare compensation more accurately.
+      </p>
+    </div>
+
+    <form id="salary-to-hourly-form" class="space-y-8 divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-10">
+      <div class="space-y-8">
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div class="sm:col-span-2">
+            <label for="annual-salary" class="block text-sm font-medium leading-6 text-gray-900">Annual Salary ($)</label>
+            <div class="mt-2">
+              <input type="number" name="annual-salary" id="annual-salary" value="50000" min="0" step="1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="hours-per-week" class="block text-sm font-medium leading-6 text-gray-900">Hours Per Week</label>
+            <div class="mt-2">
+              <input type="number" name="hours-per-week" id="hours-per-week" value="40" min="0.1" max="168" step="0.1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="weeks-per-year" class="block text-sm font-medium leading-6 text-gray-900">Weeks Per Year</label>
+            <div class="mt-2">
+              <input type="number" name="weeks-per-year" id="weeks-per-year" value="52" min="1" max="52" step="1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-8">
+        <button type="submit" id="calculate-btn" class="w-full rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-colors">
+          Calculate Hourly Equivalent
+        </button>
+      </div>
+    </form>
+
+    <!-- Results Section -->
+    <div id="results" class="mt-12 hidden space-y-10 animate-in fade-in duration-500">
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="group rounded-2xl border border-blue-100 bg-blue-50/50 p-6 shadow-sm hover:border-blue-200 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-blue-700 uppercase tracking-widest">Hourly Rate</h3>
+          <p class="mt-4 text-2xl font-bold text-blue-900">$<span id="res-hourly">0.00</span></p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-gray-300 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Weekly Pay</h3>
+          <p class="mt-4 text-2xl font-bold text-gray-900">$<span id="res-weekly">0.00</span></p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-gray-300 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Monthly Pay</h3>
+          <p class="mt-4 text-2xl font-bold text-gray-900">$<span id="res-monthly">0.00</span></p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-gray-300 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Annual Salary</h3>
+          <p class="mt-4 text-2xl font-bold text-gray-900">$<span id="res-annual">0.00</span></p>
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <button id="copy-btn" class="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-6 py-3 text-sm font-semibold text-white hover:bg-gray-700 transition-all active:scale-95">
+          <span>Copy Results</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Why Convert Salary to Hourly Pay?</h2>
+      <div class="mt-6 space-y-6 text-base leading-7 text-gray-600">
+        <p>
+          Understanding your compensation in hourly terms is a vital skill for anyone navigating the modern workforce in 2026. While a high annual salary might look impressive on a job offer letter, it doesn't always tell the whole story. By converting that fixed sum into an hourly rate, you gain a clearer picture of what your time is actually worth. This level of <strong>compensation analysis</strong> is essential for ensuring you aren't unknowingly undercutting your own value.
+        </p>
+        <p>
+          One of the primary reasons to use a Salary to Hourly Calculator is for <strong>comparing job offers</strong>. When choosing between a salaried position and an hourly contract, the conversion allows for an "apples-to-apples" comparison. A $70,000 salary with mandatory overtime might actually result in a lower hourly rate than a $30/hour contract with strict boundaries. Knowing these numbers empowers you to negotiate better terms or choose the path that offers the best return on your time.
+        </p>
+        <p>
+          Additionally, <strong>evaluating overtime</strong> becomes much more straightforward when you know your base hourly rate. For salaried employees who frequently work more than 40 hours per week, your "effective" hourly pay drops with every extra hour worked. If you're considering <strong>freelance transitions</strong>, knowing your current hourly equivalent helps you set a starting point for your new business rates, ensuring you maintain or exceed your current lifestyle.
+        </p>
+        <p>
+          Ultimately, whether you're a seasoned professional or a new entrant to the job market, ToolVader's tools are designed to provide the transparency you need. By taking a data-driven approach to your career, you can make informed decisions that lead to greater financial stability and a better work-life balance. Use this calculator to take control of your professional narrative today.
+        </p>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Frequently Asked Questions</h2>
+      <dl class="mt-10 space-y-8">
+        {faqData.map(item => (
+          <div>
+            <dt class="text-base font-semibold leading-7 text-gray-900">{item.question}</dt>
+            <dd class="mt-2 text-base leading-7 text-gray-600">{item.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <RelatedTools currentPath="/tools/salary-to-hourly-calculator" />
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  const form = document.getElementById('salary-to-hourly-form');
+  const resultsDiv = document.getElementById('results');
+  const resHourly = document.getElementById('res-hourly');
+  const resWeekly = document.getElementById('res-weekly');
+  const resMonthly = document.getElementById('res-monthly');
+  const resAnnual = document.getElementById('res-annual');
+  const copyBtn = document.getElementById('copy-btn');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    const annualSalary = Number(formData.get('annual-salary'));
+    const hoursPerWeek = Number(formData.get('hours-per-week'));
+    const weeksPerYear = Number(formData.get('weeks-per-year'));
+
+    if (hoursPerWeek <= 0) {
+      alert('Hours per week must be greater than zero.');
+      return;
+    }
+
+    if (weeksPerYear > 52 || weeksPerYear <= 0) {
+      alert('Weeks per year must be between 1 and 52.');
+      return;
+    }
+
+    const totalAnnualHours = hoursPerWeek * weeksPerYear;
+    const hourlyRate = annualSalary / totalAnnualHours;
+    const weeklyPay = annualSalary / weeksPerYear;
+    const monthlyPay = annualSalary / 12;
+
+    if (resHourly) resHourly.textContent = hourlyRate.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resWeekly) resWeekly.textContent = weeklyPay.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resMonthly) resMonthly.textContent = monthlyPay.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resAnnual) resAnnual.textContent = annualSalary.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    resultsDiv?.classList.remove('hidden');
+    resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    const text = `Salary to Hourly Conversion:
+Annual Salary: $${resAnnual?.textContent}
+Monthly Pay: $${resMonthly?.textContent}
+Weekly Pay: $${resWeekly?.textContent}
+Hourly Rate: $${resHourly?.textContent}
+
+Calculated by ToolVader`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const span = copyBtn.querySelector('span');
+      if (span) {
+        const originalText = span.textContent;
+        span.textContent = 'Copied!';
+        setTimeout(() => {
+          span.textContent = originalText;
+        }, 2000);
+      }
+    });
+  });
+</script>

@@ -8,17 +8,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 >
   <!-- Hero Section -->
   <div class="relative isolate overflow-hidden">
-    <div class="mx-auto max-w-7xl px-6 pb-12 pt-10 sm:pb-16 lg:flex lg:px-8 lg:pt-32">
-      <div class="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
-        <h1 class="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+    <div class="mx-auto max-w-7xl px-6 pb-12 pt-6 sm:pb-16 lg:flex lg:px-8 lg:pt-12">
+      <div class="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-0">
+        <h1 class="mt-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
           Free Business Tools for Freelancers & Solopreneurs
         </h1>
         <p class="mt-6 text-lg leading-8 text-gray-600">
           Set the right price for your expertise. Our free online business tools and calculators help freelancers, consultants, and solopreneurs make data-driven decisions to grow their business.
         </p>
         <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-          <a href="/tools/freelance-rate-calculator" class="rounded-md bg-gray-900 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-colors">
-            Open Freelance Rate Calculator
+          <a href="#featured-tools" class="rounded-md bg-gray-900 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-colors">
+            Explore Free Tools
           </a>
           <a href="/about" class="text-center text-sm font-semibold leading-6 text-gray-900">
             Learn More <span aria-hidden="true">→</span>
@@ -29,10 +29,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </div>
 
   <!-- Featured Tools Section -->
-  <div class="bg-gray-50/50 py-16 sm:py-20">
+  <div id="featured-tools" class="bg-gray-50/50 py-16 sm:py-20">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:mx-0">
-        <h2 class="text-base font-semibold leading-7 text-gray-900">Featured Tool</h2>
+        <h2 class="text-base font-semibold leading-7 text-gray-900">Essential Tools for Freelancers</h2>
+        <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          Professional calculators to help freelancers, consultants and solopreneurs price services, quote projects and grow profitable businesses.
+        </p>
       </div>
       <div class="mx-auto mt-8 max-w-2xl lg:mx-0 lg:max-w-none">
         <div class="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-3">
@@ -73,29 +76,43 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- Why Choose ToolVader Section -->
   <div class="bg-white py-16 sm:py-24">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl lg:mx-0">
+      <div class="mx-auto max-w-2xl text-center">
         <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Why Freelancers Choose ToolVader</h2>
-        <p class="mt-6 text-lg leading-8 text-gray-600">
-          In today's fast-paced independent economy, making informed financial decisions is the difference between a struggling side-hustle and a thriving professional practice. ToolVader provides the essential utilities that independent professionals need to navigate the complexities of modern business.
+        <p class="mt-4 text-lg leading-8 text-gray-600">
+          ToolVader helps freelancers, consultants and solopreneurs make smarter financial decisions through simple business calculators and practical tools.
         </p>
       </div>
-      <div class="mx-auto mt-12 grid max-w-2xl grid-cols-1 gap-x-12 gap-y-12 text-base leading-7 text-gray-600 lg:mx-0 lg:max-w-none lg:grid-cols-2">
-        <div>
-          <p>
-            For <strong>freelance designers and developers</strong>, our calculators take the guesswork out of pricing. By factoring in specific market demand, regional multipliers, and individual business expenses, you can ensure that every quote you send is both competitive and sustainable. No more undercharging or losing projects to vague pricing strategies.
-          </p>
-          <p class="mt-8">
-            <strong>Consultants and strategists</strong> use ToolVader to translate their deep expertise into clear, value-based rates. Whether you are advising an enterprise client or a small startup, our tools help you justify your fees with data-driven logic, allowing you to focus on delivering high-impact results for your clients.
-          </p>
+
+      <div class="mx-auto mt-16 max-w-2xl lg:mx-0 lg:max-w-none">
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          <!-- Feature 1 -->
+          <div class="rounded-2xl border border-gray-200 p-8 shadow-sm">
+            <h3 class="text-lg font-semibold leading-7 text-gray-900">Data-Driven Pricing</h3>
+            <p class="mt-4 text-base leading-7 text-gray-600">
+              Calculate rates and project quotes using structured inputs instead of guesswork.
+            </p>
+          </div>
+          <!-- Feature 2 -->
+          <div class="rounded-2xl border border-gray-200 p-8 shadow-sm">
+            <h3 class="text-lg font-semibold leading-7 text-gray-900">Built for Independent Professionals</h3>
+            <p class="mt-4 text-base leading-7 text-gray-600">
+              Designed specifically for freelancers, consultants, creators and solo business owners.
+            </p>
+          </div>
+          <!-- Feature 3 -->
+          <div class="rounded-2xl border border-gray-200 p-8 shadow-sm">
+            <h3 class="text-lg font-semibold leading-7 text-gray-900">Free and Privacy Friendly</h3>
+            <p class="mt-4 text-base leading-7 text-gray-600">
+              All tools are free to use and do not require account creation.
+            </p>
+          </div>
         </div>
-        <div>
-          <p>
-            <strong>Solopreneurs and creative writers</strong> often face the challenge of managing diverse income streams while tracking overhead costs. Our platform simplifies these financial hurdles, providing a centralized place to project monthly revenue and understand your true profitability. We empower you to manage your business with the same precision as a large agency.
-          </p>
-          <p class="mt-8">
-            At ToolVader, we are committed to supporting the global community of marketers, engineers, and independent creators. Our mission is to provide professional-grade business utilities that remain accessible, free, and privacy-focused, ensuring you have the tools to build your legacy on your own terms.
-          </p>
-        </div>
+      </div>
+
+      <div class="mx-auto mt-16 max-w-2xl text-center">
+        <p class="text-sm text-gray-500 leading-6">
+          Whether you are a freelance designer, developer, consultant, marketer or agency owner, ToolVader provides free business tools that help you price services, estimate projects and improve profitability in 2026.
+        </p>
       </div>
     </div>
   </div>

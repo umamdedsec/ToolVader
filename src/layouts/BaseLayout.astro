@@ -28,8 +28,18 @@ const websiteStructuredData = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": siteName,
-  "url": Astro.site,
+  "url": "https://toolvader.com",
   "description": "Free tools for freelancers and independent professionals."
+};
+
+// Organization Structured Data
+const organizationStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ToolVader",
+  "url": "https://toolvader.com",
+  "logo": "https://toolvader.com/toolvader_logo.png",
+  "description": "Free business tools and calculators for freelancers, consultants and solopreneurs."
 };
 
 // Breadcrumb Structured Data
@@ -101,6 +111,11 @@ const breadcrumbStructuredData = {
     <script
       type="application/ld+json"
       set:html={JSON.stringify(websiteStructuredData)}
+    />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(organizationStructuredData)}
     />
 
     <script
