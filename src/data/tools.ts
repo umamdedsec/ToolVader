@@ -3,6 +3,7 @@ export interface Tool {
   category: 'Pricing' | 'Income' | 'Finance' | string;
   description: string;
   href: string;
+  featured?: boolean;
 }
 
 export const tools: Tool[] = [
@@ -10,36 +11,70 @@ export const tools: Tool[] = [
     title: "Freelance Rate Calculator",
     category: "Pricing",
     description: "Determine what you should charge clients based on profession, experience, location, and business expenses.",
-    href: "/tools/freelance-rate-calculator"
+    href: "/tools/freelance-rate-calculator",
+    featured: true
   },
   {
     title: "Project Price Calculator",
     category: "Pricing",
     description: "Convert your hourly rate into professional fixed-price project quotes. Factor in complexity and revision rounds.",
-    href: "/tools/project-price-calculator"
+    href: "/tools/project-price-calculator",
+    featured: true
   },
   {
     title: "Hourly to Salary Calculator",
     category: "Income",
     description: "Instantly convert your hourly pay into annual, monthly and weekly salary breakdowns.",
-    href: "/tools/hourly-to-salary-calculator"
+    href: "/tools/hourly-to-salary-calculator",
+    featured: false
   },
   {
     title: "Salary to Hourly Calculator",
     category: "Income",
     description: "Convert annual salary into hourly earnings and compare compensation more accurately.",
-    href: "/tools/salary-to-hourly-calculator"
+    href: "/tools/salary-to-hourly-calculator",
+    featured: false
+  },
+  {
+    title: "Raise Percentage Calculator",
+    category: "Income",
+    description: "Calculate salary raises, pay increases and compensation growth instantly.",
+    href: "/tools/raise-percentage-calculator",
+    featured: false
   },
   {
     title: "Profit Margin Calculator",
     category: "Finance",
     description: "Calculate profit margin, markup, revenue and net profit instantly.",
-    href: "/tools/profit-margin-calculator"
+    href: "/tools/profit-margin-calculator",
+    featured: false
   },
   {
     title: "ROI Calculator",
     category: "Finance",
     description: "Calculate your return on investment and measure business performance in seconds.",
-    href: "/tools/roi-calculator"
+    href: "/tools/roi-calculator",
+    featured: false
+  },
+  {
+    title: "Break-Even Calculator",
+    category: "Finance",
+    description: "Determine how much revenue you need to cover costs based on fixed expenses, selling price, and variable costs.",
+    href: "/tools/break-even-calculator",
+    featured: false
+  },
+  {
+    title: "Freelance Tax Calculator",
+    category: "Finance",
+    description: "Estimate freelance taxes, taxable income and take-home earnings instantly.",
+    href: "/tools/freelance-tax-calculator",
+    featured: false
+  },
+  {
+    title: "Consulting Rate Calculator",
+    category: "Consulting",
+    description: "Calculate consulting hourly rates and revenue targets based on experience, expenses, utilization, and target income.",
+    href: "/tools/consulting-rate-calculator",
+    featured: false
   }
 ];

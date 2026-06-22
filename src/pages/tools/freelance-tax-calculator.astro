@@ -1,0 +1,241 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const faqData = [
+  {
+    question: "How do freelancers estimate taxes?",
+    answer: "Freelancers estimate taxes by calculating their net self-employed income (gross annual income minus deductible business expenses). Since taxes are not automatically withheld from contractor earnings like traditional paychecks, they must apply an estimated self-employment and income tax rate (typically 20% to 30% depending on location) and set aside these funds, often filing quarterly estimated payments."
+  },
+  {
+    question: "What expenses can freelancers deduct?",
+    answer: "Freelancers can deduct business-related expenses that are 'ordinary and necessary' for their work. Examples include software licenses, web hosting, hardware purchases, hardware depreciation, home office spaces (if used exclusively for business), internet/phone bills (business percentage), subcontracting costs, professional development, and travel expenses directly related to client projects."
+  },
+  {
+    question: "Why should freelancers set aside money for taxes?",
+    answer: "Setting aside money is critical for freelance tax planning because failing to do so leads to significant tax bills at the end of the fiscal year, combined with potential IRS underpayment penalties. Establishing a dedicated tax savings account and routing a fixed percentage (25% to 30%) of every client payout ensures you stay compliant, avoid cash flow stress, and maintain long-term financial security."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Freelance Tax Calculator (2026)",
+      "description": "Estimate freelance taxes, taxable income and take-home earnings using ToolVader's free Freelance Tax Calculator.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="Freelance Tax Calculator (2026) - ToolVader"
+  description="Estimate freelance taxes, taxable income and take-home earnings using ToolVader's free Freelance Tax Calculator."
+  structuredData={structuredData}
+>
+  <div class="mx-auto max-w-4xl px-4 pt-6 pb-12 sm:px-6 lg:px-8">
+    <div class="mb-12 text-center">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Freelance Tax Calculator</h1>
+      <p class="mt-4 text-lg text-gray-600">
+        Estimate your self-employed taxable income, annual tax liability, and net take-home earnings.
+      </p>
+    </div>
+
+    <form id="tax-form" class="space-y-8 divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-10">
+      <div class="space-y-8">
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3">
+          <div>
+            <label for="annual-income" class="block text-sm font-medium leading-6 text-gray-900">Annual Gross Income ($)</label>
+            <div class="mt-2">
+              <input type="number" name="annual-income" id="annual-income" value="75000" min="0" step="0.01" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Your total expected self-employed revenue before any business deductions or taxes.</p>
+          </div>
+
+          <div>
+            <label for="business-expenses" class="block text-sm font-medium leading-6 text-gray-900">Business Expenses ($)</label>
+            <div class="mt-2">
+              <input type="number" name="business-expenses" id="business-expenses" value="10000" min="0" step="0.01" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Deductible operating costs (e.g. software, gear, advertising, hosting).</p>
+          </div>
+
+          <div>
+            <label for="tax-rate" class="block text-sm font-medium leading-6 text-gray-900">Estimated Tax Rate (%)</label>
+            <div class="mt-2">
+              <input type="number" name="tax-rate" id="tax-rate" value="25" min="0" max="100" step="0.1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Your combined state, federal, and self-employment tax rate percentage estimate.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-8">
+        <button type="submit" id="calculate-btn" class="w-full rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-colors">
+          Calculate Estimated Taxes
+        </button>
+      </div>
+    </form>
+
+    <!-- Results Section -->
+    <div id="results" class="mt-12 hidden space-y-10 animate-in fade-in duration-500">
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-gray-300 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Taxable Income</h3>
+          <p class="mt-4 text-2xl font-bold text-gray-900">$<span id="res-taxable">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">GROSS LESS EXPENSES</p>
+        </div>
+        <div class="group rounded-2xl border border-blue-100 bg-blue-50/50 p-6 shadow-sm hover:border-blue-200 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-blue-700 uppercase tracking-widest">Estimated Tax</h3>
+          <p class="mt-4 text-2xl font-bold text-blue-900">$<span id="res-tax">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-blue-400 uppercase tracking-widest">ESTIMATED LIABILITY</p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-gray-300 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Net Income</h3>
+          <p class="mt-4 text-2xl font-bold text-gray-900">$<span id="res-net">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">TAKE-HOME EARNINGS</p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-gray-300 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Effective Tax Rate</h3>
+          <p class="mt-4 text-2xl font-bold text-gray-900"><span id="res-effective">0.00</span>%</p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">OF GROSS INCOME</p>
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <button id="copy-btn" class="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-6 py-3 text-sm font-semibold text-white hover:bg-gray-700 transition-all active:scale-95">
+          <span>Copy Results</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Strategic Tax Planning and Income Forecasting for Freelancers</h2>
+      <div class="mt-6 space-y-6 text-base leading-7 text-gray-600">
+        <p>
+          Navigating the financial obligations of self-employment requires a proactive approach to money management. Unlike traditional employees who receive paychecks with automatic deductions, independent professionals are responsible for calculating and submitting their own <strong>freelance taxes</strong>. Managing your <strong>self-employed income</strong> efficiently is crucial for building a sustainable career. Every invoice you collect represents gross revenue, but your true take-home pay is determined only after accounting for business overhead and taxes. Understanding these numbers is essential for accurate <strong>income forecasting</strong> and long-term business health.
+        </p>
+        
+        <h3 class="text-lg font-semibold text-gray-900 mt-8">The Critical Role of Deductible Expenses</h3>
+        <p>
+          For anyone earning <strong>contractor earnings</strong>, understanding how taxable income is calculated is the first step toward optimization. Taxable income is not your total gross revenue; rather, it is your annual income minus eligible <strong>deductible expenses</strong>. Under tax codes, expenses that are both ordinary and necessary for running your freelance business can be written off. This includes software licensing fees, web hosting, marketing and advertising budgets, home office costs, hardware equipment, and professional services. By tracking and logging these expenses meticulously throughout the year, you reduce your taxable income baseline and directly lower the amount of taxes you owe.
+        </p>
+        
+        <h3 class="text-lg font-semibold text-gray-900 mt-8">Implementing Proactive Tax Planning</h3>
+        <p>
+          Once you establish your net taxable income, the next critical phase is <strong>tax planning</strong>. Self-employed individuals are typically subject to both standard income taxes and self-employment taxes (which fund Social Security and Medicare). In many regions, freelancers must make quarterly estimated tax payments to avoid underpayment penalties at the end of the year. Using this Freelance Tax Calculator regularly helps you simulate different income scenarios and calculate how much you should set aside from every payment. Experts recommend routing at least 25% to 30% of your earnings to a dedicated tax savings account immediately upon receiving client payouts.
+        </p>
+        
+        <h3 class="text-lg font-semibold text-gray-900 mt-8">Income Forecasting for Financial Security</h3>
+        <p>
+          Beyond compliance, incorporating tax estimates into your regular financial forecasting gives you a realistic overview of your business viability. If your estimated net income after taxes is too low to cover your living costs and personal savings goals, you know that you must adjust your pricing, find higher-paying clients, or optimize your operational expenses. With data-driven calculations, you can confidently set rates that reflect your true value and cover all your obligations.
+        </p>
+
+        <h3 class="text-lg font-semibold text-gray-900 mt-8">Tips for Staying Organized and Compliant</h3>
+        <p>
+          To maintain financial health, freelancers should follow several best practices. First, open a dedicated business bank account. Mixing personal and business transactions makes tracking deductible expenses a nightmare and complicates tax filings. Second, use digital accounting software or dedicated spreadsheet templates to log all contractor earnings and business expenses as they occur, rather than trying to reconstruct them at the end of the year. Third, conduct monthly or quarterly financial reviews. Compare your actual income against your initial forecasts to see if you are on track or need to adjust your tax planning strategies.
+        </p>
+        <p>
+          Furthermore, consulting with a certified public accountant (CPA) who specializes in self-employed taxes is highly recommended. A professional can help identify obscure deductions you might miss, ensure you are compliant with local tax jurisdictions, and provide personalized advice on structuring your business (e.g., sole proprietorship vs. S-Corporation) for optimal tax savings. Use ToolVader's suite of free calculators to manage your freelance business like a professional and achieve financial clarity.
+        </p>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Frequently Asked Questions</h2>
+      <dl class="mt-10 space-y-8">
+        {faqData.map(item => (
+          <div>
+            <dt class="text-base font-semibold leading-7 text-gray-900">{item.question}</dt>
+            <dd class="mt-2 text-base leading-7 text-gray-600">{item.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <RelatedTools currentPath="/tools/freelance-tax-calculator" />
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  const form = document.getElementById('tax-form');
+  const resultsDiv = document.getElementById('results');
+  const resTaxable = document.getElementById('res-taxable');
+  const resTax = document.getElementById('res-tax');
+  const resNet = document.getElementById('res-net');
+  const resEffective = document.getElementById('res-effective');
+  const copyBtn = document.getElementById('copy-btn');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    const annualIncome = Number(formData.get('annual-income'));
+    const businessExpenses = Number(formData.get('business-expenses'));
+    const taxRate = Number(formData.get('tax-rate'));
+
+    if (annualIncome < 0 || businessExpenses < 0 || taxRate < 0) {
+      alert('Values cannot be negative.');
+      return;
+    }
+
+    if (taxRate < 0 || taxRate > 100) {
+      alert('Tax Rate must be between 0 and 100.');
+      return;
+    }
+
+    const taxableIncome = Math.max(0, annualIncome - businessExpenses);
+    const estimatedTax = taxableIncome * (taxRate / 100);
+    const netIncome = taxableIncome - estimatedTax;
+    const effectiveTaxRate = annualIncome > 0 ? (estimatedTax / annualIncome) * 100 : 0;
+
+    if (resTaxable) resTaxable.textContent = taxableIncome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resTax) resTax.textContent = estimatedTax.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resNet) resNet.textContent = netIncome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resEffective) resEffective.textContent = effectiveTaxRate.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    resultsDiv?.classList.remove('hidden');
+    resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    const text = `Freelance Tax Estimation:
+Annual Income: $${Number(document.getElementById('annual-income').value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+Business Expenses: $${Number(document.getElementById('business-expenses').value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+Estimated Tax Rate: ${Number(document.getElementById('tax-rate').value).toFixed(1)}%
+
+Taxable Income: $${resTaxable?.textContent}
+Estimated Tax: $${resTax?.textContent}
+Net Income: $${resNet?.textContent}
+Effective Tax Rate: ${resEffective?.textContent}%
+
+Calculated by ToolVader`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const span = copyBtn.querySelector('span');
+      if (span) {
+        const originalText = span.textContent;
+        span.textContent = 'Copied!';
+        setTimeout(() => {
+          span.textContent = originalText;
+        }, 2000);
+      }
+    });
+  });
+</script>

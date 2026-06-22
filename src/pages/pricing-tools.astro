@@ -1,0 +1,279 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const faqData = [
+  {
+    question: "What is the difference between hourly and value-based pricing?",
+    answer: "Hourly pricing charges clients for the specific amount of time spent performing a task. Value-based pricing sets a flat rate based on the estimated financial impact, revenue growth, or cost savings the client receives from the service. Value-based pricing decouples your earning potential from your working hours, making it highly lucrative for experienced specialists."
+  },
+  {
+    question: "How do I choose the right pricing tool for my business?",
+    answer: "If you execute specific tasks for clients (like coding, design, or writing), start with the Freelance Rate Calculator to find your operational cost basis. If you provide advisory, diagnostic, or strategic consulting services, use the Consulting Rate Calculator to apply experience multipliers. When quoting structured projects, use the Project Price Calculator to convert baseline hourly rates into fixed-price proposals."
+  },
+  {
+    question: "What is a safe billable utilization rate to target?",
+    answer: "A standard billable utilization rate for independent professionals is between 45% and 60% of their total working hours. This assumes you will spend 18 to 24 hours per week on billable work, with the remaining time dedicated to administrative tasks, client proposals, bookkeeping, and marketing."
+  },
+  {
+    question: "How do consulting retainers work?",
+    answer: "A consulting retainer is a recurring agreement where a client pays a set fee (usually monthly) to secure your ongoing availability or delivery of monthly tasks. Retainers provide predictable cash flow and stabilize solo business income. You can structure them as pay-for-access (advisory retainers) or pay-for-work (deliverables retainers)."
+  },
+  {
+    question: "How often should I raise my pricing?",
+    answer: "You should review and raise your rates at least once a year. An annual rate adjustment of 5% to 10% helps offset inflation, cost of living increases, and business overhead. You should also raise your rates when your capacity is full or after completing significant client projects that enhance your portfolio."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://toolvader.com/pricing-tools/#collection",
+      "url": "https://toolvader.com/pricing-tools/",
+      "name": "Freelance & Consulting Pricing Tools Hub - ToolVader",
+      "description": "Topical authority hub page mapping the best freelance pricing tools, consulting pricing tools, and calculators for independent professionals in 2026.",
+      "about": [
+        {
+          "@type": "WebApplication",
+          "name": "Freelance Rate Calculator",
+          "url": "https://toolvader.com/tools/freelance-rate-calculator"
+        },
+        {
+          "@type": "WebApplication",
+          "name": "Consulting Rate Calculator",
+          "url": "https://toolvader.com/tools/consulting-rate-calculator"
+        },
+        {
+          "@type": "WebApplication",
+          "name": "Project Price Calculator",
+          "url": "https://toolvader.com/tools/project-price-calculator"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://toolvader.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Pricing Tools",
+          "item": "https://toolvader.com/pricing-tools/"
+        }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="Freelance & Consulting Pricing Tools Hub - ToolVader"
+  description="Explore the best freelance pricing tools, consulting pricing tools, and rate calculators for 2026. Calculate rates, estimate quotes, and plan revenues."
+  structuredData={structuredData}
+>
+  <div class="mx-auto max-w-4xl px-4 pt-6 pb-12 sm:px-6 lg:px-8">
+    
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 flex" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-xs font-semibold text-gray-500">
+        <li>
+          <a href="/" class="hover:text-gray-950 transition-colors">Home</a>
+        </li>
+        <li>
+          <span class="text-gray-400">/</span>
+        </li>
+        <li class="text-gray-950 truncate" aria-current="page">
+          Pricing Tools Hub
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="mb-12 text-center">
+      <div class="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 ring-1 ring-inset ring-blue-700/10 mb-4">
+        Resource Hub
+      </div>
+      <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">Freelance & Consulting Pricing Tools Hub</h1>
+      <p class="mt-4 text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
+        Set the right price for your expertise in 2026. Access interactive rate calculators, project quote generators, and strategic pricing guides designed for independent professionals.
+      </p>
+    </div>
+
+    <!-- Main Content -->
+    <article class="prose prose-gray max-w-none space-y-8 text-base leading-7 text-gray-600 border-t border-gray-100 pt-10">
+      
+      <!-- Section 1: Introduction to Pricing Strategies -->
+      <section>
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900 mt-8 mb-4">Strategic Pricing for Independent Professionals</h2>
+        <p class="mb-4">
+          For solopreneurs, freelancers, and independent consultants, selecting a pricing model is one of the most critical decisions affecting business sustainability. Unlike traditional employment, where your salary is fixed and operating overhead is absorbed by the company, running an independent practice requires calculating every expense, benefit placeholder, tax liability, and non-billable hour. If you do not actively model these variables, you risk charging rates that barely cover your costs.
+        </p>
+        <p class="mb-4">
+          A successful pricing strategy aligns your pricing model with the value you deliver to clients. While some projects lend themselves well to hourly rates, others are far better suited for fixed project quoting, consulting retainers, or value-based billing. Choosing the wrong mechanism can limit your earning potential and penalize you for efficiency.
+        </p>
+        <p class="mb-4">
+          To help independent professionals navigate these complex billing structures, ToolVader has compiled a robust collection of **freelance pricing tools** and **consulting pricing tools**. These resources allow you to mathematically model your cost baseline, apply expert experience multipliers, and package your deliverables to build a profitable business in 2026.
+        </p>
+      </section>
+
+      <!-- Section 2: Interactive Pricing Tools -->
+      <section class="border-t border-gray-100 pt-8">
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900 mt-8 mb-4">Interactive Rate & Quote Calculators</h2>
+        <p class="mb-4">
+          Determining how much to charge should not be based on guesswork. Our interactive calculators provide instant, data-driven answers tailored to your specific business parameters, allowing you to model different rates and project scenarios.
+        </p>
+
+        <!-- Tool 1 -->
+        <div class="my-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-900 mb-2">1. Freelance Rate Calculator</h3>
+          <p class="text-sm text-gray-600 mb-4">
+            Designed for execution-focused professionals (e.g. designers, developers, writers, marketers). This tool helps you calculate your baseline hourly rate by combining your desired take-home salary, estimated annual business expenses, self-employment tax liabilities, and billable utilization targets.
+          </p>
+          <a href="/tools/freelance-rate-calculator" class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-500">
+            Launch Freelance Rate Calculator <span aria-hidden="true" class="ml-1">→</span>
+          </a>
+        </div>
+
+        <!-- Tool 2 -->
+        <div class="my-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-900 mb-2">2. Consulting Rate Calculator</h3>
+          <p class="text-sm text-gray-600 mb-4">
+            Designed specifically for strategic advisors and corporate consultants. The consulting rate calculator applies premium experience multipliers (ranging from 1.0x to 1.6x) to your baseline revenue targets, allowing you to price your strategic inputs and account for lower billable utilization rates.
+          </p>
+          <a href="/tools/consulting-rate-calculator" class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-500">
+            Launch Consulting Rate Calculator <span aria-hidden="true" class="ml-1">→</span>
+          </a>
+        </div>
+
+        <!-- Tool 3 -->
+        <div class="my-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-900 mb-2">3. Project Price Calculator</h3>
+          <p class="text-sm text-gray-600 mb-4">
+            Ideal for shifting from hourly billing to flat project pricing. This project pricing calculator helps you estimate fixed quotes by multiplying your hourly rate requirements by expected project hours, adding client communication buffers, accounting for revision rounds, and calculating profit margins.
+          </p>
+          <a href="/tools/project-price-calculator" class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-500">
+            Launch Project Price Calculator <span aria-hidden="true" class="ml-1">→</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Section 3: Strategic Guides -->
+      <section class="border-t border-gray-100 pt-8">
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900 mt-8 mb-4">Practical Pricing Strategy Guides</h2>
+        <p class="mb-4">
+          Calculators are only half the equation. To successfully pitch premium pricing models to corporate accounts and stand firm during contract negotiations, you must understand the strategy behind rate setting. Explore our extensive guides to refine your business model:
+        </p>
+
+        <!-- Guide 1 -->
+        <div class="my-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-900 mb-2">1. Freelance Pricing Guide 2026</h3>
+          <p class="text-sm text-gray-600 mb-4">
+            Our comprehensive freelancer pricing guide explores standard rate-setting methodologies, comparing hourly wages to fixed project pricing. Learn how to outline client deliverables, justify your fees, structure revisions, and avoid common undercharging traps.
+          </p>
+          <a href="/guides/freelance-pricing-guide-2026" class="inline-flex items-center text-sm font-semibold text-purple-600 hover:text-purple-500">
+            Read Freelance Pricing Guide <span aria-hidden="true" class="ml-1">→</span>
+          </a>
+        </div>
+
+        <!-- Guide 2 -->
+        <div class="my-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-900 mb-2">2. Freelance Hourly Rate Guide 2026</h3>
+          <p class="text-sm text-gray-600 mb-4">
+            A focused breakdown of hourly billing frameworks. This article helps you calculate your billable hourly capacity, budget for unpaid administrative tasks, explore industry averages across developers, writers, and designers, and map rates by experience level.
+          </p>
+          <a href="/guides/freelance-hourly-rate-guide-2026" class="inline-flex items-center text-sm font-semibold text-purple-600 hover:text-purple-500">
+            Read Freelance Hourly Rate Guide <span aria-hidden="true" class="ml-1">→</span>
+          </a>
+        </div>
+
+        <!-- Guide 3 -->
+        <div class="my-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-900 mb-2">3. Consulting Rates Guide 2026</h3>
+          <p class="text-sm text-gray-600 mb-4">
+            A masterclass in advisory fees. Learn why consultant pricing differs from freelance models, discover how to structure consulting retainers, explore outcomes-based value-based pricing, and understand rates across junior and expert consultant tiers.
+          </p>
+          <a href="/guides/consulting-rates-guide-2026" class="inline-flex items-center text-sm font-semibold text-purple-600 hover:text-purple-500">
+            Read Consulting Rates Guide <span aria-hidden="true" class="ml-1">→</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Section 4: Key Pricing Frameworks -->
+      <section class="border-t border-gray-100 pt-8">
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900 mt-8 mb-4">Understanding Modern Pricing Structures</h2>
+        <p class="mb-4">
+          Independent service providers must balance four primary structures when quoting clients. Deciding which model to implement depends on the level of predictability, project complexity, and client relationship:
+        </p>
+        <ul class="list-disc pl-5 space-y-3 mb-6">
+          <li>
+            <strong>Hourly Billing:</strong> The simplest structure, where you sell hours in exchange for fees. Highly effective for ongoing, undefined support or when client requirements change rapidly. Its primary limitation is the revenue cap, as you cannot earn more without working more.
+          </li>
+          <li>
+            <strong>Fixed Project Pricing:</strong> Quoting a single flat fee for a scoped list of deliverables. This model rewards speed and workflow automation. If you complete a scoped project quickly, your effective hourly rate increases.
+          </li>
+          <li>
+            <strong>Consulting Retainers:</strong> Monthly recurring contracts that guarantee your availability. Structured as pay-for-access (advisory retainers) or pay-for-work (execution retainers). Retainers form the financial foundation of stable solo consulting business models.
+          </li>
+          <li>
+            <strong>Value-Based Pricing:</strong> Setting fees in proportion to the estimated financial outcome or return on investment the client receives. Highly profitable for experienced strategists who audit operations or fix expensive bottlenecks.
+          </li>
+        </ul>
+        <p class="mb-4">
+          Selecting a rate that ensures business longevity is essential. Ground your calculations in mathematical projections using our interactive tools rather than copying competitors' rates. Keep in mind that a sustainable rate is the single most important factor in preventing professional burnout and funding long-term growth.
+        </p>
+      </section>
+      
+    </article>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Frequently Asked Questions</h2>
+      <dl class="mt-10 space-y-8">
+        {faqData.map(item => (
+          <div>
+            <dt class="text-base font-semibold leading-7 text-gray-900">{item.question}</dt>
+            <dd class="mt-2 text-base leading-7 text-gray-600">{item.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="mt-24">
+      <div class="relative isolate overflow-hidden bg-gray-900 px-6 py-24 text-center shadow-2xl rounded-3xl sm:px-16">
+        <h2 class="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          Set Your Professional Rate
+        </h2>
+        <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">
+          Run your baseline numbers, target income, and operating expenses through our suite of free online pricing calculators.
+        </p>
+        <div class="mt-10 flex items-center justify-center gap-x-6">
+          <a href="/tools/freelance-rate-calculator" class="rounded-md bg-white px-6 py-3.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-all active:scale-95">
+            Freelance Rate Calculator
+          </a>
+          <a href="/tools/consulting-rate-calculator" class="rounded-md border border-white px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition-all active:scale-95">
+            Consulting Rate Calculator
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</BaseLayout>

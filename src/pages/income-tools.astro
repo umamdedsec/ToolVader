@@ -1,0 +1,257 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const faqData = [
+  {
+    question: "How many working hours are in a standard working year?",
+    answer: "A standard full-time working year has 2,080 working hours. This is calculated by multiplying 40 hours per week by 52 weeks. If you work part-time (e.g., 20 hours per week), your standard working year has 1,040 working hours. When calculating salary conversions, adjusting for vacation and unpaid leave can give a more accurate picture of net hourly earnings."
+  },
+  {
+    question: "What is the difference between gross income and net income?",
+    answer: "Gross income is the total compensation you earn before any deductions are made (such as income taxes, Social Security contributions, health insurance premiums, or retirement savings allocations). Net income, also known as take-home pay, is the actual amount deposited into your bank account after all taxes and deductions have been subtracted."
+  },
+  {
+    question: "How do I justify a salary raise to my employer?",
+    answer: "To justify a raise, collect evidence of your accomplishments, increased responsibilities, and how your contributions have directly saved costs or generated revenue for the company. Research market rates using salary planning tools, choose an appropriate timing (like annual reviews), and request a specific percentage raise backed by your track record."
+  },
+  {
+    question: "Should I accept a lower hourly rate for a remote position?",
+    answer: "While remote roles offer flexibility and save commuting expenses (which acts as an indirect raise), you should not automatically accept lower compensation. Compare the role's base pay using a compensation calculator against local and national standards. Evaluate the overall benefits package (like health insurance, stock options, and equipment stipends) alongside the hourly rate."
+  },
+  {
+    question: "How do I calculate a raise percentage?",
+    answer: "To calculate a raise percentage, subtract your current salary from your new salary to find the raise amount. Divide this raise amount by your current salary, and multiply the result by 100. For example, if your salary increases from $80,000 to $88,000, your raise amount is $8,000, which represents a 10% raise."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://toolvader.com/income-tools/#collection",
+      "url": "https://toolvader.com/income-tools/",
+      "name": "Hourly & Salary Income Tools Hub - ToolVader",
+      "description": "Topical authority hub page mapping the best income calculators, hourly to salary tools, salary to hourly converters, raise calculators, and salary planning tools for 2026.",
+      "about": [
+        {
+          "@type": "WebApplication",
+          "name": "Hourly to Salary Calculator",
+          "url": "https://toolvader.com/tools/hourly-to-salary-calculator"
+        },
+        {
+          "@type": "WebApplication",
+          "name": "Salary to Hourly Calculator",
+          "url": "https://toolvader.com/tools/salary-to-hourly-calculator"
+        },
+        {
+          "@type": "WebApplication",
+          "name": "Raise Percentage Calculator",
+          "url": "https://toolvader.com/tools/raise-percentage-calculator"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://toolvader.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Income Tools",
+          "item": "https://toolvader.com/income-tools/"
+        }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="Hourly & Salary Income Tools Hub - ToolVader"
+  description="Explore the best freelance and career income calculators, hourly to salary tools, salary to hourly converters, and raise percentage calculators for 2026."
+  structuredData={structuredData}
+>
+  <div class="mx-auto max-w-4xl px-4 pt-6 pb-12 sm:px-6 lg:px-8">
+    
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 flex" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-xs font-semibold text-gray-500">
+        <li>
+          <a href="/" class="hover:text-gray-950 transition-colors">Home</a>
+        </li>
+        <li>
+          <span class="text-gray-400">/</span>
+        </li>
+        <li class="text-gray-950 truncate" aria-current="page">
+          Income Tools Hub
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="mb-12 text-center">
+      <div class="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 ring-1 ring-inset ring-blue-700/10 mb-4">
+        Resource Hub
+      </div>
+      <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">Hourly & Salary Income Tools Hub</h1>
+      <p class="mt-4 text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
+        Plan your career earnings and hourly rates in 2026. Convert hourly wages to annual salaries, deconstruct your salary into hourly baselines, and calculate salary raises.
+      </p>
+    </div>
+
+    <!-- Main Content -->
+    <article class="prose prose-gray max-w-none space-y-8 text-base leading-7 text-gray-600 border-t border-gray-100 pt-10">
+      
+      <!-- Section 1: Intro to Salary Planning -->
+      <section>
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900 mt-8 mb-4">Compensation Structure and Salary Planning</h2>
+        <p class="mb-4">
+          Understanding compensation structures is a vital skill for career professionals, remote contractors, and freelancers alike. When negotiating a job offer, planning career transitions, or requesting a salary raise, you must be able to convert pay rates across hourly, weekly, monthly, and annual intervals. Failing to perform these basic mathematical conversions makes it difficult to compare job opportunities or model financial growth.
+        </p>
+        <p class="mb-4">
+          Compensation analysis involves assessing base pay alongside secondary benefits like bonuses, retirement contributions, healthcare, and vacation time. For instance, an hourly contract rate might seem significantly higher than a salaried job's equivalent hourly rate, but when you factor in unpaid holidays, sick leave, and self-employment taxes, the financial landscape changes.
+        </p>
+        <p class="mb-4">
+          To help professionals analyze their compensation structures, ToolVader has compiled a robust collection of **income calculators** and **salary planning tools**. These interactive tools simplify the math behind salary conversions and raise percentages. If you are comparing corporate jobs with independent advisory contracts, check out our unified <a href="/pricing-tools" class="font-semibold text-gray-900 hover:underline">Pricing Tools Hub</a> or analyze operating business expenses and margins in the <a href="/finance-tools" class="font-semibold text-gray-900 hover:underline">Finance Tools Hub</a>.
+        </p>
+      </section>
+
+      <!-- Section 2: Income Calculators -->
+      <section class="border-t border-gray-100 pt-8">
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900 mt-8 mb-4">Interactive Income & Raise Calculators</h2>
+        <p class="mb-4">
+          Use our specialized computational tools to analyze your current pay rates, project your earnings, and evaluate salary offers:
+        </p>
+
+        <!-- Tool 1: Hourly to Salary Calculator -->
+        <div class="my-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-900 mb-2">1. Hourly to Salary Calculator</h3>
+          <p class="text-sm text-gray-600 mb-4">
+            Convert your hourly wage into full-time salary breakdowns. Our interactive hourly to salary calculator determines your weekly, bi-weekly, monthly, and annual salary baselines based on standard workweeks (e.g. 40 hours).
+          </p>
+          <a href="/tools/hourly-to-salary-calculator" class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-500">
+            Launch Hourly to Salary Calculator <span aria-hidden="true" class="ml-1">→</span>
+          </a>
+        </div>
+
+        <!-- Tool 2: Salary to Hourly Calculator -->
+        <div class="my-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-900 mb-2">2. Salary to Hourly Calculator</h3>
+          <p class="text-sm text-gray-600 mb-4">
+            Deconstruct your annual corporate salary into an equivalent hourly wage. The salary to hourly calculator helps you evaluate if your workload matches your pay check, helping you compare career positions or contract offers.
+          </p>
+          <a href="/tools/salary-to-hourly-calculator" class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-500">
+            Launch Salary to Hourly Calculator <span aria-hidden="true" class="ml-1">→</span>
+          </a>
+        </div>
+
+        <!-- Tool 3: Raise Percentage Calculator -->
+        <div class="my-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-900 mb-2">3. Raise Percentage Calculator</h3>
+          <p class="text-sm text-gray-600 mb-4">
+            Model your salary increases and pay growth. The raise percentage calculator estimates your salary growth in absolute currency, percentages, monthly increases, and hourly adjustments, preparing you for contract reviews.
+          </p>
+          <a href="/tools/raise-percentage-calculator" class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-500">
+            Launch Raise Percentage Calculator <span aria-hidden="true" class="ml-1">→</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Section 3: Income Guides -->
+      <section class="border-t border-gray-100 pt-8">
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900 mt-8 mb-4">Practical Career & Compensation Guides</h2>
+        <p class="mb-4">
+          Calculations are only the starting point. To successfully improve your income, you must understand how to position your capabilities and set competitive rates. Read our strategic guides to optimize your earning potential:
+        </p>
+
+        <!-- Guide 1: Freelance Hourly Rate Guide 2026 -->
+        <div class="my-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-bold text-gray-900 mb-2">Freelance Hourly Rate Guide 2026: What Should You Charge?</h3>
+          <p class="text-sm text-gray-600 mb-4">
+            Learn the core strategies for setting competitive hourly rates. This guide breaks down billable hourly capacities, budgets for non-billable administrative hours, and maps typical industry averages across designers, developers, and writers.
+          </p>
+          <a href="/guides/freelance-hourly-rate-guide-2026" class="inline-flex items-center text-sm font-semibold text-purple-600 hover:text-purple-500">
+            Read Freelance Hourly Rate Guide <span aria-hidden="true" class="ml-1">→</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Section 4: Compensation & Conversion Pillars -->
+      <section class="border-t border-gray-100 pt-8">
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900 mt-8 mb-4">Core Principles of Compensation Planning</h2>
+        <p class="mb-4">
+          Effective income planning requires analyzing multiple conversion metrics. Pay attention to these four primary factors when comparing wages or asking for a raise:
+        </p>
+        <ul class="list-disc pl-5 space-y-3 mb-6">
+          <li>
+            <strong>Billable vs Non-Billable Hours:</strong> Understand that if you transition from a salaried corporate role (where non-billable administrative time is paid) to an hourly contract, you will only bill for active work. Your hourly rate must be adjusted upward to account for unpaid downtime.
+          </li>
+          <li>
+            <strong>Annual Working Capacity:</strong> A standard working year assumes 2,080 hours, but actual capacity is lower after subtracting vacation time, sick leave, and holidays. Factoring in these unpaid periods is critical to finding your true hourly baseline.
+          </li>
+          <li>
+            <strong>Total Compensation Valuation:</strong> Look beyond base pay. Evaluate bonus structures, employer retirement contributions (such as 401k match programs), health benefits, and transportation stipends when running calculations on a compensation calculator.
+          </li>
+          <li>
+            <strong>Incremental Raises:</strong> Even a small raise percentage (e.g. 5% to 8%) can lead to thousands of dollars in annual compounding growth. Regularly audit your market value and use salary planning tools to prepare for negotiations.
+          </li>
+        </ul>
+        <p class="mb-4">
+          By utilizing **income calculators**, career professionals and independent contractors can replace guessing with mathematical baseline figures. Regularly reviewing your compensation metrics protects your earning capacity and ensures you are fairly compensated for your professional expertise in 2026.
+        </p>
+      </section>
+      
+    </article>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Frequently Asked Questions</h2>
+      <dl class="mt-10 space-y-8">
+        {faqData.map(item => (
+          <div>
+            <dt class="text-base font-semibold leading-7 text-gray-900">{item.question}</dt>
+            <dd class="mt-2 text-base leading-7 text-gray-600">{item.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="mt-24">
+      <div class="relative isolate overflow-hidden bg-gray-900 px-6 py-24 text-center shadow-2xl rounded-3xl sm:px-16">
+        <h2 class="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          Analyze Your Compensation
+        </h2>
+        <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">
+          Convert hourly wages to annual salaries, deconstruct corporate salary rates, and plan pay raises using our free online calculators.
+        </p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <a href="/tools/hourly-to-salary-calculator" class="rounded-md bg-white px-6 py-3.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 transition-all active:scale-95">
+            Hourly to Salary Calculator
+          </a>
+          <a href="/tools/raise-percentage-calculator" class="rounded-md border border-white px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition-all active:scale-95">
+            Raise Percentage Calculator
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</BaseLayout>

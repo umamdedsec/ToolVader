@@ -1,0 +1,215 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const faqData = [
+  {
+    question: "How do I calculate a raise percentage?",
+    answer: "To calculate a raise percentage, subtract your current salary from your new salary to determine the raise amount. Then, divide the raise amount by your current salary, and multiply the resulting fraction by 100 to get the percentage increase."
+  },
+  {
+    question: "What is considered a good raise?",
+    answer: "A standard annual raise typically ranges from 3% to 5%. However, a promotion or career advancement raise can range from 10% to 20% or more. Factors such as market demand, performance evaluations, cost of living index adjustments, and industry growth all impact standard raise rates."
+  },
+  {
+    question: "Should I compare raise amount or percentage?",
+    answer: "Both metrics are important. The raise percentage is critical for evaluating how your earnings stack up against general inflation, standard industry rates, and career progression trends. The absolute dollar amount (annual and monthly increase) is essential for direct personal budgeting and cash flow evaluations."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Raise Percentage Calculator (2026)",
+      "description": "Calculate salary raises, pay increases and compensation growth instantly using ToolVader's free Raise Percentage Calculator.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="Raise Percentage Calculator (2026) - ToolVader"
+  description="Calculate salary raises, pay increases and compensation growth instantly using ToolVader's free Raise Percentage Calculator."
+  structuredData={structuredData}
+>
+  <div class="mx-auto max-w-4xl px-4 pt-6 pb-12 sm:px-6 lg:px-8">
+    <div class="mb-12 text-center">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Raise Percentage Calculator</h1>
+      <p class="mt-4 text-lg text-gray-600">
+        Calculate your pay increase in percentage, annual amount, and monthly equivalents.
+      </p>
+    </div>
+
+    <form id="raise-form" class="space-y-8 divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-10">
+      <div class="space-y-8">
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+          <div>
+            <label for="current-salary" class="block text-sm font-medium leading-6 text-gray-900">Current Salary ($)</label>
+            <div class="mt-2">
+              <input type="number" name="current-salary" id="current-salary" value="50000" min="0.01" step="0.01" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Your current annual, monthly, or hourly compensation before the raise.</p>
+          </div>
+
+          <div>
+            <label for="new-salary" class="block text-sm font-medium leading-6 text-gray-900">New Salary ($)</label>
+            <div class="mt-2">
+              <input type="number" name="new-salary" id="new-salary" value="55000" min="0.01" step="0.01" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">The proposed or new compensation amount after the raise.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-8">
+        <button type="submit" id="calculate-btn" class="w-full rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-colors">
+          Calculate Raise Details
+        </button>
+      </div>
+    </form>
+
+    <!-- Results Section -->
+    <div id="results" class="mt-12 hidden space-y-10 animate-in fade-in duration-500">
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="group rounded-2xl border border-blue-100 bg-blue-50/50 p-6 shadow-sm hover:border-blue-200 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-blue-700 uppercase tracking-widest">Raise Percentage</h3>
+          <p class="mt-4 text-2xl font-bold text-blue-900"><span id="res-percentage">0.00</span>%</p>
+          <p class="mt-2 text-[10px] font-extrabold text-blue-400 uppercase tracking-widest">PAY INCREASE (%)</p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-gray-300 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Raise Amount</h3>
+          <p class="mt-4 text-2xl font-bold text-gray-900">$<span id="res-amount">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">TOTAL INCREASE</p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-gray-300 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Monthly Increase</h3>
+          <p class="mt-4 text-2xl font-bold text-gray-900">$<span id="res-monthly">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">EXTRA PER MONTH</p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-gray-300 hover:shadow-md transition-all text-center">
+          <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Annual Increase</h3>
+          <p class="mt-4 text-2xl font-bold text-gray-900">$<span id="res-annual">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">EXTRA PER YEAR</p>
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <button id="copy-btn" class="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-6 py-3 text-sm font-semibold text-white hover:bg-gray-700 transition-all active:scale-95">
+          <span>Copy Results</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Navigating Salary Negotiations and Compensation Planning</h2>
+      <div class="mt-6 space-y-6 text-base leading-7 text-gray-600">
+        <p>
+          Evaluating pay growth is a standard part of career progression in 2026. Whether you are prepping for upcoming <strong>salary negotiations</strong>, reviewing proposed <strong>promotions</strong>, comparing diverse <strong>job offers</strong>, or checking packages during <strong>annual reviews</strong>, understanding your numbers is vital. The <strong>Raise Percentage Calculator</strong> empowers you to quickly translate dollar increases into precise percentage growth metrics, helping you analyze salary packages objectively.
+        </p>
+        <p>
+          During <strong>compensation planning</strong> and reviews, measuring a salary raise purely in terms of total dollar amounts can lead to incomplete evaluations. For example, a $5,000 raise on a $50,000 salary represents a significant 10% increase, whereas that same $5,000 raise on a $100,000 salary is only 5%. Keeping track of the percentage change ensures that your compensation scales inline with inflation indexes, job performance achievements, and overall industry standards.
+        </p>
+        <p>
+          Additionally, converting your annual raise into its monthly equivalent helps you budget your new income effectively. It reveals exactly how much extra cash flow will land in your bank account each month, allowing for strategic planning around savings, investments, or debt payoffs. Knowing these figures gives you the leverage needed to negotiate confidently and make data-driven decisions that align with your long-term financial security and <strong>career growth</strong>.
+        </p>
+        <p>
+          Pricing and pay growth are critical factors of professional success. By taking control of your financial calculations, you can approach salary reviews with clear metrics and assert your value in the modern workplace. Use ToolVader to calculate raises, analyze compensation offers, and plan your career moves with data-driven precision.
+        </p>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Frequently Asked Questions</h2>
+      <dl class="mt-10 space-y-8">
+        {faqData.map(item => (
+          <div>
+            <dt class="text-base font-semibold leading-7 text-gray-900">{item.question}</dt>
+            <dd class="mt-2 text-base leading-7 text-gray-600">{item.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <RelatedTools currentPath="/tools/raise-percentage-calculator" />
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  const form = document.getElementById('raise-form');
+  const resultsDiv = document.getElementById('results');
+  const resPercentage = document.getElementById('res-percentage');
+  const resAmount = document.getElementById('res-amount');
+  const resMonthly = document.getElementById('res-monthly');
+  const resAnnual = document.getElementById('res-annual');
+  const copyBtn = document.getElementById('copy-btn');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    const currentSalary = Number(formData.get('current-salary'));
+    const newSalary = Number(formData.get('new-salary'));
+
+    if (currentSalary < 0 || newSalary < 0) {
+      alert('Values cannot be negative.');
+      return;
+    }
+
+    if (newSalary <= currentSalary) {
+      alert('New Salary must be greater than Current Salary.');
+      return;
+    }
+
+    const raiseAmount = newSalary - currentSalary;
+    const raisePercentage = (raiseAmount / currentSalary) * 100;
+    const monthlyIncrease = raiseAmount / 12;
+
+    if (resPercentage) resPercentage.textContent = raisePercentage.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resAmount) resAmount.textContent = raiseAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resMonthly) resMonthly.textContent = monthlyIncrease.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (resAnnual) resAnnual.textContent = raiseAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    resultsDiv?.classList.remove('hidden');
+    resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    const text = `Salary Raise Calculation:
+Current Salary: $${Number(document.getElementById('current-salary').value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+New Salary: $${Number(document.getElementById('new-salary').value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+
+Raise Percentage: ${resPercentage?.textContent}%
+Raise Amount (Annual Increase): $${resAmount?.textContent}
+Monthly Increase: $${resMonthly?.textContent}
+
+Calculated by ToolVader`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const span = copyBtn.querySelector('span');
+      if (span) {
+        const originalText = span.textContent;
+        span.textContent = 'Copied!';
+        setTimeout(() => {
+          span.textContent = originalText;
+        }, 2000);
+      }
+    });
+  });
+</script>

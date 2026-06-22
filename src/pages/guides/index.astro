@@ -1,39 +1,41 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { tools } from '../../data/tools';
+import { guides } from '../../data/guides';
 
-const categories = [...new Set(tools.map(tool => tool.category))];
+const categories = [...new Set(guides.map(guide => guide.category))];
 
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": "Free Business Calculators & Tools - ToolVader",
-  "description": "Browse all free business calculators and tools from ToolVader for freelancers, consultants, remote workers and solopreneurs.",
-  "url": "https://toolvader.com/tools"
+  "name": "Freelance Guides & Resources - ToolVader",
+  "description": "Browse free, high-quality freelance guides, pricing resources, and financial strategies on ToolVader to grow your business in 2026.",
+  "url": "https://toolvader.com/guides"
 };
 ---
 
 <BaseLayout 
-  title="Free Business Calculators & Tools - ToolVader"
-  description="Browse all free business calculators and tools from ToolVader for freelancers, consultants, remote workers and solopreneurs."
+  title="Freelance Guides & Resources - ToolVader"
+  description="Browse free, high-quality freelance guides, pricing resources, and financial strategies on ToolVader to grow your business in 2026."
   structuredData={structuredData}
 >
   <!-- Hero Section -->
   <div class="bg-white px-6 py-16 sm:py-24 lg:px-8">
     <div class="mx-auto max-w-2xl text-center">
-      <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Free Business Calculators for Freelancers & Professionals</h1>
+      <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Freelance Guides & Resources</h1>
       <p class="mt-6 text-lg leading-8 text-gray-600">
-        Free business calculators designed to help freelancers, consultants and independent professionals make better financial decisions. Explore our targeted <a href="/pricing-tools" class="font-semibold text-gray-900 hover:underline">Pricing Tools Hub</a>, <a href="/finance-tools" class="font-semibold text-gray-900 hover:underline">Finance Tools Hub</a>, and <a href="/income-tools" class="font-semibold text-gray-900 hover:underline">Income Tools Hub</a> for unified strategies.
+        In-depth strategies, pricing frameworks, and financial planning tips to help freelancers and solopreneurs build sustainable businesses in 2026. Access targeted resources in our <a href="/pricing-tools" class="font-semibold text-gray-900 hover:underline">Pricing Tools Hub</a>, <a href="/finance-tools" class="font-semibold text-gray-900 hover:underline">Finance Tools Hub</a>, and <a href="/income-tools" class="font-semibold text-gray-900 hover:underline">Income Tools Hub</a>.
       </p>
     </div>
-  </div>  <!-- Search and Filter Controls -->
+  </div>
+
+  <!-- Search and Filter Controls -->
   <div class="mx-auto max-w-7xl px-6 lg:px-8 pb-12">
     <div class="mx-auto max-w-xl mb-6">
-      <label for="tool-search" class="sr-only">Search calculators</label>
+      <label for="guide-search" class="sr-only">Search guides</label>
       <input 
         type="text" 
-        id="tool-search" 
-        placeholder="Search calculators (e.g. rate, salary, profit)..." 
+        id="guide-search" 
+        placeholder="Search guides (e.g. rate, taxes, pricing)..." 
         class="block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-900 shadow-sm placeholder:text-gray-400 focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900 sm:text-sm transition-all"
       />
     </div>
@@ -51,39 +53,39 @@ const structuredData = {
     </div>
   </div>
 
-  <!-- Tool Grid Section -->
+  <!-- Guides Grid Section -->
   <div class="bg-gray-50/50 py-12 sm:py-16">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 lg:mx-0 lg:max-w-none lg:grid-cols-3">
         <!-- Fallback No-results messaging -->
         <div id="no-results-msg" class="hidden text-center py-12 col-span-full">
-          <p class="text-lg font-medium text-gray-500">No tools found. Try a different search.</p>
+          <p class="text-lg font-medium text-gray-500">No guides found. Try a different search.</p>
         </div>
 
-        {tools.map((tool) => (
+        {guides.map((guide) => (
           <div 
-            class="tool-card flex flex-col rounded-2xl border border-gray-200 bg-white p-8 shadow-sm transition-all hover:shadow-md hover:border-gray-300"
-            data-title={tool.title.toLowerCase()}
-            data-description={tool.description.toLowerCase()}
-            data-category={tool.category.toLowerCase()}
+            class="guide-card flex flex-col rounded-2xl border border-gray-200 bg-white p-8 shadow-sm transition-all hover:shadow-md hover:border-gray-300"
+            data-title={guide.title.toLowerCase()}
+            data-description={guide.description.toLowerCase()}
+            data-category={guide.category.toLowerCase()}
           >
             <div class="flex-1">
               <div class="flex items-center gap-x-3 mb-6">
-                <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                  {tool.category}
+                <span class="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">
+                  {guide.category} Strategy
                 </span>
                 <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-                  Updated for 2026
+                  2026 Edition
                 </span>
               </div>
-              <h3 class="text-lg font-semibold leading-8 tracking-tight text-gray-900">{tool.title}</h3>
-              <p class="mt-4 text-base leading-7 text-gray-600">
-                {tool.description}
+              <h3 class="text-lg font-semibold leading-8 tracking-tight text-gray-900">{guide.title}</h3>
+              <p class="mt-4 text-base leading-7 text-gray-600 line-clamp-4">
+                {guide.description}
               </p>
             </div>
             <div class="mt-8 pt-6 border-t border-gray-100">
-              <a href={tool.href} class="inline-flex items-center text-sm font-semibold leading-6 text-gray-900 hover:text-gray-600 transition-colors">
-                Launch Calculator <span aria-hidden="true" class="ml-2">→</span>
+              <a href={guide.path} class="inline-flex items-center text-sm font-semibold leading-6 text-gray-900 hover:text-gray-600 transition-colors">
+                Read Guide <span aria-hidden="true" class="ml-2">→</span>
               </a>
             </div>
           </div>
@@ -97,14 +99,14 @@ const structuredData = {
     <div class="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
       <div class="relative isolate overflow-hidden bg-gray-900 px-6 py-24 text-center shadow-2xl rounded-3xl sm:px-16">
         <h2 class="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
-          Need a tool we don't have yet?
+          Want to calculate your rates?
         </h2>
         <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">
-          We're constantly building new utilities for the independent workforce. Let us know what you need.
+          Put our pricing frameworks to work. Use our free interactive calculators to find your ideal hourly rates and project price points.
         </p>
         <div class="mt-10 flex items-center justify-center gap-x-6">
-          <a href="/contact" class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-colors">
-            Contact Us
+          <a href="/tools" class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-colors">
+            Explore Calculators
           </a>
         </div>
       </div>
@@ -113,18 +115,18 @@ const structuredData = {
 </BaseLayout>
 
 <script is:inline>
-  const searchInput = document.getElementById('tool-search');
+  const searchInput = document.getElementById('guide-search');
   const categoryBtns = document.querySelectorAll('.category-btn');
-  const toolCards = document.querySelectorAll('.tool-card');
+  const guideCards = document.querySelectorAll('.guide-card');
   const noResultsMsg = document.getElementById('no-results-msg');
 
   let currentCategory = 'all';
   let searchQuery = '';
 
-  function filterTools() {
+  function filterGuides() {
     let visibleCount = 0;
 
-    toolCards.forEach(card => {
+    guideCards.forEach(card => {
       const title = card.getAttribute('data-title') || '';
       const description = card.getAttribute('data-description') || '';
       const category = card.getAttribute('data-category') || '';
@@ -150,7 +152,7 @@ const structuredData = {
   // Bind search input
   searchInput?.addEventListener('input', (e) => {
     searchQuery = e.target.value.toLowerCase().trim();
-    filterTools();
+    filterGuides();
   });
 
   // Bind category buttons
@@ -166,7 +168,7 @@ const structuredData = {
       btn.classList.add('bg-gray-900', 'text-white', 'border-gray-900');
 
       currentCategory = btn.getAttribute('data-category') || 'all';
-      filterTools();
+      filterGuides();
     });
   });
 </script>
