@@ -1,0 +1,403 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const faqData = [
+  {
+    question: "What is a startup runway?",
+    answer: "A startup runway is the number of months a company can continue to operate at its current burn rate before running out of cash, assuming no additional capital is raised or generated. It is a critical survival metric for pre-revenue and pre-profitable businesses."
+  },
+  {
+    question: "How do you calculate startup cash runway?",
+    answer: "To calculate cash runway, divide your Current Cash Balance by your Net Monthly Burn Rate (Monthly Expenses minus Monthly Revenue). For example, if you have $100,000 in cash and spend $10,000 net per month, your runway is $100,000 / $10,000 = 10 months. You can factor in monthly revenue growth rates for a more dynamic projection."
+  },
+  {
+    question: "What is the difference between gross burn rate and net burn rate?",
+    answer: "Gross burn rate represents the total monthly operating expenditures of your business. Net burn rate represents the actual cash lost per month, which is the total monthly expenses minus the monthly revenue. Runway is always calculated using net burn rate."
+  },
+  {
+    question: "How much runway should a startup aim to maintain?",
+    answer: "A standard benchmark for pre-profitable startups is to maintain between 18 and 24 months of runway. This timeframe provides founders with enough cushion to hit operational milestones, test product-market fit, or run a 6-month funding campaign without facing instant insolvency."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Startup Runway Calculator",
+      "description": "Calculate startup cash runway, net monthly burn rate, runway end date, and cash remaining after 12 months with MoM growth simulation.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://toolvader.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Finance Tools",
+          "item": "https://toolvader.com/finance-tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Startup Runway Calculator",
+          "item": "https://toolvader.com/tools/startup-runway-calculator/"
+        }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="Startup Runway Calculator - Burn Rate & Cash Runway Tool"
+  description="Calculate your startup cash runway, net monthly burn rate, runway end date, and cash remaining after 12 months. Free burn rate calculator with growth simulation."
+  structuredData={structuredData}
+>
+  <div class="mx-auto max-w-4xl px-4 pt-6 pb-12 sm:px-6 lg:px-8">
+    
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 flex" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-xs font-semibold text-gray-500">
+        <li>
+          <a href="/" class="hover:text-gray-950 transition-colors">Home</a>
+        </li>
+        <li>
+          <span class="text-gray-400">/</span>
+        </li>
+        <li>
+          <a href="/finance-tools" class="hover:text-gray-950 transition-colors">Finance Tools</a>
+        </li>
+        <li>
+          <span class="text-gray-400">/</span>
+        </li>
+        <li class="text-gray-950 truncate" aria-current="page">
+          Startup Runway Calculator
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Header Section -->
+    <div class="mb-12 text-center">
+      <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Startup Runway Calculator</h1>
+      <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+        Calculate your startup cash runway, net monthly burn rate, runway end date, and cash remaining after 12 months. Simulate revenue growth rates dynamically to plan your funding cycles.
+      </p>
+    </div>
+
+    <!-- Form Section -->
+    <form id="runway-form" class="space-y-8 divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-10">
+      <div class="space-y-8">
+        
+        <h2 class="text-lg font-bold text-gray-900">Capital & Burn Inputs</h2>
+        
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+          
+          <div>
+            <label for="cash-balance" class="block text-sm font-semibold leading-6 text-gray-900">Current Cash Balance ($)</label>
+            <div class="mt-2">
+              <input type="number" name="cash-balance" id="cash-balance" value="100000" min="0" step="1000" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Your total active cash reserves and bank balances.</p>
+          </div>
+
+          <div>
+            <label for="revenue" class="block text-sm font-semibold leading-6 text-gray-900">Monthly Revenue ($)</label>
+            <div class="mt-2">
+              <input type="number" name="revenue" id="revenue" value="10000" min="0" step="250" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Your starting monthly billings or recurring revenue baseline.</p>
+          </div>
+
+          <div>
+            <label for="expenses" class="block text-sm font-semibold leading-6 text-gray-900">Monthly Expenses ($)</label>
+            <div class="mt-2">
+              <input type="number" name="expenses" id="expenses" value="20000" min="0" step="250" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Your gross monthly operating overhead (salaries, software, marketing).</p>
+          </div>
+
+          <div>
+            <label for="growth-rate" class="block text-sm font-semibold leading-6 text-gray-900">Monthly Growth Rate (%)</label>
+            <div class="mt-2">
+              <input type="number" name="growth-rate" id="growth-rate" value="5" min="-50" max="200" step="0.1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">The expected month-over-month (MoM) revenue growth percentage.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="pt-8">
+        <button type="submit" id="calculate-btn" class="w-full rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-colors">
+          Calculate Startup Runway
+        </button>
+      </div>
+    </form>
+
+    <!-- Results Section -->
+    <div id="results" class="mt-12 hidden space-y-10 animate-in fade-in duration-500">
+      
+      <!-- Primary Card: Runway Months and Date -->
+      <div class="rounded-3xl bg-gray-900 p-8 text-white sm:p-12 shadow-2xl relative overflow-hidden ring-1 ring-white/10 hover:ring-white/20 transition-all">
+        <div class="relative z-10">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div>
+              <span class="inline-flex items-center rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-400 ring-1 ring-inset ring-amber-500/20 mb-6">
+                Runway Projections
+              </span>
+              <h2 class="text-xl font-medium text-gray-400">Cash Runway Duration</h2>
+              <div class="mt-4 flex flex-col">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-6xl font-extrabold tracking-tight text-white"><span id="res-runway">0.0</span> <span class="text-3xl font-medium text-gray-400">Months</span></span>
+                </div>
+                <span class="mt-2 text-xs font-bold uppercase tracking-widest text-gray-600">PROJECTED MONTHS UNTIL SOLVENCY THRESHOLD</span>
+              </div>
+            </div>
+            <button id="copy-btn" class="inline-flex items-center self-start sm:self-center gap-2 rounded-xl bg-white/5 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10 border border-white/10 transition-all active:scale-95">
+              <svg class="h-5 w-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+              </svg>
+              <span>Copy Results</span>
+            </button>
+          </div>
+          <div class="mt-10 border-t border-white/10 pt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <p class="text-sm text-gray-400">Runway End Date:</p>
+              <p class="text-2xl font-bold mt-1 text-white"><span id="res-date">N/A</span></p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-400">Cash Remaining After 12 Months:</p>
+              <p class="text-2xl font-bold mt-1 text-white">$<span id="res-cash-12">0.00</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rating and Burn Rate -->
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div id="health-card" class="group rounded-2xl border p-8 shadow-sm transition-all flex flex-col justify-between">
+          <div>
+            <h3 class="text-sm font-semibold uppercase tracking-widest text-gray-500">Runway Health Rating</h3>
+            <p id="res-health" class="mt-4 text-xl font-bold">Checking...</p>
+          </div>
+          <p id="health-desc" class="mt-2 text-xs text-gray-500">Based on standard startup cash runway guidelines.</p>
+        </div>
+        
+        <div class="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-gray-300 hover:shadow-md transition-all flex flex-col justify-between">
+          <div>
+            <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-widest">Initial Net Monthly Burn</h3>
+            <p class="mt-4 text-3xl font-extrabold text-gray-900">$<span id="res-burn">0.00</span></p>
+          </div>
+          <p class="mt-2 text-xs text-gray-500">Starting monthly overhead minus starting revenue.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Understanding Startup Runway and Cash Flow Metrics</h2>
+      <div class="mt-6 space-y-6 text-base leading-7 text-gray-600">
+        <p>
+          Evaluating unit profitability is the key to building a sustainable enterprise. Our interactive **startup runway calculator** provides founders and finance managers with a mathematical simulation of cash flow metrics. By factoring in monthly revenue growth rates, this tool maps your runway more dynamically than static tools, helping you prepare for upcoming fundraising campaigns or align operational targets.
+        </p>
+        
+        <h3 class="text-lg font-semibold text-gray-900 mt-8">The Core Mechanics of Startup Burn Rates</h3>
+        <p>
+          Managing startup cash flows requires understanding the variables in the **startup runway formula**:
+        </p>
+        <ul class="list-disc pl-5 space-y-3 mb-6">
+          <li>
+            <strong>Gross Burn Rate:</strong> The total monthly cash outflow to cover operations, labor, software licenses, and advertising.
+          </li>
+          <li>
+            <strong>Net Burn Rate:</strong> The actual net cash lost per month. This is calculated using the **startup burn rate** formula: $Net Burn = Monthly Expenses - Monthly Revenue$.
+          </li>
+          <li>
+            <strong>Startup Cash Runway:</strong> The number of months a company can operate before bank balances reach zero. This is calculated dynamically using MoM revenue growth rates.
+          </li>
+          <li>
+            <strong>Burn Rate Calculator:</strong> A planning tool for modeling cash burn. If your burn rate is too high relative to cash reserves, you face high insolvency risks.
+          </li>
+        </ul>
+
+        <h3 class="text-lg font-semibold text-gray-900 mt-8">Runway Strategies Across Startup Models</h3>
+        <p>
+          Every business model functions with distinct cash constraints. A custom **startup cash flow calculator** allows you to analyze these variations:
+        </p>
+        <div class="mt-6 space-y-6 border-l-2 border-gray-200 pl-4 italic">
+          <p>
+            <strong>1. SaaS Startups:</strong> SaaS startups have high gross margins (80%+) and highly predictable monthly recurring revenue (MRR). However, because initial sales cycles and customer acquisition costs (CAC) can be substantial, they require a 12-month to 18-month cash cushion to support development before reaching cash-flow positivity.
+          </p>
+          <p>
+            <strong>2. Venture-Backed Startups:</strong> Venture-backed startups often operate with high net burn rates to capture market share rapidly. For these founders, maintaining a clear burn rate calculation is essential for planning series funding rounds, ensuring they have at least 6 months of capital buffer during campaigns.
+          </p>
+          <p>
+            <strong>3. Bootstrapped Startups:</strong> Bootstrapped companies operate with limited outside funding, relying entirely on early revenues. For bootstrapped founders, runway planning is highly conservative, focusing on reaching a positive cash flow margin quickly to become self-sustaining.
+          </p>
+          <p>
+            <strong>4. Founder Finance:</strong> Managing solo projects or early-stage ventures requires a firm grasp of personal and business cost allocations. Tracking runway ensures you avoid cash crunches during early development phases.
+          </p>
+        </div>
+
+        <p class="mt-6">
+          Whether you are modeling growth scenarios or calculating cash reserves for investor pitches, keeping your numbers organized protects your startup from operational disruptions. Use ToolVader to run your cash metrics and secure a healthy growth path.
+        </p>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Frequently Asked Questions</h2>
+      <dl class="mt-10 space-y-8">
+        {faqData.map(item => (
+          <div>
+            <dt class="text-base font-semibold leading-7 text-gray-900">{item.question}</dt>
+            <dd class="mt-2 text-base leading-7 text-gray-600">{item.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <RelatedTools currentPath="/tools/startup-runway-calculator" />
+  </div>
+</BaseLayout>
+
+<script>
+  import { calculateRunway } from '../../data/calculations';
+
+  const form = document.getElementById('runway-form') as HTMLFormElement;
+  const resultsDiv = document.getElementById('results');
+
+  // Outputs
+  const resRunway = document.getElementById('res-runway');
+  const resDate = document.getElementById('res-date');
+  const resCash12 = document.getElementById('res-cash-12');
+  const resHealth = document.getElementById('res-health');
+  const resBurn = document.getElementById('res-burn');
+
+  const healthCard = document.getElementById('health-card');
+  const healthDesc = document.getElementById('health-desc');
+  const copyBtn = document.getElementById('copy-btn');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const cashBalance = Number(formData.get('cash-balance'));
+    const revenue = Number(formData.get('revenue'));
+    const expenses = Number(formData.get('expenses'));
+    const growthRate = Number(formData.get('growth-rate'));
+
+    if (cashBalance < 0 || revenue < 0 || expenses < 0) {
+      alert('Values cannot be negative.');
+      return;
+    }
+
+    const input = { cashBalance, revenue, expenses, growthRate };
+    const results = calculateRunway(input);
+
+    const fmt = (val: number) => val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    // Render primary metrics
+    if (resBurn) resBurn.textContent = fmt(results.initialBurnRate);
+    if (resCash12) resCash12.textContent = fmt(results.cashRemaining12Months);
+    if (resHealth) resHealth.textContent = results.healthRating;
+
+    // Runway End Date & Runway months formatting
+    if (results.runwayMonths === 999) {
+      if (resRunway) resRunway.textContent = 'Infinite (Profitable)';
+      if (resDate) resDate.textContent = 'N/A (Self-Sustaining)';
+    } else {
+      if (resRunway) resRunway.textContent = results.runwayMonths.toFixed(1);
+      
+      // Calculate end date based on local time
+      const today = new Date();
+      const endMonths = Math.floor(results.runwayMonths);
+      const endDays = Math.round((results.runwayMonths - endMonths) * 30.4);
+      
+      const endDate = new Date(today.getFullYear(), today.getMonth() + endMonths, today.getDate() + endDays);
+      const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+      if (resDate) resDate.textContent = endDate.toLocaleDateString(undefined, options);
+    }
+
+    // Health Card styling
+    if (healthCard && healthDesc) {
+      healthCard.className = 'group rounded-2xl border p-8 shadow-sm transition-all flex flex-col justify-between';
+      if (results.runwayMonths === 999 || results.runwayMonths >= 18) {
+        healthCard.classList.add('border-emerald-200', 'bg-emerald-50/50');
+        if (resHealth) resHealth.className = 'mt-4 text-xl font-bold text-emerald-900';
+        healthDesc.textContent = 'Outstanding cash safety. Sufficient buffer to scale operations or hit next funding milestones.';
+      } else if (results.runwayMonths >= 12) {
+        healthCard.classList.add('border-blue-200', 'bg-blue-50/50');
+        if (resHealth) resHealth.className = 'mt-4 text-xl font-bold text-blue-900';
+        healthDesc.textContent = 'Healthy runway duration. Ideal timeframe to run a standard fundraise campaign.';
+      } else if (results.runwayMonths >= 6) {
+        healthCard.classList.add('border-amber-200', 'bg-amber-50/50');
+        if (resHealth) resHealth.className = 'mt-4 text-xl font-bold text-amber-900';
+        healthDesc.textContent = 'Short runway. Focus on optimizing sales growth, reducing expenses, or starting investor talks immediately.';
+      } else {
+        healthCard.classList.add('border-rose-200', 'bg-rose-50/50');
+        if (resHealth) resHealth.className = 'mt-4 text-xl font-bold text-rose-900';
+        healthDesc.textContent = 'Critical cash shortage. High danger of insolvency. Cut burn rate or secure bridge financing instantly.';
+      }
+    }
+
+    resultsDiv?.classList.remove('hidden');
+    resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    const cashVal = (document.getElementById('cash-balance') as HTMLInputElement).value;
+    const revVal = (document.getElementById('revenue') as HTMLInputElement).value;
+    const expVal = (document.getElementById('expenses') as HTMLInputElement).value;
+    const growthVal = (document.getElementById('growth-rate') as HTMLInputElement).value;
+
+    const text = `Startup Runway Calculation Results:
+Current Cash: $${Number(cashVal).toLocaleString()}
+Starting Monthly Revenue: $${Number(revVal).toLocaleString()}
+Starting Monthly Expenses: $${Number(expVal).toLocaleString()}
+MoM Revenue Growth Rate: ${growthVal}%
+
+Initial Net Monthly Burn: $${resBurn?.textContent}
+Runway Duration: ${resRunway?.textContent} Months
+Projected Runway End Date: ${resDate?.textContent}
+Cash Remaining After 12 Months: $${resCash12?.textContent}
+Runway Health Rating: ${resHealth?.textContent}
+
+Calculated by ToolVader`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const span = copyBtn.querySelector('span');
+      if (span) {
+        const originalText = span.textContent;
+        span.textContent = 'Copied!';
+        setTimeout(() => {
+          span.textContent = originalText;
+        }, 2000);
+      }
+    });
+  });
+</script>

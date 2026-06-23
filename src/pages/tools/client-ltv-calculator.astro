@@ -1,0 +1,448 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const faqData = [
+  {
+    question: "What is Client Lifetime Value (LTV)?",
+    answer: "Client Lifetime Value (LTV), also known as Customer Lifetime Value (CLV), is a critical financial metric that estimates the total gross profit a business can expect to earn from a single client account throughout their entire relationship. It factors in the average revenue per customer, the gross margin percentage, and the duration of the customer lifespan."
+  },
+  {
+    question: "How do you calculate customer lifetime value?",
+    answer: "To calculate customer lifetime value, multiply the Average Revenue Per Customer (ARPU) by the Customer Lifespan in months, then multiply that gross total by your Gross Margin percentage. The formula is: LTV = ARPU × Lifespan (months) × (Gross Margin % / 100). For example, if a client pays $1,000/month for 12 months with an 80% gross margin, the LTV is $1,000 × 12 × 0.80 = $9,600."
+  },
+  {
+    question: "What is the relationship between CAC and LTV?",
+    answer: "Customer Acquisition Cost (CAC) is the total marketing and sales expense required to acquire a single customer. The relationship between CAC and LTV measures your acquisition efficiency. A standard benchmark for healthy growth is an LTV:CAC ratio of 3:1 or higher, meaning the value of a customer is at least three times the cost to acquire them."
+  },
+  {
+    question: "Why should I include gross margin in my LTV calculation?",
+    answer: "Many businesses mistakenly calculate LTV using revenue instead of gross profit. Using revenue inflates customer value, leading to overallocation of acquisition budgets. Adjusting for gross margin ensures you only count the revenue left over after covering the direct costs of delivering your services or products."
+  },
+  {
+    question: "How can I improve my Customer Profitability Score?",
+    answer: "You can improve your Customer Profitability Score by either increasing your average revenue per client (through upselling or price increases), extending your customer lifespan (improving retention and reducing churn), improving gross margins (reducing fulfillment overhead), or lowering your Customer Acquisition Cost (CAC) through more efficient marketing channels."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Client Lifetime Value (LTV) Calculator",
+      "description": "Calculate client lifetime value (LTV), Net LTV, LTV:CAC ratios, and profitability scores to optimize your business unit economics.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://toolvader.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Finance Tools",
+          "item": "https://toolvader.com/finance-tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "LTV Calculator",
+          "item": "https://toolvader.com/tools/client-ltv-calculator/"
+        }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="Client Lifetime Value (LTV) Calculator - Customer Value Tool"
+  description="Calculate your client lifetime value (LTV), Net LTV, LTV:CAC ratio, and customer profitability score. Free calculator with SaaS, agency, and freelance examples."
+  structuredData={structuredData}
+>
+  <div class="mx-auto max-w-4xl px-4 pt-6 pb-12 sm:px-6 lg:px-8">
+    
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 flex" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-xs font-semibold text-gray-500">
+        <li>
+          <a href="/" class="hover:text-gray-950 transition-colors">Home</a>
+        </li>
+        <li>
+          <span class="text-gray-400">/</span>
+        </li>
+        <li>
+          <a href="/finance-tools" class="hover:text-gray-950 transition-colors">Finance Tools</a>
+        </li>
+        <li>
+          <span class="text-gray-400">/</span>
+        </li>
+        <li class="text-gray-950 truncate" aria-current="page">
+          LTV Calculator
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Header Section -->
+    <div class="mb-12 text-center">
+      <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Client Lifetime Value (LTV) Calculator</h1>
+      <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+        Calculate your client lifetime value (LTV), net value contribution, LTV:CAC ratios, and customer profitability scores to optimize your marketing budgets and pricing models.
+      </p>
+    </div>
+
+    <!-- Form Section -->
+    <form id="ltv-form" class="space-y-8 divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-10">
+      <div class="space-y-8">
+        
+        <h2 class="text-lg font-bold text-gray-900">Unit Economics & Customer Value Inputs</h2>
+        
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+          
+          <div>
+            <label for="arpu" class="block text-sm font-semibold leading-6 text-gray-900">Average Revenue Per Customer (ARPU) ($/mo)</label>
+            <div class="mt-2">
+              <input type="number" name="arpu" id="arpu" value="500" min="0" step="10" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">The average monthly billings generated from a single client account.</p>
+          </div>
+
+          <div>
+            <label for="margin" class="block text-sm font-semibold leading-6 text-gray-900">Gross Margin (%)</label>
+            <div class="mt-2">
+              <input type="number" name="margin" id="margin" value="80" min="1" max="100" step="0.1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Revenue remaining after subtracting the direct costs to deliver your services.</p>
+          </div>
+
+          <div>
+            <label for="lifespan" class="block text-sm font-semibold leading-6 text-gray-900">Customer Lifespan (months)</label>
+            <div class="mt-2">
+              <input type="number" name="lifespan" id="lifespan" value="12" min="1" step="1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">The average duration in months that a client remains with your business.</p>
+          </div>
+
+          <div>
+            <label for="cac" class="block text-sm font-semibold leading-6 text-gray-900">Customer Acquisition Cost (CAC) ($)</label>
+            <div class="mt-2">
+              <input type="number" name="cac" id="cac" value="1000" min="0" step="25" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Total marketing, sales, and labor costs divided by customers acquired.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="pt-8">
+        <button type="submit" id="calculate-btn" class="w-full rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-colors">
+          Calculate Client Lifetime Value
+        </button>
+      </div>
+    </form>
+
+    <!-- Results Section -->
+    <div id="results" class="mt-12 hidden space-y-10 animate-in fade-in duration-500">
+      
+      <!-- Primary Card: LTV & Net LTV -->
+      <div class="rounded-3xl bg-gray-900 p-8 text-white sm:p-12 shadow-2xl relative overflow-hidden ring-1 ring-white/10 hover:ring-white/20 transition-all">
+        <div class="relative z-10">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div>
+              <span class="inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400 ring-1 ring-inset ring-emerald-500/20 mb-6">
+                LTV Metrics
+              </span>
+              <h2 class="text-xl font-medium text-gray-400">Gross Client Lifetime Value (LTV)</h2>
+              <div class="mt-4 flex flex-col">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-6xl font-extrabold tracking-tight text-white">$<span id="res-ltv">0.00</span></span>
+                </div>
+                <span class="mt-2 text-xs font-bold uppercase tracking-widest text-gray-600">USD LIFETIME GROSS PROFIT CONTRIBUTION</span>
+              </div>
+            </div>
+            <button id="copy-btn" class="inline-flex items-center self-start sm:self-center gap-2 rounded-xl bg-white/5 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10 border border-white/10 transition-all active:scale-95">
+              <svg class="h-5 w-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+              </svg>
+              <span>Copy Results</span>
+            </button>
+          </div>
+          <div class="mt-10 border-t border-white/10 pt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <p class="text-sm text-gray-400">Net Lifetime Value (LTV minus CAC):</p>
+              <p class="text-2xl font-bold mt-1 text-white">$<span id="res-net-ltv">0.00</span></p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-400">LTV:CAC Ratio:</p>
+              <p class="text-2xl font-bold mt-1 text-white"><span id="res-ratio">0.00</span>:1</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Score Card and Status -->
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div class="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-gray-300 hover:shadow-md transition-all">
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-widest">Customer Profitability Score</h3>
+          <div class="mt-4 flex items-baseline gap-2">
+            <span class="text-4xl font-extrabold text-gray-900"><span id="res-score">0</span></span>
+            <span class="text-sm font-semibold text-gray-400">/ 100</span>
+          </div>
+          <p class="mt-2 text-xs text-gray-500">Evaluates the health of your unit economics based on margin and CAC efficiency.</p>
+        </div>
+        <div id="status-card" class="group rounded-2xl border p-8 shadow-sm transition-all flex flex-col justify-between">
+          <div>
+            <h3 class="text-sm font-semibold uppercase tracking-widest text-gray-500">Profitability Status</h3>
+            <p id="res-status" class="mt-4 text-xl font-bold">Checking...</p>
+          </div>
+          <p id="status-desc" class="mt-2 text-xs text-gray-500">Based on standard LTV:CAC performance guidelines.</p>
+        </div>
+      </div>
+
+      <!-- Profitability Table Details -->
+      <div class="rounded-2xl border border-gray-200 bg-white p-8 sm:p-10 shadow-sm hover:border-gray-300 transition-all">
+        <h3 class="text-lg font-semibold text-gray-900">Financial Breakdown Summary</h3>
+        <div class="mt-6 overflow-hidden border-t border-gray-100">
+          <table class="min-w-full divide-y divide-gray-200 text-left text-sm">
+            <thead>
+              <tr class="text-xs font-bold uppercase tracking-wider text-gray-500">
+                <th scope="col" class="py-3">Financial Metric</th>
+                <th scope="col" class="py-3 text-right">Value</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100 text-gray-700">
+              <tr>
+                <td class="py-3 font-medium">Gross Billings (ARPU × Lifespan)</td>
+                <td id="breakdown-gross-billings" class="py-3 text-right">$0.00</td>
+              </tr>
+              <tr>
+                <td class="py-3 font-medium">Gross Profit Contribution (LTV)</td>
+                <td id="breakdown-gross-profit" class="py-3 text-right">$0.00</td>
+              </tr>
+              <tr>
+                <td class="py-3 font-medium">Cost of Acquisition (CAC)</td>
+                <td id="breakdown-cac" class="py-3 text-right">$0.00</td>
+              </tr>
+              <tr class="font-bold text-gray-900 bg-gray-50/50">
+                <td class="py-3 px-2">Net Business Profit Per Client</td>
+                <td id="breakdown-net-profit" class="py-3 px-2 text-right">$0.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Understanding Client Lifetime Value (LTV)</h2>
+      <div class="mt-6 space-y-6 text-base leading-7 text-gray-600">
+        <p>
+          Determining unit profitability is the key to expanding any independent enterprise. Using a data-driven <strong>client lifetime value calculator</strong> provides a mathematical framework for measuring the efficiency of your marketing efforts and pricing structures. If you do not calculate the financial output of a customer, you operate blindly, running the risk of spending more to acquire accounts than they return in net profitability.
+        </p>
+        <p>
+          The <strong>LTV calculator</strong> measures the gross profit generated during your typical relationship with a client. By utilizing a <strong>customer lifetime value calculator</strong>, service providers, agency owners, and product developers can easily model future revenues, determine safe acquisition boundaries, and project operational margins.
+        </p>
+        
+        <h3 class="text-lg font-semibold text-gray-900 mt-8">The Core Mechanics of CAC vs LTV</h3>
+        <p>
+          Evaluating customer profitability requires comparing the lifetime contribution of a client against the cost to secure them. The correlation of <strong>CAC vs LTV</strong> is the premier metric for assessing growth health:
+        </p>
+        <ul class="list-disc pl-5 space-y-3 mb-6">
+          <li>
+            <strong>LTV (Lifetime Value):</strong> The net margins left over after fulfillment costs are met. Rather than relying on simple top-line billing numbers, true LTV adjusts for gross margins to show clean earnings.
+          </li>
+          <li>
+            <strong>CAC (Customer Acquisition Cost):</strong> The total marketing spend, advertising overhead, and sales hours allocated to secure a new account.
+          </li>
+          <li>
+            <strong>LTV:CAC Ratio:</strong> A benchmark metric indicating profitability thresholds. A ratio of 3:1 is the baseline standard for sustainability. Ratios below 3:1 point to over-inflated acquisition channels or high customer churn. Ratios above 5:1 suggest outstanding efficiency, meaning you have the capacity to scale acquisition budgets.
+          </li>
+        </ul>
+
+        <h3 class="text-lg font-semibold text-gray-900 mt-8">LTV Modeling Across Key Business Models</h3>
+        <p>
+          Every business model functions with distinct customer life patterns. A custom <strong>customer value calculator</strong> allows you to analyze these variations:
+        </p>
+        
+        <div class="mt-6 space-y-6 border-l-2 border-gray-200 pl-4 italic">
+          <p>
+            <strong>1. Software as a Service (SaaS):</strong> SaaS businesses operate on monthly or annual subscriptions. With minimal direct fulfillment costs, gross margins typically hover between 80% and 90%. However, because subscription price points are lower (e.g., $50/mo), companies require longer lifespans (18-24 months) and low churn rates to offset their initial customer acquisition costs.
+          </p>
+          <p>
+            <strong>2. Marketing Agencies:</strong> Agencies typically sell monthly service retainers ranging from $1,500 to $5,000. Gross margins fall around 60% to 70% due to the manual labor required for client management. With lifespans averaging 10 months, an agency has a high gross LTV, allowing them to absorb higher CAC ($2,000+) while maintaining strong profitability.
+          </p>
+          <p>
+            <strong>3. Freelancers & Solopreneurs:</strong> Independent contractors operate with high gross margins (90%+) due to low business overhead. Freelancers usually secure clients for either project engagements or ongoing advisory agreements. An average client lifetime value might involve a retainer of $1,000/month lasting 6 months, yielding an LTV of $5,400.
+          </p>
+          <p>
+            <strong>4. Consulting Services:</strong> High-ticket consultants charge premium flat fees or advisory retainers. While acquisition costs can be substantial due to long sales cycles, the high gross margin and premium billing rates produce excellent profitability scores.
+          </p>
+        </div>
+
+        <p class="mt-6">
+          Whether you are modeling long-term retainers or calculating customer value for digital products, tracking LTV ensures you build a sustainable foundation. Use ToolVader's interactive calculator to map your unit economics and take control of your business growth.
+        </p>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Frequently Asked Questions</h2>
+      <dl class="mt-10 space-y-8">
+        {faqData.map(item => (
+          <div>
+            <dt class="text-base font-semibold leading-7 text-gray-900">{item.question}</dt>
+            <dd class="mt-2 text-base leading-7 text-gray-600">{item.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <RelatedTools currentPath="/tools/client-ltv-calculator" />
+  </div>
+</BaseLayout>
+
+<script>
+  import { calculateLtv } from '../../data/calculations';
+
+  const form = document.getElementById('ltv-form') as HTMLFormElement;
+  const resultsDiv = document.getElementById('results');
+  
+  // Results Elements
+  const resLtv = document.getElementById('res-ltv');
+  const resNetLtv = document.getElementById('res-net-ltv');
+  const resRatio = document.getElementById('res-ratio');
+  const resScore = document.getElementById('res-score');
+  const resStatus = document.getElementById('res-status');
+  
+  // Breakdown Tables
+  const breakdownGrossBillings = document.getElementById('breakdown-gross-billings');
+  const breakdownGrossProfit = document.getElementById('breakdown-gross-profit');
+  const breakdownCac = document.getElementById('breakdown-cac');
+  const breakdownNetProfit = document.getElementById('breakdown-net-profit');
+  
+  const statusCard = document.getElementById('status-card');
+  const statusDesc = document.getElementById('status-desc');
+  const copyBtn = document.getElementById('copy-btn');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    const arpu = Number(formData.get('arpu'));
+    const margin = Number(formData.get('margin'));
+    const lifespan = Number(formData.get('lifespan'));
+    const cac = Number(formData.get('cac'));
+
+    if (arpu < 0 || margin < 0 || lifespan < 0 || cac < 0) {
+      alert('Values cannot be negative.');
+      return;
+    }
+
+    if (margin < 1 || margin > 100) {
+      alert('Gross Margin must be between 1% and 100%.');
+      return;
+    }
+
+    if (lifespan < 1) {
+      alert('Customer lifespan must be at least 1 month.');
+      return;
+    }
+
+    const input = { arpu, margin, lifespan, cac };
+    const results = calculateLtv(input);
+
+    const fmt = (val: number) => val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    // Render primary metrics
+    if (resLtv) resLtv.textContent = fmt(results.ltv);
+    if (resNetLtv) resNetLtv.textContent = fmt(results.netLtv);
+    if (resRatio) resRatio.textContent = fmt(results.ltvToCacRatio);
+    if (resScore) resScore.textContent = results.profitabilityScore.toString();
+    if (resStatus) resStatus.textContent = results.profitabilityStatus;
+
+    // Render table details
+    const grossBillings = arpu * lifespan;
+    if (breakdownGrossBillings) breakdownGrossBillings.textContent = '$' + fmt(grossBillings);
+    if (breakdownGrossProfit) breakdownGrossProfit.textContent = '$' + fmt(results.ltv);
+    if (breakdownCac) breakdownCac.textContent = '$' + fmt(cac);
+    if (breakdownNetProfit) breakdownNetProfit.textContent = '$' + fmt(results.netLtv);
+
+    // Style the status card dynamically
+    if (statusCard && statusDesc) {
+      statusCard.className = 'group rounded-2xl border p-8 shadow-sm transition-all flex flex-col justify-between';
+      if (results.profitabilityScore >= 80) {
+        statusCard.classList.add('border-emerald-200', 'bg-emerald-50/50');
+        if (resStatus) resStatus.className = 'mt-4 text-xl font-bold text-emerald-900';
+        statusDesc.textContent = 'Outstanding unit economics. Highly profitable account margins.';
+      } else if (results.profitabilityScore >= 60) {
+        statusCard.classList.add('border-blue-200', 'bg-blue-50/50');
+        if (resStatus) resStatus.className = 'mt-4 text-xl font-bold text-blue-900';
+        statusDesc.textContent = 'Strong, healthy financial returns. Stable business profile.';
+      } else if (results.profitabilityScore >= 40) {
+        statusCard.classList.add('border-amber-200', 'bg-amber-50/50');
+        if (resStatus) resStatus.className = 'mt-4 text-xl font-bold text-amber-900';
+        statusDesc.textContent = 'Moderate margins. Monitor CAC or attempt to upsell/retain clients longer.';
+      } else {
+        statusCard.classList.add('border-rose-200', 'bg-rose-50/50');
+        if (resStatus) resStatus.className = 'mt-4 text-xl font-bold text-rose-900';
+        statusDesc.textContent = 'Unhealthy returns. High acquisition costs or low customer retention.';
+      }
+    }
+
+    resultsDiv?.classList.remove('hidden');
+    resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    const arpuVal = (document.getElementById('arpu') as HTMLInputElement).value;
+    const marginVal = (document.getElementById('margin') as HTMLInputElement).value;
+    const lifespanVal = (document.getElementById('lifespan') as HTMLInputElement).value;
+    const cacVal = (document.getElementById('cac') as HTMLInputElement).value;
+
+    const text = `Client Lifetime Value (LTV) Calculation Results:
+Average Revenue Per Customer: $${arpuVal}/mo
+Gross Margin: ${marginVal}%
+Customer Lifespan: ${lifespanVal} months
+Customer Acquisition Cost: $${cacVal}
+
+Gross Lifetime Value (LTV): $${resLtv?.textContent}
+Net Lifetime Value (Net LTV): $${resNetLtv?.textContent}
+LTV:CAC Ratio: ${resRatio?.textContent}:1
+Customer Profitability Score: ${resScore?.textContent}/100
+Profitability Status: ${resStatus?.textContent}
+
+Calculated by ToolVader`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const span = copyBtn.querySelector('span');
+      if (span) {
+        const originalText = span.textContent;
+        span.textContent = 'Copied!';
+        setTimeout(() => {
+          span.textContent = originalText;
+        }, 2000);
+      }
+    });
+  });
+</script>

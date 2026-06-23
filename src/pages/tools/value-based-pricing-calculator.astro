@@ -1,0 +1,419 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const faqData = [
+  {
+    question: "What is value-based pricing?",
+    answer: "Value-based pricing is a pricing strategy where a project's fee is set in proportion to the estimated financial impact, revenue increase, or cost savings that the service delivers to the client's business, rather than billing for the raw hours spent executing the task."
+  },
+  {
+    question: "How do you calculate value-based pricing?",
+    answer: "To calculate a value-based price, first estimate the total financial return the client will generate from the project. Adjust this gross value by the project's success confidence percentage to account for risk, and then capture a percentage of that risk-adjusted value (typically 10% to 20%) as your project fee."
+  },
+  {
+    question: "What is a standard value capture percentage to target?",
+    answer: "Independent professionals and consultants typically target a value capture percentage between 10% and 25%. A 10% capture rate offers the client a 900% ROI, making it highly attractive, while a 25% capture rate is standard for high-complexity, specialized engagements with deep expertise."
+  },
+  {
+    question: "How do I determine the project confidence level?",
+    answer: "The confidence level is a risk-adjustment metric. Use 90-100% for projects where you have done identical work before and have predictable success. Scale down to 50-70% for projects with higher uncertainty, dependencies on the client's sales team, or unproven marketing channels to ensure you align expectations realistically."
+  },
+  {
+    question: "When should I avoid using value-based pricing models?",
+    answer: "Avoid value-based pricing for small administrative tasks, clients who cannot track their business revenues, or when there is no measurable financial baseline. In these scenarios, use hourly rates or standard project-based packaging models instead."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Value-Based Pricing Calculator",
+      "description": "Calculate client value-based project quotes, price ranges, effective hourly rates, and client ROI.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="Value-Based Pricing Calculator (2026) - Calculate Value Rates"
+  description="Calculate your value-based project pricing, capture ranges, hourly equivalent rate, and client ROI based on business value generation."
+  structuredData={structuredData}
+>
+  <div class="mx-auto max-w-4xl px-4 pt-6 pb-12 sm:px-6 lg:px-8">
+    
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 flex" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-xs font-semibold text-gray-500">
+        <li>
+          <a href="/" class="hover:text-gray-950 transition-colors">Home</a>
+        </li>
+        <li>
+          <span class="text-gray-400">/</span>
+        </li>
+        <li>
+          <a href="/pricing-tools" class="hover:text-gray-950 transition-colors">Pricing Tools</a>
+        </li>
+        <li>
+          <span class="text-gray-400">/</span>
+        </li>
+        <li class="text-gray-950 truncate" aria-current="page">
+          Value-Based Pricing Calculator
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Header Section -->
+    <div class="mb-12 text-center">
+      <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Value-Based Pricing Calculator</h1>
+      <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+        Calculate your professional project fee based on the financial impact you deliver. Determine price ranges, equivalent hourly rates, and client ROI projections.
+      </p>
+    </div>
+
+    <!-- Form Section -->
+    <form id="value-pricing-form" class="space-y-8 divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-10">
+      <div class="space-y-8">
+        
+        <h2 class="text-lg font-bold text-gray-900">Project Value Inputs</h2>
+        
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+          
+          <div>
+            <label for="value-generated" class="block text-sm font-semibold leading-6 text-gray-900">Direct Value Generated ($)</label>
+            <div class="mt-2">
+              <input type="number" name="value-generated" id="value-generated" value="30000" min="0" step="1000" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Cost savings, direct assets, or immediate cash value added.</p>
+          </div>
+
+          <div>
+            <label for="revenue-increase" class="block text-sm font-semibold leading-6 text-gray-900">Expected Revenue Increase (%)</label>
+            <div class="mt-2">
+              <input type="number" name="revenue-increase" id="revenue-increase" value="4" min="0" max="100" step="0.1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Percentage growth expected in client's annual revenue.</p>
+          </div>
+
+          <div>
+            <label for="annual-revenue" class="block text-sm font-semibold leading-6 text-gray-900">Client Annual Revenue ($)</label>
+            <div class="mt-2">
+              <input type="number" name="annual-revenue" id="annual-revenue" value="1500000" min="0" step="10000" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">The baseline annual turnover of your client's business.</p>
+          </div>
+
+        </div>
+
+        <div class="pt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+          
+          <div>
+            <label for="confidence-level" class="block text-sm font-semibold leading-6 text-gray-900">Project Confidence Level (%)</label>
+            <div class="mt-2">
+              <input type="number" name="confidence-level" id="confidence-level" value="85" min="10" max="100" step="1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Cushion multiplier adjusting for risk and delivery success rate.</p>
+          </div>
+
+          <div>
+            <label for="value-capture" class="block text-sm font-semibold leading-6 text-gray-900">Desired Value Capture (%)</label>
+            <div class="mt-2">
+              <input type="number" name="value-capture" id="value-capture" value="15" min="1" max="100" step="0.5" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">The portion of delivered financial value you charge as your fee.</p>
+          </div>
+
+          <div>
+            <label for="project-hours" class="block text-sm font-semibold leading-6 text-gray-900">Estimated Project Hours</label>
+            <div class="mt-2">
+              <input type="number" name="project-hours" id="project-hours" value="50" min="0" step="1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Hours expected to complete the scope (used for equivalent rate checks).</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="pt-8">
+        <button type="submit" id="calculate-btn" class="w-full rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-colors">
+          Calculate Value-Based Quote
+        </button>
+      </div>
+    </form>
+
+    <!-- Results Section -->
+    <div id="results" class="mt-12 hidden space-y-10 animate-in fade-in duration-500">
+      
+      <!-- Primary Card: Recommended Price -->
+      <div class="rounded-3xl bg-gray-900 p-8 text-white sm:p-12 shadow-2xl relative overflow-hidden ring-1 ring-white/10 hover:ring-white/20 transition-all">
+        <div class="relative z-10">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div>
+              <span class="inline-flex items-center rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-400 ring-1 ring-inset ring-indigo-500/20 mb-6">
+                Recommended Price
+              </span>
+              <h2 class="text-xl font-medium text-gray-400">Recommended Project Price</h2>
+              <div class="mt-4 flex flex-col">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-6xl font-extrabold tracking-tight text-white">$<span id="res-recommended">0.00</span></span>
+                </div>
+                <span class="mt-2 text-xs font-bold uppercase tracking-widest text-gray-600">USD FLAT PROJECT FEE</span>
+              </div>
+            </div>
+            <button id="copy-btn" class="inline-flex items-center self-start sm:self-center gap-2 rounded-xl bg-white/5 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10 border border-white/10 transition-all active:scale-95">
+              <svg class="h-5 w-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+              </svg>
+              <span>Copy Results</span>
+            </button>
+          </div>
+          <div class="mt-10 border-t border-white/10 pt-8">
+            <p class="text-base text-gray-400 leading-7 max-w-2xl">
+              This price represents your value capture percentage of the risk-adjusted financial output delivered to the client.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secondary Metrics Grid -->
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+        <div class="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-gray-300 hover:shadow-md transition-all">
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-widest">Pricing Range</h3>
+          <p class="mt-4 text-xl font-bold text-gray-900">$<span id="res-low-range">0.00</span> - $<span id="res-high-range">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">USD RANGE (LOWER TO HIGHER BOUND)</p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-gray-300 hover:shadow-md transition-all">
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-widest">Hourly Equivalent Rate</h3>
+          <p class="mt-4 text-3xl font-bold text-gray-900">$<span id="res-hourly-equiv">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">USD / HOUR BASIS</p>
+        </div>
+        <div class="group rounded-2xl border border-blue-100 bg-blue-50/50 p-8 shadow-sm hover:border-blue-200 hover:shadow-md transition-all">
+          <h3 class="text-sm font-semibold text-blue-700 uppercase tracking-widest">Client ROI Projection</h3>
+          <p class="mt-4 text-3xl font-bold text-blue-900"><span id="res-client-roi">0.00</span>%</p>
+          <p class="mt-2 text-[10px] font-extrabold text-blue-400 uppercase tracking-widest">EXPECTED RETURN ON INVESTMENT</p>
+        </div>
+      </div>
+
+      <!-- Valuation Breakdown Section -->
+      <div class="rounded-2xl border border-gray-200 bg-white p-8 sm:p-10 shadow-sm hover:border-gray-300 transition-all">
+        <h3 class="text-lg font-semibold text-gray-900">Project Valuation Breakdown</h3>
+        <p class="mt-1 text-sm text-gray-500">How the total client value is modeled and adjusted for risk.</p>
+        
+        <div class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-3">
+          <div class="space-y-2 border-r border-gray-100 pr-4">
+            <span class="text-sm font-medium text-gray-500 uppercase tracking-wider">Gross Value Generated</span>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-bold text-gray-900">$<span id="breakdown-gross">0.00</span></span>
+            </div>
+            <p class="text-xs text-gray-400">Sum of direct value and percentage revenue increase.</p>
+          </div>
+          <div class="space-y-2 border-r border-gray-100 pr-4">
+            <span class="text-sm font-medium text-gray-500 uppercase tracking-wider">Risk-Adjusted Value</span>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-bold text-gray-900">$<span id="breakdown-adjusted">0.00</span></span>
+            </div>
+            <p class="text-xs text-gray-400">Scaled down by your project confidence level.</p>
+          </div>
+          <div class="space-y-2">
+            <span class="text-sm font-medium text-indigo-600 uppercase tracking-wider">Net Client Value Added</span>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-bold text-indigo-900">$<span id="breakdown-net">0.00</span></span>
+            </div>
+            <p class="text-xs text-gray-400">Financial output retained by the client after your fee.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Understanding Value-Based Pricing Models</h2>
+      <div class="mt-6 space-y-6 text-base leading-7 text-gray-600">
+        <p>
+          Using a **value-based pricing calculator** marks the transition from selling commodity labor to pricing for strategic business outcome. Traditional pricing mechanisms (like hourly billing or basic fixed project quoting) limit your growth potential because they link your compensation to resources spent rather than outputs achieved. If you automate your workflow or deliver a highly expert solution quickly, an hourly model penalizes you.
+        </p>
+        <p>
+          By implementing **value pricing freelance** and **consulting value pricing** architectures, you align your incentives directly with your client's growth. When the price of a project is determined by the financial impact it creates, you are rewarded for efficiency and business acumen. This dynamic builds a transparent win-win engagement where the client receives a highly favorable return on investment (ROI) and you capture premium profits.
+        </p>
+        
+        <h3 class="text-lg font-semibold text-gray-900 mt-8">How to Calculate Value Based Pricing</h3>
+        <p>
+          To calculate value-based quotes mathematically, you must identify three major factors: gross business value, risk adjustments, and value capture targets.
+        </p>
+        <ul class="list-disc pl-5 space-y-3 mb-6">
+          <li>
+            <strong>Gross Business Value:</strong> The overall dollar amount the client expects to generate or save. This includes direct cost savings, immediate assets (e.g. databases), and projected percentage increases in annual revenue ($Annual \times Increase\%$).
+          </li>
+          <li>
+            <strong>Project Confidence Level (Risk Adjustment):</strong> Not all projects succeed immediately. Scaling down the gross value by a confidence percentage (e.g., 80% confidence of delivery) protects client margins and aligns expectations.
+          </li>
+          <li>
+            <strong>Value Capture Percentage:</strong> The portion of risk-adjusted value you charge as your project fee. Service providers typically target capturing 10% to 20% of the total value delivered.
+          </li>
+        </ul>
+        <p>
+          Using these variables, the **value-based pricing model** provides a balanced, premium flat rate that is easy to justify during client discovery calls. It frames your fee as a minor capital allocation that yields major financial results.
+        </p>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Frequently Asked Questions</h2>
+      <dl class="mt-10 space-y-8">
+        {faqData.map(item => (
+          <div>
+            <dt class="text-base font-semibold leading-7 text-gray-900">{item.question}</dt>
+            <dd class="mt-2 text-base leading-7 text-gray-600">{item.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="mt-24">
+      <div class="relative isolate overflow-hidden bg-gray-900 px-6 py-24 text-center shadow-2xl rounded-3xl sm:px-16">
+        <h2 class="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          Establish Value-Based Quotes
+        </h2>
+        <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">
+          Ready to transition from commodity hourly billing? Run your client value estimates through our calculator to find your premium project price.
+        </p>
+        <div class="mt-10 flex items-center justify-center gap-x-6">
+          <a href="/tools/project-price-calculator" class="rounded-md bg-white px-6 py-3.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-all active:scale-95">
+            Compare with Project Calculator
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <RelatedTools currentPath="/tools/value-based-pricing-calculator" />
+  </div>
+</BaseLayout>
+
+<script>
+  import { calculateValuePricing } from '../../data/calculations';
+
+  const form = document.getElementById('value-pricing-form') as HTMLFormElement;
+  const resultsDiv = document.getElementById('results');
+  
+  // Results Elements
+  const resRecommended = document.getElementById('res-recommended');
+  const resLowRange = document.getElementById('res-low-range');
+  const resHighRange = document.getElementById('res-high-range');
+  const resHourlyEquiv = document.getElementById('res-hourly-equiv');
+  const resClientRoi = document.getElementById('res-client-roi');
+
+  // Breakdown Elements
+  const breakdownGross = document.getElementById('breakdown-gross');
+  const breakdownAdjusted = document.getElementById('breakdown-adjusted');
+  const breakdownNet = document.getElementById('breakdown-net');
+
+  const copyBtn = document.getElementById('copy-btn');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    
+    const valueGenerated = Number(formData.get('value-generated'));
+    const revenueIncreasePercent = Number(formData.get('revenue-increase'));
+    const clientAnnualRevenue = Number(formData.get('annual-revenue'));
+    const confidenceLevel = Number(formData.get('confidence-level'));
+    const valueCapturePercent = Number(formData.get('value-capture'));
+    const projectHours = Number(formData.get('project-hours'));
+
+    if (valueGenerated < 0 || revenueIncreasePercent < 0 || clientAnnualRevenue < 0 || confidenceLevel < 0 || valueCapturePercent < 0 || projectHours < 0) {
+      alert('Values cannot be negative.');
+      return;
+    }
+
+    if (confidenceLevel < 10 || confidenceLevel > 100) {
+      alert('Confidence level must be between 10% and 100%.');
+      return;
+    }
+
+    if (valueCapturePercent < 1 || valueCapturePercent > 100) {
+      alert('Value capture percentage must be between 1% and 100%.');
+      return;
+    }
+
+    const input = {
+      valueGenerated,
+      revenueIncreasePercent,
+      clientAnnualRevenue,
+      confidenceLevel,
+      valueCapturePercent,
+      projectHours
+    };
+
+    const results = calculateValuePricing(input);
+
+    // Format utility
+    const fmt = (val: number) => val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    // Render results
+    if (resRecommended) resRecommended.textContent = fmt(results.recommendedPrice);
+    if (resLowRange) resLowRange.textContent = fmt(results.lowPriceRange);
+    if (resHighRange) resHighRange.textContent = fmt(results.highPriceRange);
+    
+    if (resHourlyEquiv) {
+      resHourlyEquiv.textContent = projectHours > 0 ? fmt(results.hourlyEquivalent) : 'N/A';
+    }
+    
+    if (resClientRoi) resClientRoi.textContent = results.clientRoi.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    // Render monthly breakdowns
+    const netClientVal = results.riskAdjustedValue - results.recommendedPrice;
+
+    if (breakdownGross) breakdownGross.textContent = fmt(results.grossValue);
+    if (breakdownAdjusted) breakdownAdjusted.textContent = fmt(results.riskAdjustedValue);
+    if (breakdownNet) breakdownNet.textContent = fmt(netClientVal);
+
+    resultsDiv?.classList.remove('hidden');
+    resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    const text = `Value-Based Pricing Quote (2026):
+Client Direct Value: $${Number((document.getElementById('value-generated') as HTMLInputElement).value).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+Revenue Growth: ${(document.getElementById('revenue-increase') as HTMLInputElement).value}% of $${Number((document.getElementById('annual-revenue') as HTMLInputElement).value).toLocaleString(undefined, { minimumFractionDigits: 2 })} Annual Rev
+Project Confidence: ${(document.getElementById('confidence-level') as HTMLInputElement).value}%
+Value Capture: ${(document.getElementById('value-capture') as HTMLInputElement).value}%
+Estimated Hours: ${(document.getElementById('project-hours') as HTMLInputElement).value} Hours
+
+Recommended Project Fee: $${resRecommended?.textContent}
+Low to High Range: $${resLowRange?.textContent} - $${resHighRange?.textContent}
+Hourly Equivalent: $${resHourlyEquiv?.textContent}/hour
+Client ROI Projection: ${resClientRoi?.textContent}%
+
+Calculated by ToolVader`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const span = copyBtn.querySelector('span');
+      if (span) {
+        const originalText = span.textContent;
+        span.textContent = 'Copied!';
+        setTimeout(() => {
+          span.textContent = originalText;
+        }, 2000);
+      }
+    });
+  });
+</script>

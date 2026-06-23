@@ -15,6 +15,20 @@ export const tools: Tool[] = [
     featured: true
   },
   {
+    title: "Freelance Retainer Calculator",
+    category: "Pricing",
+    description: "Calculate your recommended monthly retainer fee per client, annual revenue, and equivalent hourly rate based on target income and expenses.",
+    href: "/tools/freelance-retainer-calculator",
+    featured: true
+  },
+  {
+    title: "Value-Based Pricing Calculator",
+    category: "Pricing",
+    description: "Calculate recommended project pricing, price ranges, hourly equivalents, and client ROI based on estimated client value generation.",
+    href: "/tools/value-based-pricing-calculator",
+    featured: true
+  },
+  {
     title: "Project Price Calculator",
     category: "Pricing",
     description: "Convert your hourly rate into professional fixed-price project quotes. Factor in complexity and revision rounds.",
@@ -68,6 +82,34 @@ export const tools: Tool[] = [
     category: "Finance",
     description: "Estimate freelance taxes, taxable income and take-home earnings instantly.",
     href: "/tools/freelance-tax-calculator",
+    featured: false
+  },
+  {
+    title: "Client Lifetime Value (LTV) Calculator",
+    category: "Finance",
+    description: "Calculate client lifetime value (LTV), net LTV, LTV:CAC ratios, and customer profitability scores.",
+    href: "/tools/client-ltv-calculator",
+    featured: false
+  },
+  {
+    title: "Agency Profit Margin Calculator",
+    category: "Finance",
+    description: "Calculate agency net profit, profit margins, annual profit projections, and profitability ratings based on revenue and overhead costs.",
+    href: "/tools/agency-profit-margin-calculator",
+    featured: false
+  },
+  {
+    title: "Startup Runway Calculator",
+    category: "Finance",
+    description: "Calculate startup cash runway, net monthly burn rate, runway end date, and cash remaining after 12 months with MoM growth simulation.",
+    href: "/tools/startup-runway-calculator",
+    featured: false
+  },
+  {
+    title: "SaaS Pricing Calculator",
+    category: "Finance",
+    description: "Calculate cost per customer, break-even targets, minimum pricing thresholds, and recommended subscription pricing tiers based on operating costs.",
+    href: "/tools/saas-pricing-calculator",
     featured: false
   },
   {

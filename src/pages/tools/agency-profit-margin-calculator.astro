@@ -1,0 +1,458 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const faqData = [
+  {
+    question: "What is a healthy profit margin for a marketing agency?",
+    answer: "A healthy net profit margin for a marketing agency typically ranges between 15% and 30%. Agencies with margins above 30% are highly efficient, often due to high-value service packaging, optimized team structures, and minimal administrative overhead, while margins below 15% indicate high operational risks."
+  },
+  {
+    question: "How do you calculate agency net profit and margin?",
+    answer: "To calculate agency net profit, subtract all direct and indirect expenses—including general operations, team labor, software subscriptions, and miscellaneous costs—from your total monthly revenue. To find the profit margin percentage, divide the net profit by the total monthly revenue and multiply by 100."
+  },
+  {
+    question: "What is the difference between team costs and software costs in margins?",
+    answer: "Team costs represent the labor expenses (salaries, contractor fees, payroll taxes) required to deliver services, which is typically the largest cost center for service businesses. Software costs represent the licensing fees for delivery and administrative tools. Categorizing these separately allows you to identify if profit issues stem from high labor overhead or excessive software creep."
+  },
+  {
+    question: "How can a consulting business improve its profit margin?",
+    answer: "A consulting business can improve margins by increasing average billings (upselling or shifting to value-based pricing), reducing delivery expenses, minimizing non-billable hours, or automating administrative tasks to limit the need for additional support staff."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Agency Profit Margin Calculator",
+      "description": "Calculate agency net profit, profit margins, annual profit projections, and profitability ratings based on revenue and overhead costs.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://toolvader.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Finance Tools",
+          "item": "https://toolvader.com/finance-tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Agency Profit Margin Calculator",
+          "item": "https://toolvader.com/tools/agency-profit-margin-calculator/"
+        }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="Agency Profit Margin Calculator - Service Profitability Tool"
+  description="Calculate agency net profit, profit margins, annual profit projections, and profitability ratings. Free profitability tool for marketing agencies, consultants, and service businesses."
+  structuredData={structuredData}
+>
+  <div class="mx-auto max-w-4xl px-4 pt-6 pb-12 sm:px-6 lg:px-8">
+    
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 flex" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-xs font-semibold text-gray-500">
+        <li>
+          <a href="/" class="hover:text-gray-950 transition-colors">Home</a>
+        </li>
+        <li>
+          <span class="text-gray-400">/</span>
+        </li>
+        <li>
+          <a href="/finance-tools" class="hover:text-gray-950 transition-colors">Finance Tools</a>
+        </li>
+        <li>
+          <span class="text-gray-400">/</span>
+        </li>
+        <li class="text-gray-950 truncate" aria-current="page">
+          Agency Profit Calculator
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Header Section -->
+    <div class="mb-12 text-center">
+      <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Agency Profit Margin Calculator</h1>
+      <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+        Calculate your agency net profit, profit margins, annual profit projections, and profitability ratings based on revenue and overhead costs to protect your business bottom line.
+      </p>
+    </div>
+
+    <!-- Form Section -->
+    <form id="agency-form" class="space-y-8 divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-10">
+      <div class="space-y-8">
+        
+        <div>
+          <h2 class="text-lg font-bold text-gray-900">Agency Revenue</h2>
+          <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2">
+            <div>
+              <label for="revenue" class="block text-sm font-semibold leading-6 text-gray-900">Monthly Revenue ($)</label>
+              <div class="mt-2">
+                <input type="number" name="revenue" id="revenue" value="25000" min="0" step="100" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+              </div>
+              <p class="mt-2 text-xs text-gray-500">Total monthly billings generated from client retainer and project fees.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-8">
+          <h2 class="text-lg font-bold text-gray-900">Monthly Overhead Breakdowns</h2>
+          <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+            
+            <div>
+              <label for="expenses" class="block text-sm font-semibold leading-6 text-gray-900">Monthly Operating Expenses ($)</label>
+              <div class="mt-2">
+                <input type="number" name="expenses" id="expenses" value="2000" min="0" step="50" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+              </div>
+              <p class="mt-2 text-xs text-gray-500">General operating costs, office rent, professional insurance, and taxes.</p>
+            </div>
+
+            <div>
+              <label for="team-costs" class="block text-sm font-semibold leading-6 text-gray-900">Team Costs ($)</label>
+              <div class="mt-2">
+                <input type="number" name="team-costs" id="team-costs" value="8000" min="0" step="100" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+              </div>
+              <p class="mt-2 text-xs text-gray-500">Direct labor expenses, including employee salaries and subcontractor fees.</p>
+            </div>
+
+            <div>
+              <label for="software-costs" class="block text-sm font-semibold leading-6 text-gray-900">Software Costs ($)</label>
+              <div class="mt-2">
+                <input type="number" name="software-costs" id="software-costs" value="1500" min="0" step="50" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+              </div>
+              <p class="mt-2 text-xs text-gray-500">SaaS licenses, delivery systems, web hosting, and communication platforms.</p>
+            </div>
+
+            <div>
+              <label for="misc-costs" class="block text-sm font-semibold leading-6 text-gray-900">Miscellaneous Costs ($)</label>
+              <div class="mt-2">
+                <input type="number" name="misc-costs" id="misc-costs" value="500" min="0" step="25" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+              </div>
+              <p class="mt-2 text-xs text-gray-500">Unplanned project expenses, travel overhead, client gifts, and bank fees.</p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-8">
+        <button type="submit" id="calculate-btn" class="w-full rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-colors">
+          Calculate Agency Profit Margin
+        </button>
+      </div>
+    </form>
+
+    <!-- Results Section -->
+    <div id="results" class="mt-12 hidden space-y-10 animate-in fade-in duration-500">
+      
+      <!-- Primary Card: Net Profit and Margin % -->
+      <div class="rounded-3xl bg-gray-900 p-8 text-white sm:p-12 shadow-2xl relative overflow-hidden ring-1 ring-white/10 hover:ring-white/20 transition-all">
+        <div class="relative z-10">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div>
+              <span class="inline-flex items-center rounded-full bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-400 ring-1 ring-inset ring-blue-500/20 mb-6">
+                Profit Margin Summary
+              </span>
+              <h2 class="text-xl font-medium text-gray-400">Monthly Net Profit</h2>
+              <div class="mt-4 flex flex-col">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-6xl font-extrabold tracking-tight text-white">$<span id="res-profit">0.00</span></span>
+                </div>
+                <span class="mt-2 text-xs font-bold uppercase tracking-widest text-gray-600">USD NET PROFIT RETAINED</span>
+              </div>
+            </div>
+            <button id="copy-btn" class="inline-flex items-center self-start sm:self-center gap-2 rounded-xl bg-white/5 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10 border border-white/10 transition-all active:scale-95">
+              <svg class="h-5 w-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+              </svg>
+              <span>Copy Results</span>
+            </button>
+          </div>
+          <div class="mt-10 border-t border-white/10 pt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <p class="text-sm text-gray-400">Net Profit Margin:</p>
+              <p class="text-3xl font-extrabold mt-1 text-white"><span id="res-margin">0.00</span>%</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-400">Annual Profit Projection:</p>
+              <p class="text-3xl font-extrabold mt-1 text-white">$<span id="res-annual">0.00</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rating and Overhead breakdown -->
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div id="rating-card" class="group rounded-2xl border p-8 shadow-sm transition-all flex flex-col justify-between">
+          <div>
+            <h3 class="text-sm font-semibold uppercase tracking-widest text-gray-500">Profitability Rating</h3>
+            <p id="res-rating" class="mt-4 text-xl font-bold">Checking...</p>
+          </div>
+          <p id="rating-desc" class="mt-2 text-xs text-gray-500">Based on standard professional agency margin benchmarks.</p>
+        </div>
+        
+        <div class="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-gray-300 hover:shadow-md transition-all flex flex-col justify-between">
+          <div>
+            <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-widest">Total Monthly Cost</h3>
+            <p class="mt-4 text-3xl font-extrabold text-gray-900">$<span id="res-total-costs">0.00</span></p>
+          </div>
+          <p class="mt-2 text-xs text-gray-500">Sum of operations, team, software, and miscellaneous costs.</p>
+        </div>
+      </div>
+
+      <!-- Financial Table Breakdown -->
+      <div class="rounded-2xl border border-gray-200 bg-white p-8 sm:p-10 shadow-sm hover:border-gray-300 transition-all">
+        <h3 class="text-lg font-semibold text-gray-900">Overhead Allocation Analysis</h3>
+        <div class="mt-6 overflow-hidden border-t border-gray-100">
+          <table class="min-w-full divide-y divide-gray-200 text-left text-sm">
+            <thead>
+              <tr class="text-xs font-bold uppercase tracking-wider text-gray-500">
+                <th scope="col" class="py-3">Cost Category</th>
+                <th scope="col" class="py-3 text-right">Monthly Cost</th>
+                <th scope="col" class="py-3 text-right">Allocation %</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100 text-gray-700">
+              <tr>
+                <td class="py-3 font-medium">Operating Expenses (Admin/Rent/Tax)</td>
+                <td id="breakdown-expenses" class="py-3 text-right">$0.00</td>
+                <td id="alloc-expenses" class="py-3 text-right">0.0%</td>
+              </tr>
+              <tr>
+                <td class="py-3 font-medium">Team Costs (Labor/Contractors)</td>
+                <td id="breakdown-team" class="py-3 text-right">$0.00</td>
+                <td id="alloc-team" class="py-3 text-right">0.0%</td>
+              </tr>
+              <tr>
+                <td class="py-3 font-medium">Software Costs (SaaS/Hosting)</td>
+                <td id="breakdown-software" class="py-3 text-right">$0.00</td>
+                <td id="alloc-software" class="py-3 text-right">0.0%</td>
+              </tr>
+              <tr>
+                <td class="py-3 font-medium">Miscellaneous Costs (Travel/Unplanned)</td>
+                <td id="breakdown-misc" class="py-3 text-right">$0.00</td>
+                <td id="alloc-misc" class="py-3 text-right">0.0%</td>
+              </tr>
+              <tr class="font-bold text-gray-900 bg-gray-50/50">
+                <td class="py-3 px-2">Total Monthly Expenses Combined</td>
+                <td id="breakdown-total" class="py-3 px-2 text-right">$0.00</td>
+                <td class="py-3 px-2 text-right">100.0%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Understanding Agency Profitability and Overhead Costs</h2>
+      <div class="mt-6 space-y-6 text-base leading-7 text-gray-600">
+        <p>
+          Managing margins is the foundation of scale for any modern service firm. Our interactive **agency profit margin calculator** is designed to provide quick, comprehensive assessments of your business's financial viability. By entering your monthly revenue alongside detailed cost breakdowns, you can substitute guesswork with mathematical facts, ensuring you retain enough earnings to fund future business growth.
+        </p>
+        <p>
+          Unlike simple calculators, our **agency profitability calculator** isolates your major operational cost centers. Categorizing your team costs separate from software tools and operations is critical for diagnosing financial stress. If your agency is struggling with cash flow, this granularity lets you identify whether your labor overhead is too high or if software subscriptions are draining margins.
+        </p>
+
+        <h3 class="text-lg font-semibold text-gray-900 mt-8">Benchmarks for Service Businesses</h3>
+        <p>
+          Every service business functions with distinct cost constraints. Understanding these benchmarks allows you to evaluate your competitiveness:
+        </p>
+        <ul class="list-disc pl-5 space-y-3 mb-6">
+          <li>
+            <strong>Marketing Agency Profit Margin:</strong> A standard **marketing agency profit margin** typically targets 20% to 30%. Because agencies utilize direct account managers and fulfillment contractors, team costs represent a massive portion of the billing.
+          </li>
+          <li>
+            <strong>Consulting Business Profit Margin:</strong> Consulting firms often boast higher margins, ranging between 30% and 50%. A high **consulting business profit margin** is supported by low physical fulfillment costs and high billing rates, though outbound sales cycles can be longer.
+          </li>
+          <li>
+            <strong>Freelancer Margins:</strong> Independent contractors frequently operate with margins above 70%. Because a freelancer rarely employs support staff, their expenses are restricted to basic software and home office overhead.
+          </li>
+          <li>
+            <strong>Service Business Profit Calculator:</strong> Operating any service-based firm requires factoring in hidden write-offs, unplanned scope creep, and transaction fees. Utilizing a custom **service business profit calculator** prevents these miscellaneous costs from eroding your net profitability.
+          </li>
+        </ul>
+        <p>
+          Ultimately, tracking profitability allows you to make informed packaging decisions. If your margins fall below 15%, it indicates a need to raise project fees, transition clients to recurring retainers, or cut software overhead. Use ToolVader to stay organized and secure the healthy profit margins required to expand your business in 2026.
+        </p>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Frequently Asked Questions</h2>
+      <dl class="mt-10 space-y-8">
+        {faqData.map(item => (
+          <div>
+            <dt class="text-base font-semibold leading-7 text-gray-900">{item.question}</dt>
+            <dd class="mt-2 text-base leading-7 text-gray-600">{item.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <RelatedTools currentPath="/tools/agency-profit-margin-calculator" />
+  </div>
+</BaseLayout>
+
+<script>
+  import { calculateAgencyMargin } from '../../data/calculations';
+
+  const form = document.getElementById('agency-form') as HTMLFormElement;
+  const resultsDiv = document.getElementById('results');
+
+  // Outputs
+  const resProfit = document.getElementById('res-profit');
+  const resMargin = document.getElementById('res-margin');
+  const resAnnual = document.getElementById('res-annual');
+  const resRating = document.getElementById('res-rating');
+  const resTotalCosts = document.getElementById('res-total-costs');
+
+  // Table Breakdowns
+  const breakdownExpenses = document.getElementById('breakdown-expenses');
+  const breakdownTeam = document.getElementById('breakdown-team');
+  const breakdownSoftware = document.getElementById('breakdown-software');
+  const breakdownMisc = document.getElementById('breakdown-misc');
+  const breakdownTotal = document.getElementById('breakdown-total');
+
+  // Allocation %
+  const allocExpenses = document.getElementById('alloc-expenses');
+  const allocTeam = document.getElementById('alloc-team');
+  const allocSoftware = document.getElementById('alloc-software');
+  const allocMisc = document.getElementById('alloc-misc');
+
+  const ratingCard = document.getElementById('rating-card');
+  const ratingDesc = document.getElementById('rating-desc');
+  const copyBtn = document.getElementById('copy-btn');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const revenue = Number(formData.get('revenue'));
+    const expenses = Number(formData.get('expenses'));
+    const teamCosts = Number(formData.get('team-costs'));
+    const softwareCosts = Number(formData.get('software-costs'));
+    const miscCosts = Number(formData.get('misc-costs'));
+
+    if (revenue < 0 || expenses < 0 || teamCosts < 0 || softwareCosts < 0 || miscCosts < 0) {
+      alert('Values cannot be negative.');
+      return;
+    }
+
+    const input = { revenue, expenses, teamCosts, softwareCosts, miscCosts };
+    const results = calculateAgencyMargin(input);
+
+    const fmt = (val: number) => val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    // Render results
+    if (resProfit) resProfit.textContent = fmt(results.netProfit);
+    if (resMargin) resMargin.textContent = fmt(results.profitMargin);
+    if (resAnnual) resAnnual.textContent = fmt(results.annualProfit);
+    if (resRating) resRating.textContent = results.profitabilityRating;
+    if (resTotalCosts) resTotalCosts.textContent = fmt(results.totalExpenses);
+
+    // Render table
+    if (breakdownExpenses) breakdownExpenses.textContent = '$' + fmt(expenses);
+    if (breakdownTeam) breakdownTeam.textContent = '$' + fmt(teamCosts);
+    if (breakdownSoftware) breakdownSoftware.textContent = '$' + fmt(softwareCosts);
+    if (breakdownMisc) breakdownMisc.textContent = '$' + fmt(miscCosts);
+    if (breakdownTotal) breakdownTotal.textContent = '$' + fmt(results.totalExpenses);
+
+    // Allocations
+    const pct = (val: number) => results.totalExpenses > 0 ? ((val / results.totalExpenses) * 100).toFixed(1) + '%' : '0.0%';
+    if (allocExpenses) allocExpenses.textContent = pct(expenses);
+    if (allocTeam) allocTeam.textContent = pct(teamCosts);
+    if (allocSoftware) allocSoftware.textContent = pct(softwareCosts);
+    if (allocMisc) allocMisc.textContent = pct(miscCosts);
+
+    // Dynamic rating styles
+    if (ratingCard && ratingDesc) {
+      ratingCard.className = 'group rounded-2xl border p-8 shadow-sm transition-all flex flex-col justify-between';
+      if (results.profitMargin >= 50) {
+        ratingCard.classList.add('border-emerald-200', 'bg-emerald-50/50');
+        if (resRating) resRating.className = 'mt-4 text-xl font-bold text-emerald-900';
+        ratingDesc.textContent = 'Outstanding leverage. High margin and exceptional operational efficiency.';
+      } else if (results.profitMargin >= 30) {
+        ratingCard.classList.add('border-blue-200', 'bg-blue-50/50');
+        if (resRating) resRating.className = 'mt-4 text-xl font-bold text-blue-900';
+        ratingDesc.textContent = 'Strong agency baseline. Healthy margins protecting your operational capacity.';
+      } else if (results.profitMargin >= 15) {
+        ratingCard.classList.add('border-amber-200', 'bg-amber-50/50');
+        if (resRating) resRating.className = 'mt-4 text-xl font-bold text-amber-900';
+        ratingDesc.textContent = 'Moderate margins. Monitor contractor billable efficiency or consider price optimization.';
+      } else {
+        ratingCard.classList.add('border-rose-200', 'bg-rose-50/50');
+        if (resRating) resRating.className = 'mt-4 text-xl font-bold text-rose-900';
+        ratingDesc.textContent = 'High operational risk. Costs are too close to revenue, threatening solvency.';
+      }
+    }
+
+    resultsDiv?.classList.remove('hidden');
+    resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    const revVal = (document.getElementById('revenue') as HTMLInputElement).value;
+    const expVal = (document.getElementById('expenses') as HTMLInputElement).value;
+    const teamVal = (document.getElementById('team-costs') as HTMLInputElement).value;
+    const softVal = (document.getElementById('software-costs') as HTMLInputElement).value;
+    const miscVal = (document.getElementById('misc-costs') as HTMLInputElement).value;
+
+    const text = `Agency Profit Margin Calculation Results:
+Monthly Revenue: $${Number(revVal).toLocaleString()}
+Operating Expenses: $${Number(expVal).toLocaleString()}
+Team Labor: $${Number(teamVal).toLocaleString()}
+Software Overhead: $${Number(softVal).toLocaleString()}
+Misc Costs: $${Number(miscVal).toLocaleString()}
+
+Total Monthly Overhead: $${resTotalCosts?.textContent}
+Monthly Net Profit: $${resProfit?.textContent}
+Net Profit Margin: ${resMargin?.textContent}%
+Annual Profit Projection: $${resAnnual?.textContent}
+Profitability Rating: ${resRating?.textContent}
+
+Calculated by ToolVader`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const span = copyBtn.querySelector('span');
+      if (span) {
+        const originalText = span.textContent;
+        span.textContent = 'Copied!';
+        setTimeout(() => {
+          span.textContent = originalText;
+        }, 2000);
+      }
+    });
+  });
+</script>

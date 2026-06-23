@@ -13,6 +13,18 @@ export const guides: Guide[] = [
     category: "Pricing"
   },
   {
+    title: "Freelance Retainer Guide 2026: Complete Guide to Monthly Retainer Pricing",
+    description: "Learn how to calculate freelance retainer pricing, structure consulting retainer agreements, avoid scope creep, and secure predictable recurring income.",
+    path: "/guides/freelance-retainer-guide-2026",
+    category: "Pricing"
+  },
+  {
+    title: "Freelance Value-Based Pricing Guide 2026: The Complete Guide",
+    description: "Discover how to calculate value-based pricing, leverage consulting value pricing models, evaluate client ROI, and transition away from hourly wages.",
+    path: "/guides/freelance-value-based-pricing-guide-2026",
+    category: "Pricing"
+  },
+  {
     title: "Freelance Tax Guide 2026: Taxes for Freelancers and Contractors",
     description: "Learn how freelance taxes work, understand taxable income and deductible expenses, estimate tax payments, and plan your take-home earnings.",
     path: "/guides/freelance-tax-guide-2026",
@@ -29,5 +41,17 @@ export const guides: Guide[] = [
     description: "Learn how consultants price their services in 2026. Discover consulting fees, hourly rates, value-based pricing and revenue planning strategies.",
     path: "/guides/consulting-rates-guide-2026",
     category: "Consulting"
+  },
+  {
+    title: "Client Lifetime Value Guide 2026: The Complete Guide to Customer Value",
+    description: "Learn how to calculate and optimize client lifetime value (LTV), understand LTV:CAC benchmarks, and leverage customer profitability strategies.",
+    path: "/guides/client-lifetime-value-guide-2026",
+    category: "Finance"
+  },
+  {
+    title: "Startup Runway Guide 2026: Complete Guide to Burn Rate and Runway Planning",
+    description: "Master startup cash runway, net burn rate calculations, MoM growth simulations, and founder financial planning strategies.",
+    path: "/guides/startup-runway-guide-2026",
+    category: "Finance"
   }
 ];

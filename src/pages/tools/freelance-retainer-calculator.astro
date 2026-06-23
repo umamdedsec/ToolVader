@@ -1,0 +1,378 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const faqData = [
+  {
+    question: "What is a freelance retainer agreement?",
+    answer: "A freelance retainer is a long-term agreement where a client pays a set fee (usually monthly) in advance to secure a freelancer's ongoing services or availability. Retainers provide freelancers with predictable recurring income and give clients guaranteed resources for execution."
+  },
+  {
+    question: "How do you calculate a freelance retainer fee?",
+    answer: "To calculate a retainer fee, determine your target annual income plus operating expenses to find your baseline revenue requirement. Add a profit buffer percentage (e.g. 10-20%) for business growth and safety, then divide the monthly total by the number of active clients you expect to support."
+  },
+  {
+    question: "What is the difference between pay-for-work and pay-for-access retainers?",
+    answer: "Pay-for-work retainers commit you to a set scope of monthly deliverables or hours (e.g., 20 hours/month or 4 blog posts/month). Pay-for-access retainers (often called advisory retainers) charge the client to have priority access to your strategic guidance, consultation, or troubleshooting expertise as needed, without a set deliverable scope."
+  },
+  {
+    question: "Why should freelancers add a profit buffer to retainers?",
+    answer: "A profit buffer ensures your business has cash reserves to invest in new tools, cover unexpected downtime, pay quarterly taxes, and fund growth. Charging only your baseline living costs leaves you vulnerable to client churn and unable to build business savings."
+  },
+  {
+    question: "What happens if a retainer's hours are not fully used?",
+    answer: "Retainer hours are typically 'use-it-or-lose-it' and do not roll over to the next month. This guarantees your availability is paid for, regardless of client utilization. Be sure to specify rollover policies clearly in your freelance retainer contract."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Freelance Retainer Calculator 2026",
+      "description": "Calculate recommended monthly retainer fees, annual revenues, hourly equivalents, and profit buffers based on target income and active clients.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="Freelance Retainer Calculator (2026) - Calculate Monthly Retainers"
+  description="Calculate your recommended monthly retainer fee per client, annual revenue target, equivalent hourly rate, and profit buffer instantly."
+  structuredData={structuredData}
+>
+  <div class="mx-auto max-w-4xl px-4 pt-6 pb-12 sm:px-6 lg:px-8">
+    
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 flex" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-xs font-semibold text-gray-500">
+        <li>
+          <a href="/" class="hover:text-gray-950 transition-colors">Home</a>
+        </li>
+        <li>
+          <span class="text-gray-400">/</span>
+        </li>
+        <li>
+          <a href="/pricing-tools" class="hover:text-gray-950 transition-colors">Pricing Tools</a>
+        </li>
+        <li>
+          <span class="text-gray-400">/</span>
+        </li>
+        <li class="text-gray-950 truncate" aria-current="page">
+          Freelance Retainer Calculator
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Header Section -->
+    <div class="mb-12 text-center">
+      <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Freelance Retainer Calculator</h1>
+      <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+        Calculate your ideal recurring monthly retainer per client, projected annual revenue, equivalent hourly rate, and profit buffer requirements instantly.
+      </p>
+    </div>
+
+    <!-- Form Section -->
+    <form id="retainer-form" class="space-y-8 divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-10">
+      <div class="space-y-8">
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+          
+          <div>
+            <label for="desired-income" class="block text-sm font-semibold leading-6 text-gray-900">Desired Annual Income ($)</label>
+            <div class="mt-2">
+              <input type="number" name="desired-income" id="desired-income" value="90000" min="0" step="1000" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Your target take-home earnings before taxes and business costs.</p>
+          </div>
+
+          <div>
+            <label for="monthly-expenses" class="block text-sm font-semibold leading-6 text-gray-900">Monthly Business Expenses ($)</label>
+            <div class="mt-2">
+              <input type="number" name="monthly-expenses" id="monthly-expenses" value="1200" min="0" step="50" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Software, hardware, legal, CPA, insurance, and office space costs.</p>
+          </div>
+
+          <div>
+            <label for="active-clients" class="block text-sm font-semibold leading-6 text-gray-900">Estimated Active Clients</label>
+            <div class="mt-2">
+              <input type="number" name="active-clients" id="active-clients" value="4" min="1" step="1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">The total number of retainer clients you plan to support concurrently.</p>
+          </div>
+
+          <div>
+            <label for="hours-per-client" class="block text-sm font-semibold leading-6 text-gray-900">Monthly Hours per Client</label>
+            <div class="mt-2">
+              <input type="number" name="hours-per-client" id="hours-per-client" value="25" min="1" step="1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Estimated hours committed per client each month.</p>
+          </div>
+
+          <div>
+            <label for="profit-buffer" class="block text-sm font-semibold leading-6 text-gray-900">Profit Buffer Percentage (%)</label>
+            <div class="mt-2">
+              <input type="number" name="profit-buffer" id="profit-buffer" value="15" min="0" max="100" step="1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Markup cushion for business savings, tax security, and investment capacity.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="pt-8">
+        <button type="submit" id="calculate-btn" class="w-full rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-colors">
+          Calculate Recommended Retainer
+        </button>
+      </div>
+    </form>
+
+    <!-- Results Section -->
+    <div id="results" class="mt-12 hidden space-y-10 animate-in fade-in duration-500">
+      
+      <!-- Primary Card: Recommended Monthly Retainer -->
+      <div class="rounded-3xl bg-gray-900 p-8 text-white sm:p-12 shadow-2xl relative overflow-hidden ring-1 ring-white/10 hover:ring-white/20 transition-all">
+        <div class="relative z-10">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div>
+              <span class="inline-flex items-center rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-400 ring-1 ring-inset ring-indigo-500/20 mb-6">
+                Recommended Retainer Fee
+              </span>
+              <h2 class="text-xl font-medium text-gray-400">Monthly Fee per Client</h2>
+              <div class="mt-4 flex flex-col">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-6xl font-extrabold tracking-tight text-white">$<span id="res-retainer">0.00</span></span>
+                  <span class="text-xl font-medium text-gray-500">/ client</span>
+                </div>
+                <span class="mt-2 text-xs font-bold uppercase tracking-widest text-gray-600">USD / MONTHLY RETAINER</span>
+              </div>
+            </div>
+            <button id="copy-btn" class="inline-flex items-center self-start sm:self-center gap-2 rounded-xl bg-white/5 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10 border border-white/10 transition-all active:scale-95">
+              <svg class="h-5 w-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+              </svg>
+              <span>Copy Results</span>
+            </button>
+          </div>
+          <div class="mt-10 border-t border-white/10 pt-8">
+            <p class="text-base text-gray-400 leading-7 max-w-2xl">
+              This monthly retainer ensures you cover your desired income requirements and operational overhead while incorporating a safety buffer. 
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secondary Metrics Grid -->
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+        <div class="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-gray-300 hover:shadow-md transition-all">
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-widest">Projected Annual Revenue</h3>
+          <p class="mt-4 text-3xl font-bold text-gray-900">$<span id="res-annual-revenue">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">USD / ANNUAL TARGET</p>
+        </div>
+        <div class="group rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-gray-300 hover:shadow-md transition-all">
+          <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-widest">Hourly Equivalent Rate</h3>
+          <p class="mt-4 text-3xl font-bold text-gray-900">$<span id="res-hourly-equiv">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">USD / HOUR BASIS</p>
+        </div>
+        <div class="group rounded-2xl border border-blue-100 bg-blue-50/50 p-8 shadow-sm hover:border-blue-200 hover:shadow-md transition-all">
+          <h3 class="text-sm font-semibold text-blue-700 uppercase tracking-widest">Monthly Buffer per Client</h3>
+          <p class="mt-4 text-3xl font-bold text-blue-900">$<span id="res-profit-buffer-amt">0.00</span></p>
+          <p class="mt-2 text-[10px] font-extrabold text-blue-400 uppercase tracking-widest">USD / PROFIT RESERVE</p>
+        </div>
+      </div>
+
+      <!-- Detailed Breakdown Section -->
+      <div class="rounded-2xl border border-gray-200 bg-white p-8 sm:p-10 shadow-sm hover:border-gray-300 transition-all">
+        <h3 class="text-lg font-semibold text-gray-900">Monthly Earnings & Cost Breakdown</h3>
+        <p class="mt-1 text-sm text-gray-500">How your total incoming monthly revenue is partitioned to sustain your business.</p>
+        
+        <div class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-3">
+          <div class="space-y-2 border-r border-gray-100 pr-4">
+            <span class="text-sm font-medium text-gray-500 uppercase tracking-wider">Salary Cover</span>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-bold text-gray-900">$<span id="breakdown-salary">0.00</span></span>
+              <span class="text-sm text-gray-500">/ month</span>
+            </div>
+            <p class="text-xs text-gray-400">Personal take-home goal allocation.</p>
+          </div>
+          <div class="space-y-2 border-r border-gray-100 pr-4">
+            <span class="text-sm font-medium text-gray-500 uppercase tracking-wider">Expenses Cover</span>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-bold text-gray-900">$<span id="breakdown-expenses">0.00</span></span>
+              <span class="text-sm text-gray-500">/ month</span>
+            </div>
+            <p class="text-xs text-gray-400">Total monthly operating budget cover.</p>
+          </div>
+          <div class="space-y-2">
+            <span class="text-sm font-medium text-indigo-600 uppercase tracking-wider">Total Profit Buffer</span>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-bold text-indigo-900">$<span id="breakdown-buffer">0.00</span></span>
+              <span class="text-sm text-gray-500">/ month</span>
+            </div>
+            <p class="text-xs text-gray-400">Accumulating cash reserve buffer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Strategic Retainer Planning for Solopreneurs & Freelancers</h2>
+      <div class="mt-6 space-y-6 text-base leading-7 text-gray-600">
+        <p>
+          Moving from hourly billing to a **recurring monthly retainer** is the most effective way for freelancers and independent professionals to build financial stability. In the gig economy, relying solely on single, hourly-rate contracts often creates a feast-or-famine cycle. Retainers stabilize your monthly revenues and allow you to forecast cash flow with certainty.
+        </p>
+        <p>
+          To price your retainer correctly, you must start with a **cost baseline**. This consists of your target annual salary (what you need for personal expenses) plus your business overhead expenses (such as software subscriptions, insurance, tax CPA fees, and hardware). Dividing this baseline by your active client limit defines the minimum amount you must charge each client just to break even.
+        </p>
+        
+        <h3 class="text-lg font-semibold text-gray-900 mt-8">Why the Profit Buffer is Critical</h3>
+        <p>
+          A common mistake is pricing retainers exactly at cost. Freelancers must act as businesses and build profit margins into their pricing. A **profit buffer percentage** provides a markup to cover non-billable periods (vacations, sickness), tax liabilities (self-employment tax cushions), and software changes, and allows you to invest back into your business (continuing education, outsourcing tasks, or scaling infrastructure). Aiming for a 10% to 20% buffer is a standard recommendation for service businesses in 2026.
+        </p>
+
+        <h3 class="text-lg font-semibold text-gray-900 mt-8">Transitioning Hourly Clients to Retainers</h3>
+        <p>
+          When pitching a retainer model to an existing hourly client, frame the change around **predictability and priority access**. Under an hourly model, clients risk unpredictable invoice spikes and must worry whether your schedule is too busy to handle their sudden requests.
+        </p>
+        <p>
+          A retainer solves both problems:
+        </p>
+        <ul class="list-disc pl-5 space-y-3 mb-6">
+          <li><strong>Predictable Budgeting:</strong> The client pays an identical invoice every month, eliminating financial surprises.</li>
+          <li><strong>Priority Availability:</strong> You reserve a set block of your monthly bandwidth specifically for their business.</li>
+          <li><strong>Workflow Continuity:</strong> Both parties can plan projects and milestones weeks in advance rather than executing in a reactive scramble.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Frequently Asked Questions</h2>
+      <dl class="mt-10 space-y-8">
+        {faqData.map(item => (
+          <div>
+            <dt class="text-base font-semibold leading-7 text-gray-900">{item.question}</dt>
+            <dd class="mt-2 text-base leading-7 text-gray-600">{item.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <RelatedTools currentPath="/tools/freelance-retainer-calculator" />
+  </div>
+</BaseLayout>
+
+<script>
+  import { calculateRetainerRate } from '../../data/calculations';
+
+  const form = document.getElementById('retainer-form') as HTMLFormElement;
+  const resultsDiv = document.getElementById('results');
+  
+  // Results Elements
+  const resRetainer = document.getElementById('res-retainer');
+  const resAnnualRevenue = document.getElementById('res-annual-revenue');
+  const resHourlyEquiv = document.getElementById('res-hourly-equiv');
+  const resProfitBufferAmt = document.getElementById('res-profit-buffer-amt');
+
+  // Breakdown Elements
+  const breakdownSalary = document.getElementById('breakdown-salary');
+  const breakdownExpenses = document.getElementById('breakdown-expenses');
+  const breakdownBuffer = document.getElementById('breakdown-buffer');
+
+  const copyBtn = document.getElementById('copy-btn');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    
+    const desiredIncome = Number(formData.get('desired-income'));
+    const monthlyExpenses = Number(formData.get('monthly-expenses'));
+    const activeClients = Number(formData.get('active-clients'));
+    const hoursPerClient = Number(formData.get('hours-per-client'));
+    const profitBufferPercent = Number(formData.get('profit-buffer'));
+
+    if (desiredIncome < 0 || monthlyExpenses < 0 || activeClients < 0 || hoursPerClient < 0 || profitBufferPercent < 0) {
+      alert('Values cannot be negative.');
+      return;
+    }
+
+    if (activeClients === 0) {
+      alert('Active clients must be at least 1.');
+      return;
+    }
+
+    const input = {
+      desiredIncome,
+      monthlyExpenses,
+      activeClients,
+      hoursPerClient,
+      profitBufferPercent
+    };
+
+    const results = calculateRetainerRate(input);
+
+    // Format utility
+    const fmt = (val: number) => val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    // Render results
+    if (resRetainer) resRetainer.textContent = fmt(results.recommendedRetainer);
+    if (resAnnualRevenue) resAnnualRevenue.textContent = fmt(results.annualRevenue);
+    if (resHourlyEquiv) resHourlyEquiv.textContent = fmt(results.hourlyEquivalent);
+    if (resProfitBufferAmt) resProfitBufferAmt.textContent = fmt(results.profitBufferAmount);
+
+    // Render monthly breakdowns
+    const totalExpensesMonthly = monthlyExpenses;
+    const salaryMonthlyCover = desiredIncome / 12;
+    const profitBufferMonthlyTotal = (results.annualRevenue - (desiredIncome + (monthlyExpenses * 12))) / 12;
+
+    if (breakdownSalary) breakdownSalary.textContent = fmt(salaryMonthlyCover);
+    if (breakdownExpenses) breakdownExpenses.textContent = fmt(totalExpensesMonthly);
+    if (breakdownBuffer) breakdownBuffer.textContent = fmt(profitBufferMonthlyTotal);
+
+    resultsDiv?.classList.remove('hidden');
+    resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    const text = `Freelance Retainer Estimation (2026):
+Desired Annual Income: $${Number(document.getElementById('desired-income')?.getAttribute('value') || (document.getElementById('desired-income') as HTMLInputElement)?.value).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+Monthly Business Expenses: $${Number(document.getElementById('monthly-expenses')?.getAttribute('value') || (document.getElementById('monthly-expenses') as HTMLInputElement)?.value).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+Estimated Active Clients: ${ (document.getElementById('active-clients') as HTMLInputElement)?.value }
+Monthly Hours per Client: ${ (document.getElementById('hours-per-client') as HTMLInputElement)?.value } Hours
+Profit Buffer: ${ (document.getElementById('profit-buffer') as HTMLInputElement)?.value }%
+
+Recommended Monthly Retainer per Client: $${resRetainer?.textContent}
+Projected Annual Revenue Target: $${resAnnualRevenue?.textContent}
+Hourly Equivalent Rate: $${resHourlyEquiv?.textContent}/hour
+Monthly Buffer per Client: $${resProfitBufferAmt?.textContent}
+
+Calculated by ToolVader`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const span = copyBtn.querySelector('span');
+      if (span) {
+        const originalText = span.textContent;
+        span.textContent = 'Copied!';
+        setTimeout(() => {
+          span.textContent = originalText;
+        }, 2000);
+      }
+    });
+  });
+</script>

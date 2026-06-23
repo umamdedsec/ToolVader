@@ -1,0 +1,419 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const faqData = [
+  {
+    question: "What is a SaaS pricing calculator?",
+    answer: "A SaaS pricing calculator is a financial tool that helps software-as-a-service companies determine appropriate pricing for their subscription products. By factoring in monthly operating costs, infrastructure expenses, customer support overhead, target customer volume, and desired profit margins, the calculator estimates the cost per customer, break-even customer count, and recommended monthly and annual plan pricing."
+  },
+  {
+    question: "How do you calculate the minimum price floor for a SaaS product?",
+    answer: "The absolute minimum price floor for a SaaS product (at a specific target customer volume) is its Cost Per Customer. This is calculated by dividing the sum of all monthly operating, infrastructure, and support costs by your target customer count. Billing below this floor will result in an operating loss unless you acquire more customers than your target."
+  },
+  {
+    question: "What is a typical profit margin for a SaaS business?",
+    answer: "Established public SaaS companies often target gross margins between 70% and 85%. At the net margin level, early-stage SaaS startups might operate at a loss or narrow margins to reinvest in growth, while mature SaaS businesses target net margins of 20% to 40%. When using a SaaS pricing calculator, setting a desired profit margin of 70% to 80% is recommended to ensure you cover customer acquisition costs (CAC) and future operational scaling."
+  },
+  {
+    question: "Why should SaaS companies offer annual billing plans?",
+    answer: "Annual billing plans are a vital SaaS pricing strategy because they secure upfront cash flow, reduce customer churn, and lower credit card processing failures. Most subscription businesses offer a 15% to 25% discount (equivalent to 2 months free) on annual plans to incentivize customers to commit to a longer-term contract."
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "SaaS Pricing Calculator",
+      "description": "Calculate SaaS cost per customer, break-even targets, minimum pricing thresholds, and recommended subscription pricing tiers based on operating costs.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://toolvader.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Finance Tools",
+          "item": "https://toolvader.com/finance-tools/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SaaS Pricing Calculator",
+          "item": "https://toolvader.com/tools/saas-pricing-calculator/"
+        }
+      ]
+    }
+  ]
+};
+---
+
+<BaseLayout 
+  title="SaaS Pricing Calculator - Subscription Price & Margin Tool"
+  description="Determine the optimal subscription price for your software product. Calculate cost per customer, profit margin per user, and break-even customer targets."
+  structuredData={structuredData}
+>
+  <div class="mx-auto max-w-4xl px-4 pt-6 pb-12 sm:px-6 lg:px-8">
+    
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 flex" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-xs font-semibold text-gray-500">
+        <li>
+          <a href="/" class="hover:text-gray-950 transition-colors">Home</a>
+        </li>
+        <li>
+          <span class="text-gray-400">/</span>
+        </li>
+        <li>
+          <a href="/finance-tools" class="hover:text-gray-950 transition-colors">Finance Tools</a>
+        </li>
+        <li>
+          <span class="text-gray-400">/</span>
+        </li>
+        <li class="text-gray-950 truncate" aria-current="page">
+          SaaS Pricing Calculator
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Header Section -->
+    <div class="mb-12 text-center">
+      <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">SaaS Pricing Calculator</h1>
+      <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+        Optimize your subscription economics. Estimate your cost per customer, model minimum and recommended pricing structures, and identify break-even targets based on your operating overhead.
+      </p>
+    </div>
+
+    <!-- Form Section -->
+    <form id="saas-pricing-form" class="space-y-8 divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-10">
+      <div class="space-y-8">
+        
+        <h2 class="text-lg font-bold text-gray-900">Operational Cost & Target Inputs</h2>
+        
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+          
+          <div>
+            <label for="operating-costs" class="block text-sm font-semibold leading-6 text-gray-900">Monthly Operating Costs ($)</label>
+            <div class="mt-2">
+              <input type="number" name="operating-costs" id="operating-costs" value="5000" min="0" step="100" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">General fixed monthly expenses (salaries, marketing, office, administrative overhead).</p>
+          </div>
+
+          <div>
+            <label for="infrastructure-costs" class="block text-sm font-semibold leading-6 text-gray-900">Infrastructure Costs ($/month)</label>
+            <div class="mt-2">
+              <input type="number" name="infrastructure-costs" id="infrastructure-costs" value="1500" min="0" step="50" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Hosting, database services, cloud computing, CDN, and APIs used to run your software.</p>
+          </div>
+
+          <div>
+            <label for="support-costs" class="block text-sm font-semibold leading-6 text-gray-900">Support Costs ($/month)</label>
+            <div class="mt-2">
+              <input type="number" name="support-costs" id="support-costs" value="1000" min="0" step="50" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">Helpdesk subscriptions, support agents, customer success tools, and ticket resolution costs.</p>
+          </div>
+
+          <div>
+            <label for="target-customers" class="block text-sm font-semibold leading-6 text-gray-900">Target Customers</label>
+            <div class="mt-2">
+              <input type="number" name="target-customers" id="target-customers" value="500" min="1" step="10" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">The total number of active subscription accounts you aim to support at these cost levels.</p>
+          </div>
+
+          <div>
+            <label for="desired-margin" class="block text-sm font-semibold leading-6 text-gray-900">Desired Profit Margin (%)</label>
+            <div class="mt-2">
+              <input type="number" name="desired-margin" id="desired-margin" value="70" min="0" max="99" step="1" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+            </div>
+            <p class="mt-2 text-xs text-gray-500">The target profit percentage per customer (excluding customer acquisition costs).</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="pt-8">
+        <button type="submit" id="calculate-btn" class="w-full rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-colors">
+          Calculate SaaS Pricing
+        </button>
+      </div>
+    </form>
+
+    <!-- Results Section -->
+    <div id="results" class="mt-12 hidden space-y-10 animate-in fade-in duration-500">
+      
+      <!-- Primary Output Card: Recommended Price -->
+      <div class="rounded-3xl bg-gray-900 p-8 text-white sm:p-12 shadow-2xl relative overflow-hidden ring-1 ring-white/10 hover:ring-white/20 transition-all">
+        <div class="relative z-10">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div>
+              <span class="inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400 ring-1 ring-inset ring-emerald-500/20 mb-6">
+                Recommended Structure
+              </span>
+              <h2 class="text-xl font-medium text-gray-400">Recommended Monthly Price</h2>
+              <div class="mt-4 flex flex-col">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-6xl font-extrabold tracking-tight text-white">$<span id="res-rec-price">0.00</span></span>
+                  <span class="text-lg text-gray-400">/ user / mo</span>
+                </div>
+                <span class="mt-2 text-xs font-bold uppercase tracking-widest text-gray-500">SUGGESTED RETAIL PRICE TO ACHIEVE TARGET MARGIN</span>
+              </div>
+            </div>
+            <button id="copy-btn" class="inline-flex items-center self-start sm:self-center gap-2 rounded-xl bg-white/5 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10 border border-white/10 transition-all active:scale-95">
+              <svg class="h-5 w-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+              </svg>
+              <span>Copy Results</span>
+            </button>
+          </div>
+          <div class="mt-10 border-t border-white/10 pt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div>
+              <p class="text-sm text-gray-400">Equivalent Annual Plan Price (20% discount):</p>
+              <p class="text-2xl font-bold mt-1 text-white">$<span id="res-annual-price">0.00</span> / year</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-400">Profit Per Customer at Recommended Price:</p>
+              <p class="text-2xl font-bold mt-1 text-emerald-400">+$<span id="res-profit-user">0.00</span> / month</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secondary Metrics Cards -->
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+        
+        <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-gray-300 hover:shadow-md transition-all flex flex-col justify-between">
+          <div>
+            <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Cost Per Customer</h3>
+            <p class="mt-4 text-3xl font-extrabold text-gray-900">$<span id="res-cost-user">0.00</span></p>
+          </div>
+          <p class="mt-2 text-xs text-gray-500">Your baseline direct + indirect delivery cost per user.</p>
+        </div>
+
+        <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-gray-300 hover:shadow-md transition-all flex flex-col justify-between">
+          <div>
+            <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Minimum Price Floor</h3>
+            <p class="mt-4 text-3xl font-extrabold text-gray-900">$<span id="res-min-price">0.00</span></p>
+          </div>
+          <p class="mt-2 text-xs text-gray-500">The break-even monthly rate required per subscription.</p>
+        </div>
+
+        <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:border-gray-300 hover:shadow-md transition-all flex flex-col justify-between">
+          <div>
+            <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Break-Even Customers</h3>
+            <p class="mt-4 text-3xl font-extrabold text-gray-900"><span id="res-breakeven-users">0</span></p>
+          </div>
+          <p class="mt-2 text-xs text-gray-500">Customers needed at recommended price to cover total costs.</p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Developing a Profitable SaaS Pricing Strategy</h2>
+      <div class="mt-6 space-y-6 text-base leading-7 text-gray-600">
+        <p>
+          Establishing unit economics is a vital requirement when launching or growing a software-as-a-service application. Using a data-driven **saas pricing calculator** provides founders and managers with a mathematical framework for measuring operating expenses and profit margins. Without analyzing the baseline delivery and support costs associated with each active user, your subscription models will operate blindly, risking overall losses or insufficient cash flows to cover marketing and product development.
+        </p>
+
+        <h3 class="text-lg font-semibold text-gray-900 mt-8">The Core Metrics of Subscription Software Pricing</h3>
+        <p>
+          Understanding your numbers is essential before defining standard **saas pricing tiers** or configuring discounts. A comprehensive **subscription pricing calculator** relies on several essential financial pillars:
+        </p>
+        <ul class="list-disc pl-5 space-y-3 mb-6">
+          <li>
+            <strong>Total Monthly Costs:</strong> The sum of your Monthly Operating Costs, Infrastructure Costs, and Support Costs. This forms the absolute baseline revenue your business needs to stay solvent.
+          </li>
+          <li>
+            <strong>Cost Per Customer:</strong> Calculated by dividing your Total Monthly Costs by your active customer base. This represents your operational unit cost.
+          </li>
+          <li>
+            <strong>Minimum Monthly Price:</strong> Your break-even subscription price. Charging less than this rate means that even if you meet your customer targets, you will operate at a loss.
+          </li>
+          <li>
+            <strong>Recommended Monthly Price:</strong> The subscription price adjusted for your desired profit margin (e.g. 70% or 80%). This provides the buffer necessary to fund customer acquisition and future features.
+          </li>
+          <li>
+            <strong>Break-Even Customers:</strong> The minimum number of subscription accounts you need at your recommended price point to cover the total operational costs of the application.
+          </li>
+        </ul>
+
+        <h3 class="text-lg font-semibold text-gray-900 mt-8">SaaS Pricing Model Options and Structures</h3>
+        <p>
+          Selecting a **saas pricing model** depends heavily on your target audience, product category, and distribution channels. The most common structures include:
+        </p>
+        <div class="mt-6 space-y-6 border-l-2 border-gray-200 pl-4 italic">
+          <p>
+            <strong>1. Flat-Rate Pricing:</strong> A single package with a set list of features billed monthly or annually. This model is easy to communicate but lacks the ability to upsell larger accounts.
+          </p>
+          <p>
+            <strong>2. Per-User Pricing:</strong> Charging based on the number of seats or active users added to the account. This is the dominant model for B2B SaaS applications, aligning cost directly with organization size.
+          </p>
+          <p>
+            <strong>3. Usage-Based Pricing:</strong> Billing customers dynamically based on consumed metrics, such as API calls, database storage, or emails sent. This aligns costs directly with infrastructure load.
+          </p>
+          <p>
+            <strong>4. Tiered Pricing:</strong> Offering multiple distinct packages (e.g., Starter, Growth, Enterprise) with different feature limits or support levels. Using a **software pricing calculator** ensures that your entry-tier pricing covers direct server overhead while higher tiers capture enterprise value.
+          </p>
+        </div>
+
+        <h3 class="text-lg font-semibold text-gray-900 mt-8">Real-World Examples of SaaS Pricing Tiers</h3>
+        <p>
+          Let's review concrete examples across different segments to see how a professional **saas pricing strategy** operates:
+        </p>
+        <ul class="list-disc pl-5 space-y-3 mb-6">
+          <li>
+            <strong>SaaS Startup Example:</strong> A bootstrapped productivity SaaS has $5,000/mo operating costs (founder salary, marketing), $1,000/mo cloud infrastructure, and $500/mo customer support tools. With a target of 500 customers, their Cost Per Customer is $13.00. Targeting a 70% profit margin, they should price their core tier at $43.33/mo, which breaks even at 150 customers.
+          </li>
+          <li>
+            <strong>B2B SaaS Example:</strong> A B2B CRM software operates with $30,000/mo operating overhead (development, sales), $8,000/mo server infrastructure, and $2,000/mo support costs. Targeting 1,000 companies, their baseline cost is $40.00/mo per client. Aiming for an 80% margin to support high sales-cycle costs, their recommended price is $200.00/mo, breaking even at 200 customers.
+          </li>
+          <li>
+            <strong>Subscription Business Example:</strong> A specialized email platform has low operating costs but high infrastructure output. It models $2,000/mo operating, $3,000/mo cloud infrastructure, and $1,000/mo support. Targeting 2,000 customer accounts, their cost is $3.00/mo per account. A 75% margin sets a recommended pricing model of $12.00/mo, breaking even at 500 customers.
+          </li>
+          <li>
+            <strong>Pricing Tier Example:</strong> To distribute the cost base, SaaS teams create structured packages. A standard tier structure includes a <strong>Starter Tier</strong> (basic features, covering the $5.00 unit cost at $15/mo), a <strong>Professional Tier</strong> (standard features, margin buffer at $49/mo), and an <strong>Enterprise Tier</strong> (custom SSO, priority support, high margin at $199/mo).
+          </li>
+        </ul>
+
+        <p class="mt-6">
+          Whether you are modeling customer costs or structuring pricing tiers, keeping your margins healthy protects your software from scaling bottlenecks. Use ToolVader to run your subscription metrics and design a sustainable software pricing strategy.
+        </p>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 border-t border-gray-100 pt-16">
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Frequently Asked Questions</h2>
+      <dl class="mt-10 space-y-8">
+        {faqData.map(item => (
+          <div>
+            <dt class="text-base font-semibold leading-7 text-gray-900">{item.question}</dt>
+            <dd class="mt-2 text-base leading-7 text-gray-600">{item.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <RelatedTools currentPath="/tools/saas-pricing-calculator" />
+  </div>
+</BaseLayout>
+
+<script>
+  import { calculateSaasPricing } from '../../data/calculations';
+
+  const form = document.getElementById('saas-pricing-form') as HTMLFormElement;
+  const resultsDiv = document.getElementById('results');
+
+  // Outputs
+  const resRecPrice = document.getElementById('res-rec-price');
+  const resAnnualPrice = document.getElementById('res-annual-price');
+  const resProfitUser = document.getElementById('res-profit-user');
+  const resCostUser = document.getElementById('res-cost-user');
+  const resMinPrice = document.getElementById('res-min-price');
+  const resBreakevenUsers = document.getElementById('res-breakeven-users');
+  const copyBtn = document.getElementById('copy-btn');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const operatingCosts = Number(formData.get('operating-costs'));
+    const infrastructureCosts = Number(formData.get('infrastructure-costs'));
+    const supportCosts = Number(formData.get('support-costs'));
+    const targetCustomers = Number(formData.get('target-customers'));
+    const desiredMargin = Number(formData.get('desired-margin'));
+
+    if (operatingCosts < 0 || infrastructureCosts < 0 || supportCosts < 0 || targetCustomers <= 0 || desiredMargin < 0) {
+      alert('Values must be positive, and target customers must be at least 1.');
+      return;
+    }
+
+    const input = {
+      operatingCosts,
+      infrastructureCosts,
+      supportCosts,
+      targetCustomers,
+      desiredMargin
+    };
+
+    const results = calculateSaasPricing(input);
+
+    const fmt = (val: number) => val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    // Render results
+    if (resRecPrice) resRecPrice.textContent = fmt(results.recommendedMonthlyPrice);
+    if (resAnnualPrice) resAnnualPrice.textContent = fmt(results.annualPlanPrice);
+    if (resProfitUser) resProfitUser.textContent = fmt(results.profitPerCustomer);
+    if (resCostUser) resCostUser.textContent = fmt(results.costPerCustomer);
+    if (resMinPrice) resMinPrice.textContent = fmt(results.minMonthlyPrice);
+    if (resBreakevenUsers) resBreakevenUsers.textContent = results.breakEvenCustomers.toString();
+
+    resultsDiv?.classList.remove('hidden');
+    resultsDiv?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    const opCosts = (document.getElementById('operating-costs') as HTMLInputElement).value;
+    const infraCosts = (document.getElementById('infrastructure-costs') as HTMLInputElement).value;
+    const suppCosts = (document.getElementById('support-costs') as HTMLInputElement).value;
+    const targetCust = (document.getElementById('target-customers') as HTMLInputElement).value;
+    const targetMargin = (document.getElementById('desired-margin') as HTMLInputElement).value;
+
+    const text = `SaaS Pricing Calculator Results:
+Inputs:
+- Monthly Operating Costs: $${Number(opCosts).toLocaleString()}
+- Infrastructure Costs: $${Number(infraCosts).toLocaleString()}
+- Support Costs: $${Number(suppCosts).toLocaleString()}
+- Target Customers: ${Number(targetCust).toLocaleString()}
+- Desired Profit Margin: ${targetMargin}%
+
+Calculated Output Metrics:
+- Cost Per Customer: $${resCostUser?.textContent} / month
+- Minimum Monthly Price (Break-Even): $${resMinPrice?.textContent} / month
+- Recommended Monthly Price: $${resRecPrice?.textContent} / month
+- Annual Plan Price (20% discount): $${resAnnualPrice?.textContent} / year
+- Profit Per Customer: $${resProfitUser?.textContent} / month
+- Break-Even Customer Volume: ${resBreakevenUsers?.textContent} customers
+
+Calculated by ToolVader`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const span = copyBtn.querySelector('span');
+      if (span) {
+        const originalText = span.textContent;
+        span.textContent = 'Copied!';
+        setTimeout(() => {
+          span.textContent = originalText;
+        }, 2000);
+      }
+    });
+  });
+</script>
